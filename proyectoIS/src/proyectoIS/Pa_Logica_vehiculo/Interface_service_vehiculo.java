@@ -1,7 +1,7 @@
-package proyectoIS.vehiculo.Pa_Logica_Vehiculo;
+package proyectoIS.Pa_Logica_vehiculo;
 
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.vehiculo.Vehiculo;
+import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.util.List;
 

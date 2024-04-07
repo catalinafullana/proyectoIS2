@@ -1,12 +1,11 @@
-package proyectoIS.vehiculo.Pa_Logica_Vehiculo;
+package proyectoIS.Pa_Integracion_Vehiculo;
 
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.vehiculo.Vehiculo;
+import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.util.List;
 
-public class Service_Vehiculo implements Interface_service_vehiculo{
-
+public class VehiculoDAO implements IDAOVehiculoImp{
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
         return null;
@@ -29,6 +28,11 @@ public class Service_Vehiculo implements Interface_service_vehiculo{
 
     @Override
     public boolean bajaVehiculo(String matricula) {
+        return false;
+    }
+
+    @Override
+    public boolean existeVehiculo(String matricula) {
         return false;
     }
 }

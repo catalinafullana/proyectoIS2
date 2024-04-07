@@ -1,4 +1,4 @@
-package proyectoIS.vehiculo;
+package proyectoIS.modelo_de_dominio;
 
 import proyectoIS.misc.TipoCarnet;
 
