@@ -1,5 +1,6 @@
 package proyectoIS.Pa_Integracion_Vehiculo;
 
+import proyectoIS.Conexion;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
@@ -9,18 +10,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
-    // TODO: HAY QUE HACER TODO EN EL MODELO DE DOMINIO? AÑADIENDO A LAS LISTAS ETC...
+
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
 
         List<Vehiculo> listaVehiculos = new ArrayList<>();
+        //String tipo = getString(tipo_vehiculo);
         String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' or modelo='" + modelo + "' or tipo_vehiculo='" + tipo_vehiculo + "'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
 
         try{
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
@@ -44,8 +43,24 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             case "B" -> r = TipoCarnet.B;
             case "C" -> r = TipoCarnet.C;
             case "D" -> r = TipoCarnet.D;
+
         }
         return r;
+    }
+
+    // FUNCION AUXILIAR QUE DEVUELVE STRING A PARTIR DE ENUM
+    private String getString(TipoCarnet t){
+        String s = "";
+        switch (t){
+            case A1 -> s = "A1";
+            case A2 -> s = "A2";
+            case AM -> s = "AM";
+            case B -> s = "B";
+            case C -> s = "C";
+            case D -> s = "D";
+            default -> s = "";
+        }
+        return s;
     }
 
 
@@ -53,11 +68,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     public Vehiculo consulta(String matricula) {
 
         String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
         try{
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
@@ -73,11 +85,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     @Override
     public boolean modificar(Vehiculo vehiculo) {
         String sql = "update Tabla_vehiculos set modelo ='" + vehiculo.get_modelo() + "', tipo_vehiculo ='" + vehiculo.get_tipo_vehiculo() + "' where matricula='" + vehiculo.get_matricula() + "'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
             int i = st.executeUpdate(sql);
             if(i > 0){
@@ -93,11 +102,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     @Override
     public boolean altaVehiculo(Vehiculo vehiculo) {
         String sql = "insert into Tabla_vehiculos (matricula, modelo, tipo_vehiculo)" +  "values ('" + vehiculo.get_matricula() + "','" + vehiculo.get_modelo() + "','" + vehiculo.get_tipo_vehiculo() + "')";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
             int i = st.executeUpdate(sql);
             if(i > 0){
@@ -113,11 +119,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     @Override
     public boolean bajaVehiculo(String matricula) {
         String sql = "delete from Tabla_vehiculos where matricula='" + matricula + "'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
             int i = st.executeUpdate(sql);
             if(i > 0){
@@ -134,11 +137,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     public boolean existeVehiculo(String matricula) {
 
         String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
         try{
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = Conexion.obtenerConexion();
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
@@ -155,9 +155,7 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
     public static void main(String[] args) throws Exception{
         String sql = "select modelo from Tabla_vehiculos where matricula='2'";
-        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
-        String username = "ut6tmf81mrbiz8wb";
-        String password = "Eioehpc1JyPrw3NRwmXN";
+        Connection con = Conexion.obtenerConexion();
         Vehiculo_DAO d = new Vehiculo_DAO();
 
         List<Vehiculo> lista = d.busqueda("", "", TipoCarnet.C);
