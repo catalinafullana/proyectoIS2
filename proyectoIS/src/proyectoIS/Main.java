@@ -1,4 +1,6 @@
 package proyectoIS;
+import proyectoIS.view.MainWindow;
+
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,10 +10,6 @@ public class Main {
 		String caso = "tabla";
 		SwingUtilities.invokeAndWait(() -> new MainWindow());
 
-		
-
-		if(caso=="tabla"){
-		}
 	}
 
 }
