@@ -27,6 +27,7 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
     @Override
     public boolean altaVehiculo(Vehiculo vehiculo) {
         Fa_DAO_Vehiculo faDAOVehiculo = new Fa_DAO_Vehiculo();
+
         if(faDAOVehiculo.existeVehiculo(vehiculo.get_matricula())){
             // TODO: ERROR USUARIO YA EXISTE
         }else{

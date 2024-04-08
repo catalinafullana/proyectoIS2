@@ -5,27 +5,73 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Objects;
 
 public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
+    // TODO: HAY QUE HACER TODO EN EL MODELO DE DOMINIO? AÑADIENDO A LAS LISTAS ETC...
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
         return null;
     }
 
-    @Override
-    public Vehiculo consulta(String matricula) {
-        return null;
+    // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
+    private TipoCarnet getCarnet(String s) {
+        TipoCarnet r = null;
+        switch (s) {
+            case "A1" -> r = TipoCarnet.A1;
+            case "A2" -> r = TipoCarnet.A2;
+            case "AM" -> r = TipoCarnet.AM;
+            case "B" -> r = TipoCarnet.B;
+            case "C" -> r = TipoCarnet.C;
+            case "D" -> r = TipoCarnet.D;
+        }
+        return r;
     }
+
+
+        @Override
+    public Vehiculo consulta(String matricula) {
+
+        String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
+        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
+        String username = "ut6tmf81mrbiz8wb";
+        String password = "Eioehpc1JyPrw3NRwmXN";
+        try{
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
+            return new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r);
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public boolean modificar(Vehiculo vehiculo) {
-        return false;
+        String sql = "update Tabla_vehiculos set modelo ='" + vehiculo.get_modelo() + "', tipo_vehiculo ='" + vehiculo.get_tipo_vehiculo() + "' where matricula='" + vehiculo.get_matricula() + "'";
+        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
+        String username = "ut6tmf81mrbiz8wb";
+        String password = "Eioehpc1JyPrw3NRwmXN";
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            PreparedStatement st = con.prepareStatement(sql);
+            int i = st.executeUpdate(sql);
+            if(i > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean altaVehiculo(Vehiculo vehiculo) {
-
-        // TODO: SE AÑADEN LAS SENTENCIAS SQL
         String sql = "insert into Tabla_vehiculos (matricula, modelo, tipo_vehiculo)" +  "values ('" + vehiculo.get_matricula() + "','" + vehiculo.get_modelo() + "','" + vehiculo.get_tipo_vehiculo() + "')";
         String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
         String username = "ut6tmf81mrbiz8wb";
@@ -46,12 +92,45 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
     @Override
     public boolean bajaVehiculo(String matricula) {
-        return false;
+        String sql = "delete from Tabla_vehiculos where matricula='" + matricula + "'";
+        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
+        String username = "ut6tmf81mrbiz8wb";
+        String password = "Eioehpc1JyPrw3NRwmXN";
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            PreparedStatement st = con.prepareStatement(sql);
+            int i = st.executeUpdate(sql);
+            if(i > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean existeVehiculo(String matricula) {
-        return false;
+
+        String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
+        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
+        String username = "ut6tmf81mrbiz8wb";
+        String password = "Eioehpc1JyPrw3NRwmXN";
+        try{
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            if(rs.getRow() > 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) throws Exception{
@@ -60,7 +139,39 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
         String username = "ut6tmf81mrbiz8wb";
         String password = "Eioehpc1JyPrw3NRwmXN";
         Vehiculo_DAO d = new Vehiculo_DAO();
+
+        if(d.modificar(new Vehiculo("1234","leon", TipoCarnet.C))){
+            System.out.println("Modificado");
+        }else {
+            System.out.println("No modificado");
+        }
+
+
+        /*
+        Vehiculo v = d.consulta("3");
+        System.out.println(v.get_matricula() + " " + v.get_modelo() + " " + v.get_tipo_vehiculo());
+
+        /*
+        if(d.bajaVehiculo("aaaa")){
+            System.out.println("Eliminado");
+        }else{
+            System.out.println("No eliminado");
+        }
+        /*
+        if(!d.existeVehiculo("1234")){
+            System.out.println("No esta en la bbdd");
+        }else{
+            System.out.println("Si esta en la bbdd");
+        }
+
+         */
+
+
+        /*
+
         d.altaVehiculo(new Vehiculo("2", "megane", TipoCarnet.A1));
+
+
         Connection con = DriverManager.getConnection(url, username, password);
 
         Statement st = con.createStatement();
@@ -71,6 +182,9 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
         //String r1 = rs.getString("apellido1");
         //String n = rs.getString(2);
         System.out.println(r);
+         */
+
+
     }
 
 }
