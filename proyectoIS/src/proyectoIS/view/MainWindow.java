@@ -14,6 +14,8 @@ public class MainWindow extends JFrame {
     private JButton _boton_staff;
     private JButton _boton_vehiculos;
 
+    private GUIMainVehiculo guiMainVehiculo;
+
 
     public MainWindow() {
         super("MAGNO");
@@ -75,6 +77,7 @@ public class MainWindow extends JFrame {
 
         _boton_vehiculos.addActionListener(e-> {
             //invocar panel vehiculos
+
         });
     }
 
