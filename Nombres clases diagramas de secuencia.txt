@@ -1,0 +1,14 @@
+NOMBRES DE CLASES PARA DIAGRAMAS DE SECUENCIA------------------------------
+
+CAMBIA LOS ASTERISCOS POR EL NOMBRE DE LA CLASE (CLASE/VEHICULO/ALUMNO/...)
+CON LA PRIMERA LETRA EN MAYÚSCULA!!!
+---------------------------------------------------------------------------
+gestor:Gestor
+guiMain******:GUIMain*******
+controlador******: Controlador******
+faService******: Fa_Service_******
+service*******:Service_********
+faDAO*******: Fa_DAO_*******
+dao*******:*******_DAO
+bbdd:BBDD
+---------------------------------------------------------------------------
