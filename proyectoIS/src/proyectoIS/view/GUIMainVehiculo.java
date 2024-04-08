@@ -1,5 +1,7 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorVehiculo;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,8 +10,11 @@ public class GUIMainVehiculo extends JPanel {
     JButton eraseVehicle;
     JButton addVehicle;
     JTextField search;
+    ControladorVehiculo controladorVehiculo;
+
 
     public GUIMainVehiculo() {
+        this.controladorVehiculo = new ControladorVehiculo();
         init_GUI();
     }
 

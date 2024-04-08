@@ -1,16 +1,19 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorVehiculo;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GUIAltaVehiculo extends JPanel{
-
+    ControladorVehiculo controladorVehiculo;
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
     JTextPane _modelo_vehiculo_text_field;
     JButton guardar;
 
-    public GUIAltaVehiculo() {
+    public GUIAltaVehiculo(ControladorVehiculo c) {
+        this.controladorVehiculo = c;
         initGUI();
     }
 
@@ -37,7 +40,6 @@ public class GUIAltaVehiculo extends JPanel{
         area_texto.setPreferredSize(new Dimension(100, 30));
         contentPane.add(label);
         contentPane.add(area_texto);
-
     }
 
 

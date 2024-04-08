@@ -19,6 +19,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("MAGNO");
+        this.guiMainVehiculo = new GUIMainVehiculo();
         initGUI();
     }
 
@@ -77,7 +78,7 @@ public class MainWindow extends JFrame {
 
         _boton_vehiculos.addActionListener(e-> {
             //invocar panel vehiculos
-
+            guiMainVehiculo.setVisible(true);
         });
     }
 
