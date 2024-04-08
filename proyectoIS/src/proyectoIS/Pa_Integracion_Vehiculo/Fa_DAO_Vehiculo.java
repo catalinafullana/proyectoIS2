@@ -5,34 +5,37 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.util.List;
 
-public class VehiculoDAO implements IDAOVehiculoImp{
+public class Fa_DAO_Vehiculo implements Interface_Fa_DAO_Vehiculo_Imp {
+
+    private Interface_DAO_Vehiculo_Imp iDAOVehiculoImp;
+
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
-        return null;
+        return iDAOVehiculoImp.busqueda(matricula, modelo, tipo_vehiculo);
     }
 
     @Override
     public Vehiculo consulta(String matricula) {
-        return null;
+        return iDAOVehiculoImp.consulta(matricula);
     }
 
     @Override
     public boolean modificar(Vehiculo vehiculo) {
-        return false;
+        return iDAOVehiculoImp.modificar(vehiculo);
     }
 
     @Override
     public boolean altaVehiculo(Vehiculo vehiculo) {
-        return false;
+        return iDAOVehiculoImp.altaVehiculo(vehiculo);
     }
 
     @Override
     public boolean bajaVehiculo(String matricula) {
-        return false;
+        return iDAOVehiculoImp.bajaVehiculo(matricula);
     }
 
     @Override
     public boolean existeVehiculo(String matricula) {
-        return false;
+        return iDAOVehiculoImp.existeVehiculo(matricula);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Fa_Service_Vehiculo implements Interface_Fa_Service_Vehiculo{
 
-    private Interface_service_vehiculo interface_service_vehiculo;
+    private Interface_Service_Vehiculo interface_service_vehiculo;
 
 
     // TODO: COMPROBAR
