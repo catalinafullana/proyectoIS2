@@ -1,18 +1,15 @@
 package proyectoIS.view;
 
-import proyectoIS.Main;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
-public class PanelVehiculos extends JPanel {
+public class GUIMainVehiculo extends JPanel {
 
     JButton eraseVehicle;
     JButton addVehicle;
     JTextField search;
 
-    public PanelVehiculos() {
+    public GUIMainVehiculo() {
         init_GUI();
     }
 

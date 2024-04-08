@@ -3,20 +3,20 @@ package proyectoIS.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class AltaVehiculo extends JPanel{
+public class GUIAltaVehiculo extends JPanel{
 
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
     JTextPane _modelo_vehiculo_text_field;
     JButton guardar;
 
-    public AltaVehiculo() {
+    public GUIAltaVehiculo() {
         initGUI();
     }
 
     private void initGUI() {
         setBackground(Color.decode("#D0CCD0"));
-        setLayout(new BorderLayout());  //box layout
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));  //box layout
 
         JPanel contentPane = new JPanel();
         contentPane.add(new JLabel("Nuevo vehiculo"), BorderLayout.NORTH);
