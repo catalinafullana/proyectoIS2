@@ -26,7 +26,7 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
         // TODO: SE AÑADEN LAS SENTENCIAS SQL
         
-        return ;
+        return false;
     }
 
     @Override

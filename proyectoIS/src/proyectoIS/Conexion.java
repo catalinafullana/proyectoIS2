@@ -1,5 +1,9 @@
 package proyectoIS;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Conexion {
     // Cambiar estos valores según tu configuración de la base de datos SQL Server
     private static final String URL = "mysql://ut6tmf81mrbiz8wb:Eioehpc1JyPrw3NRwmXN@b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
