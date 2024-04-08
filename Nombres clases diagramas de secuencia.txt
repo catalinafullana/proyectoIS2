@@ -4,7 +4,7 @@ CAMBIA LOS ASTERISCOS POR EL NOMBRE DE LA CLASE (CLASE/VEHICULO/ALUMNO/...)
 CON LA PRIMERA LETRA EN MAYÚSCULA!!!
 ---------------------------------------------------------------------------
 gestor:Gestor
-guiAlta******:GUIAlta*******
+guiMain******:GUIMain*******
 controlador******: Controlador******
 faService******: Fa_Service_******
 service*******:Service_********
