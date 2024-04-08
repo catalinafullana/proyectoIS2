@@ -4,6 +4,7 @@ import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +12,26 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     // TODO: HAY QUE HACER TODO EN EL MODELO DE DOMINIO? AÑADIENDO A LAS LISTAS ETC...
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
-        return null;
+
+        List<Vehiculo> listaVehiculos = new ArrayList<>();
+        String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' or modelo='" + modelo + "' or tipo_vehiculo='" + tipo_vehiculo + "'";
+        String url = "jdbc:mysql://b1twbozbipsxkveihrxu-mysql.services.clever-cloud.com:3306/b1twbozbipsxkveihrxu";
+        String username = "ut6tmf81mrbiz8wb";
+        String password = "Eioehpc1JyPrw3NRwmXN";
+
+        try{
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next()){
+                TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
+                listaVehiculos.add(new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r));
+            }
+            return listaVehiculos;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
@@ -140,7 +160,17 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
         String password = "Eioehpc1JyPrw3NRwmXN";
         Vehiculo_DAO d = new Vehiculo_DAO();
 
-        if(d.modificar(new Vehiculo("1234","leon", TipoCarnet.C))){
+        List<Vehiculo> lista = d.busqueda("", "", TipoCarnet.C);
+        for (Vehiculo vehiculo : lista) {
+            System.out.println(vehiculo.get_matricula());
+            System.out.println(vehiculo.get_modelo());
+            System.out.println(vehiculo.get_tipo_vehiculo());
+        }
+
+
+
+        /*
+        if(d.modificar(new Vehiculo("16","La ferrari", TipoCarnet.C))){
             System.out.println("Modificado");
         }else {
             System.out.println("No modificado");
