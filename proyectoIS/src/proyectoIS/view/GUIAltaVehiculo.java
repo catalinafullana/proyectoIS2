@@ -3,14 +3,14 @@ package proyectoIS.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelAltaVehiculo extends JPanel{
+public class GUIAltaVehiculo extends JPanel{
 
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
     JTextPane _modelo_vehiculo_text_field;
     JButton guardar;
 
-    public PanelAltaVehiculo() {
+    public GUIAltaVehiculo() {
         initGUI();
     }
 
