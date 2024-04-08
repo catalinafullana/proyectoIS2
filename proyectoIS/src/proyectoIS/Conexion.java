@@ -1,4 +1,11 @@
+
+// TODO: SEGURAMENTE SE PUEDA QUITAR
+
 package proyectoIS;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Conexion {
     // Cambiar estos valores según tu configuración de la base de datos SQL Server
