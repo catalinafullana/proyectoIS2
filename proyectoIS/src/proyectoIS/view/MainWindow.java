@@ -17,8 +17,9 @@ public class MainWindow extends JFrame {
 
         toolbar();
 
+        //añadir botones para hacer display de uno o de otro
         //add(new AltaVehiculo());
-        add(new PanelVehiculos());
+        //add(new PanelVehiculos());
 
         setPreferredSize(new Dimension(width, height));
 
