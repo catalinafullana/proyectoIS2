@@ -36,11 +36,13 @@ public class MainWindow extends JFrame {
 
         add(panelPrincipal);
 
+
         setLocationRelativeTo(null);
         setPreferredSize(new Dimension(width, height));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        panelPrincipal.setVisible(true);
     }
 
     private JButton addButton(String buttonText, Dimension d, JPanel container){
@@ -78,7 +80,10 @@ public class MainWindow extends JFrame {
 
         _boton_vehiculos.addActionListener(e-> {
             //invocar panel vehiculos
+            panelPrincipal.setVisible(false);
+            setContentPane(guiMainVehiculo);
             guiMainVehiculo.setVisible(true);
+
         });
     }
 
