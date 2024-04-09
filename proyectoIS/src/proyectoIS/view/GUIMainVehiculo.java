@@ -5,12 +5,14 @@ import proyectoIS.controller.ControladorVehiculo;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIMainVehiculo extends JPanel {
+public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
+    ControladorVehiculo controladorVehiculo;
     JButton eraseVehicle;
     JButton addVehicle;
     JTextField search;
-    ControladorVehiculo controladorVehiculo;
+
+    GUIAltaVehiculo guiAltaVehiculo;
 
 
     public GUIMainVehiculo() {

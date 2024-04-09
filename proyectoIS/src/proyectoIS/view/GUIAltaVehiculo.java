@@ -5,7 +5,7 @@ import proyectoIS.controller.ControladorVehiculo;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIAltaVehiculo extends JPanel{
+public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     ControladorVehiculo controladorVehiculo;
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
