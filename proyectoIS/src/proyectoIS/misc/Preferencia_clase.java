@@ -1,5 +1,5 @@
 package proyectoIS.misc;
 
-public enum PreferenciaHorario {
+public enum Preferencia_clase {
     MAÑANA, TARDE, AMBOS;
 }
