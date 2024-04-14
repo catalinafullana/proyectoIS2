@@ -15,8 +15,8 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     GUIAltaVehiculo guiAltaVehiculo;
 
 
-    public GUIMainVehiculo() {
-        this.controladorVehiculo = new ControladorVehiculo();
+    public GUIMainVehiculo(ControladorVehiculo controladorVehiculo) {
+        this.controladorVehiculo = controladorVehiculo;
         init_GUI();
     }
 

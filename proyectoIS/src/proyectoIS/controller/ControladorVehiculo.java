@@ -8,7 +8,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import java.util.List;
 
 public class ControladorVehiculo {
-    Fa_Service_Vehiculo faServiceVehiculo;
+    private Fa_Service_Vehiculo faServiceVehiculo;
 
     public ControladorVehiculo(){
         this.faServiceVehiculo = new Fa_Service_Vehiculo();
