@@ -15,7 +15,24 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) { // TODO: CAMBIAR EL TIPO VEHICULO POR STRING QUE DEBERIA IR EN LA LOGICA
 
         List<Vehiculo> listaVehiculos = new ArrayList<>();
-        String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' or modelo='" + modelo + "' or tipo_vehiculo='" + tipo_vehiculo + "'";
+        String sql = "";
+        if(!matricula.isEmpty() && !modelo.isEmpty() && tipo_vehiculo != null){
+           sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' and modelo='" + modelo + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+        } else if (!matricula.isEmpty() && !modelo.isEmpty()) {
+            sql = "select  * from Tabla_vehiculos where matricula ='" + matricula + "' and modelo='" + modelo + "'";
+        }else if(!matricula.isEmpty() && tipo_vehiculo != null){
+            sql = "select * from Tabla_vehiculos where matricula='" + matricula + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+        }else if(!matricula.isEmpty()){
+            sql = "select * from Tabla_vehiculos where matricula='" + matricula + "'";
+        }else if(!modelo.isEmpty() && tipo_vehiculo != null){
+            sql = "select * from Tabla_vehiculos where modelo='" + modelo + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+        }else if(!modelo.isEmpty()){
+            sql = "select * from Tabla_vehiculos where modelo='" + modelo + "'";
+        }else if(tipo_vehiculo != null){
+            sql = "select * from Tabla_vehiculos where tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+        }else{
+            sql = "select * from Tabla_vehiculos";
+        }
 
         try{
             Connection con = Conexion.obtenerConexion();
@@ -151,4 +168,19 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             throw new RuntimeException(e);
         }
     }
+
+    public static void main(String[] args) throws Exception{
+        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
+        Connection con = Conexion.obtenerConexion();
+        Vehiculo_DAO d = new Vehiculo_DAO();
+
+        List<Vehiculo> lista = d.busqueda("", "cayenne", TipoCarnet.A2);
+        for (Vehiculo vehiculo : lista) {
+            System.out.println(vehiculo.get_matricula());
+            System.out.println(vehiculo.get_modelo());
+            System.out.println(vehiculo.get_tipo_vehiculo());
+        }
+
+    }
+
 }
