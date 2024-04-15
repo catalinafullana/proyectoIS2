@@ -1,19 +1,23 @@
 package proyectoIS.Pa_Integracion_Clase;
 
+import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Profesor;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 public interface Interface_DAO_Clase_Imp {
     public boolean altaClase(Clase clase);
-    public boolean bajaClase(); //TODO: PARAMETROS
+    public boolean bajaClase(String id); //TODO: PARAMETROS
     public boolean modificarClase(Clase clase);
-    public List<Clase> busquedaClase(); //TODO: PARAMETROS
-    public Clase consultaClase(); //TODO: PARAMETROS
+    public List<Clase> busquedaClase(Alumno a, Profesor p, Date fecha); //TODO: PARAMETROS
+    public Clase consultaClase(String id); //TODO: PARAMETROS
     public boolean existeAlumno(String dni);
-    public boolean disponibleAlumno(String dni);
+    public boolean disponibleAlumno(String dni, Date fecha, Time hora);
     public boolean existeProfesor(String dni);
-    public boolean disponibleProfesor(String dni);
+    public boolean disponibleProfesor(String dni, Date fecha, Time hora);
     public boolean existeVehiculo(String matricula);
-    public boolean disponibleVehiculo(String matricula);
+    public boolean disponibleVehiculo(String matricula, Date fecha, Time hora);
 }
