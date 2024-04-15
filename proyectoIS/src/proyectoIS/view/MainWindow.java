@@ -16,6 +16,8 @@ public class MainWindow extends JFrame {
     private JButton _boton_staff;
     private JButton _boton_vehiculos;
 
+    private JPanel panelPrincipal;
+
     private GUIMainVehiculo guiMainVehiculo;
     //TODO GUI Alumno
     //TODO GUI Staff
@@ -24,7 +26,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow(ControladorVehiculo controladorVehiculo /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
         super("MAGNO");
-        this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo);
+        this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         //TODO GUI Alumno
         //TODO GUI Staff
         //TODO GUI Clases
@@ -33,8 +35,7 @@ public class MainWindow extends JFrame {
     }
 
     private void initGUI() {
-
-        JPanel panelPrincipal = new JPanel();
+        this.panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         panelPrincipal.add(Box.createVerticalGlue());
 
@@ -89,14 +90,11 @@ public class MainWindow extends JFrame {
 
         _boton_vehiculos.addActionListener(e-> {
             //invocar panel vehiculos
-            panelPrincipal.setVisible(false);
-            setContentPane(guiMainVehiculo);
-            guiMainVehiculo.setVisible(true);
-
+            changeJPanel(this.panelPrincipal, guiMainVehiculo);
         });
     }
 
-    private void toolbar() {
+    public void toolbar() {
         JToolBar toolbar = new JToolBar();
         toolbar.setBackground(Color.decode("#274060"));
         toolbar.setFloatable(false);
@@ -115,5 +113,13 @@ public class MainWindow extends JFrame {
         b.setIcon(new ImageIcon(iconFileNamePath));
         b.setPreferredSize(iconSize);
         return  b;
-}
+    }
+
+    public void changeJPanel(JPanel viejo, JPanel nuevo){
+        if(nuevo != null){
+            viejo.setVisible(false);
+            setContentPane(nuevo);
+            nuevo.setVisible(true);
+        }
+    }
 }

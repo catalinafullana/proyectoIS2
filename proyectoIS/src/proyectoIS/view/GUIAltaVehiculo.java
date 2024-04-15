@@ -7,30 +7,39 @@ import java.awt.*;
 
 public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     ControladorVehiculo controladorVehiculo;
+    MainWindow mainWindow;
+    GUIMainVehiculo guiMainVehiculo;
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
     JTextPane _modelo_vehiculo_text_field;
     JButton guardar;
 
-    public GUIAltaVehiculo(ControladorVehiculo c) {
+    public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
         this.controladorVehiculo = c;
+        this.mainWindow = mainWindow;
+        this.guiMainVehiculo = guiMainVehiculo;
         initGUI();
     }
 
     private void initGUI() {
+        guiMainVehiculo.toolbar(this);
         setBackground(Color.decode("#D0CCD0"));
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));  //box layout
+        setLayout(new BorderLayout());
+        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));  //box layout
 
-        JPanel contentPane = new JPanel();
-        contentPane.add(new JLabel("Nuevo vehiculo"), BorderLayout.NORTH);
-        creaCampo(contentPane, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
-        creaCampo(contentPane, new JLabel("Tipo: "), _tipo_vehiculo_text_field);
-        creaCampo(contentPane, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
+        //guiMainVehiculo.toolbar();
+
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout((new BoxLayout(panelPrincipal, BoxLayout.PAGE_AXIS)));
+        panelPrincipal.add(new JLabel("Nuevo vehiculo"), BorderLayout.NORTH);
+        creaCampo(panelPrincipal, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
+        creaCampo(panelPrincipal, new JLabel("Tipo: "), _tipo_vehiculo_text_field);
+        creaCampo(panelPrincipal, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
 
         JButton guardar = new JButton("Guardar");
-        contentPane.add(guardar);
+        panelPrincipal.add(guardar);
 
-        add(contentPane);
+        add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);
     }

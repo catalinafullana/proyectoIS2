@@ -18,19 +18,21 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     JTextField search_tipo;
 
     GUIAltaVehiculo guiAltaVehiculo;
+    MainWindow mainWindow;
 
 
-    public GUIMainVehiculo(ControladorVehiculo controladorVehiculo) {
+    public GUIMainVehiculo(ControladorVehiculo controladorVehiculo, MainWindow mainWindow) {
         this.controladorVehiculo = controladorVehiculo;
+        this.mainWindow = mainWindow;
+        this.guiAltaVehiculo = new GUIAltaVehiculo(this.controladorVehiculo, this.mainWindow, this);
         init_GUI();
     }
 
     private void init_GUI() {
         setLayout(new BorderLayout());
         //setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        toolbar();
         JPanel panelPrincipal = new JPanel();
+        toolbar(panelPrincipal);
         createHeader(panelPrincipal);
         add(panelPrincipal);
 
@@ -39,7 +41,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         vehiculos.setVisible(true);
     }
 
-    private void toolbar() {
+    protected void toolbar(JPanel p) {
         JToolBar toolbar = new JToolBar();
         toolbar.setBackground(Color.decode("#274060"));
         toolbar.setFloatable(false);
@@ -58,7 +60,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
         toolbar.add(header);
 
-        add(toolbar, BorderLayout.PAGE_START);
+        p.add(toolbar, BorderLayout.PAGE_START);
     }
 
     private void createHeader(JPanel p) {
@@ -92,6 +94,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         addVehicle.setPreferredSize(new Dimension(40, 40));
         addVehicle.addActionListener(e-> {
             //abrir formulario crear
+            mainWindow.changeJPanel(this, guiAltaVehiculo);
         });
         buttonPanel.add(addVehicle);
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
