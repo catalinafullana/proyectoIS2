@@ -12,7 +12,7 @@ import java.util.List;
 public class Clase_DAO implements Interface_DAO_Clase_Imp{
     @Override
     public boolean altaClase(Clase clase) {
-        return false;
+        String sql = "insert into Tabla_"
     }
 
     @Override

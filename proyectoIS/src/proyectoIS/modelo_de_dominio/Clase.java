@@ -16,7 +16,7 @@ public class Clase {
     private Alumno _alumno;
     private Time _hora;
     private Vehiculo _vehiculo;
-    private String _id;
+    private String _id_clase;
 
 
 
