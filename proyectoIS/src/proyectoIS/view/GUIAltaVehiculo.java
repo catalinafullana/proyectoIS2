@@ -12,7 +12,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     JTextPane _matricula_vehiculo_text_field;
     JTextPane _tipo_vehiculo_text_field;
     JTextPane _modelo_vehiculo_text_field;
-    JButton guardar;
+    JButton _guardar;
 
     public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
         this.controladorVehiculo = c;
@@ -36,8 +36,8 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         creaCampo(panelPrincipal, new JLabel("Tipo: "), _tipo_vehiculo_text_field);
         creaCampo(panelPrincipal, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
 
-        JButton guardar = new JButton("Guardar");
-        panelPrincipal.add(guardar);
+        _guardar = new JButton("Guardar");
+        panelPrincipal.add(_guardar);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
