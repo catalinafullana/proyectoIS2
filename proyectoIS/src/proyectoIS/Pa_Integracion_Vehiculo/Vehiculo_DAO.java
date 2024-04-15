@@ -169,18 +169,6 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
-        Connection con = Conexion.obtenerConexion();
-        Vehiculo_DAO d = new Vehiculo_DAO();
 
-        List<Vehiculo> lista = d.busqueda("", "cayenne", TipoCarnet.A2);
-        for (Vehiculo vehiculo : lista) {
-            System.out.println(vehiculo.get_matricula());
-            System.out.println(vehiculo.get_modelo());
-            System.out.println(vehiculo.get_tipo_vehiculo());
-        }
-
-    }
 
 }
