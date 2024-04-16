@@ -1,5 +1,5 @@
 package proyectoIS;
-import proyectoIS.controller.ControlAlumno;
+import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControlStaff;
 import proyectoIS.controller.ControladorVehiculo;
@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 		ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
-		ControlAlumno ctrlAlumno = new ControlAlumno();
+		ControladorAlumno ctrlAlumno = new ControladorAlumno();
 		ControlStaff ctrlStaff = new ControlStaff();
 		ControladorClase ctrlClases = new ControladorClase();
 		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo));
