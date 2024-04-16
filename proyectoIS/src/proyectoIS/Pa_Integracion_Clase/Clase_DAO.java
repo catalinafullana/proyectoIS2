@@ -54,7 +54,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     @Override
     public boolean modificarClase(Clase clase) {
         String sql = "update Tabla_clases set  dni_alumno='" + clase.get_alumno().get_dni() + "', dni_profesor ='" + clase.get_profesor().get_dni()
-                + "', matricula_vehiculo ='" + clase.get_vehiculo().get_matricula() + "', fecha ='" + clase.get_fecha() + "', hora ='" + clase.get_hora() + "', tipo_carnet ='" + clase.get_tipo_carnet() + "' where id_clase='" + clase.get_id_clase() + "'";
+                + "', matricula_vehiculo ='" + clase.get_vehiculo().get_matricula() + "', fecha ='" + clase.get_fecha() + "', hora ='" + clase.get_hora()
+                + "', tipo_carnet ='" + clase.get_tipo_carnet() + "' where id_clase='" + clase.get_id_clase() + "'";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
@@ -70,11 +71,27 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Profesor p,String fecha) {
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha) {
         List<Clase> listaClase = new ArrayList<>();
         String sql = "";
-        if(a != null && p != null && fecha != null){
+        if(a != null && p != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "' and fecha ='" + fecha + "'";
+        }else if(a != null && p != null){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "'";
+        }else if(a != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and fecha ='" + fecha + "'";
+        }else if(a != null){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "'";
+        }else if(p != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where dni_profesor ='" + p.get_dni() + "' and fecha ='" + fecha + "'";
 
+        }else if(p != null){
+            sql = "select * from Tabla_clases where dni_profesor ='" + p.get_dni() + "'";
+
+        }else if(!fecha.isEmpty()){
+            sql = "select * from Tabla_clases where fecha ='" + fecha + "'";
+        }else{
+            sql = "select * from Tabla_clases";
         }
 
         try{
@@ -82,8 +99,31 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
-                //listaClase.add(new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r));
+                TipoCarnet r = getCarnet(rs.getString("tipo_carnet"));
+
+                String sql2 = "select * from Tabla_alumnos where dni='" + rs.getString("dni_alumno") + "'";
+                Statement s2 = con.createStatement();
+                ResultSet rs2 = s2.executeQuery(sql2);
+                rs.next();
+
+                String sql3 = "select * from Tabla_profesores where dni='" + rs.getString("dni_profesor") + "'";
+                Statement s3 = con.createStatement();
+                ResultSet rs3 = s3.executeQuery(sql3);
+
+                String sql4 = "select * from Tabla_vehiculos where matricula='" + rs.getString("matricula") + "'";
+                Statement s4 = con.createStatement();
+                ResultSet rs4 = s4.executeQuery(sql4);
+
+
+
+                Alumno a2 = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
+                        rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
+                Profesor p2 = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
+                        rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("tipo_carnet"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
+                Vehiculo v2 = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
+
+                listaClase.add(new Clase(r,rs.getString("fecha"), p2, a2, rs.getString("hora"), v2, rs.getString("id_clase")));
+
             }
             return listaClase;
         }catch (SQLException e){
@@ -108,6 +148,22 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             Statement s2 = con.createStatement();
             ResultSet rs2 = s2.executeQuery(sql2);
             rs.next();
+            String n = rs2.getString("nombre");
+            Alumno a = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
+                    rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
+
+            sql2 = "select * from Tabla_profesores where dni='" + rs.getString("dni_profesor") + "'";
+            rs = s2.executeQuery(sql2);
+            Profesor p = new Profesor(rs2.getString("nombre"),rs2.getString("apellido1"), rs2.getString("apellido2"),
+                    rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("tipo_carnet")));
+
+
+            sql2 = "select * from Tabla_vehiculos where matricula='" + rs.getString("matricula") + "'";;
+            rs = s2.executeQuery(sql2);
+            Vehiculo v = new Vehiculo(rs2.getString("matricula"), rs2.getString("modelo"), getCarnet(rs2.getString("tipo_vehiculo")));
+
+            /*
+
 
             String sql3 = "select * from Tabla_profesores where dni='" + rs.getString("dni_profesor") + "'";
             Statement s3 = con.createStatement();
@@ -119,11 +175,14 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
 
 
+
+
             Alumno a = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
                     rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
             Profesor p = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
-                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("tipo_carnet"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
+                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("tipo_carnet")));
             Vehiculo v = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
+            */
 
             return new Clase(r,rs.getString("fecha"), p, a, rs.getString("hora"), v, rs.getString("id_clase"));
 
@@ -203,13 +262,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     public boolean disponibleVehiculo(String matricula, String fecha, String hora) {
         return false;
     }
-    public static void main(String[] args) throws Exception{
-        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
-        Connection con = Conexion.obtenerConexion();
-        Clase_DAO d = new Clase_DAO();
 
-
-    }
 
     // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
     private TipoCarnet getCarnet(String s) {
@@ -236,6 +289,25 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
         }
         return p;
     }
+
+
+    public static void main(String[] args) throws Exception{
+        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
+        Connection con = Conexion.obtenerConexion();
+        Clase_DAO d = new Clase_DAO();
+        Vehiculo_DAO v = new Vehiculo_DAO();
+        /*
+        d.altaClase(new Clase(TipoCarnet.A1,"16/02/2024",new Profesor("Manuel", "Fernandez", "Dominguez", "0000000", "5667744", "ajsbndasda",
+                Preferencia_clase.MANYANA), new Alumno("Rodrigo", "Martin", "Gonzalez", "111111", "6677665", "bbbbbbbb",
+                Preferencia_clase.MANYANA), "16:00",v.consulta("21"), "1"));
+
+         */
+
+        Clase c = d.consultaClase("1");
+        System.out.println(c.get_id_clase() + " " + c.get_hora() + " " + c.get_fecha() + " " + c.get_alumno() + " " + c.get_profesor() + " " + c.get_tipo_carnet() + " " + c.get_tipo_carnet());
+
+    }
+
 
 }
 
