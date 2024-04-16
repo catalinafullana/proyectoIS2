@@ -42,14 +42,14 @@ public class MainWindow extends JFrame {
         JPanel panelB = new JPanel();
         panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
 
-        panelPrincipal.add(Box.createVerticalGlue());
+        panelPrincipal.add(Box.createHorizontalGlue());
         toolbar(panelPrincipal);
         addButtons(panelB);
         //panelB.add(Box.createVerticalGlue());
 
 
         panelPrincipal.add(panelB);
-        panelPrincipal.add(Box.createVerticalGlue());
+        panelPrincipal.add(Box.createHorizontalGlue());
         add(panelPrincipal);
 
 
