@@ -42,13 +42,14 @@ public class MainWindow extends JFrame {
         JPanel panelB = new JPanel();
         panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
 
-
+        panelPrincipal.add(Box.createVerticalGlue());
         toolbar(panelPrincipal);
         addButtons(panelB);
+        //panelB.add(Box.createVerticalGlue());
 
-        panelPrincipal.add(Box.createVerticalGlue());
 
         panelPrincipal.add(panelB);
+        panelPrincipal.add(Box.createVerticalGlue());
         add(panelPrincipal);
 
 
@@ -66,6 +67,9 @@ public class MainWindow extends JFrame {
         b.setPreferredSize(d);
         b.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(b);
+
+        //container.add(Box.createVerticalStrut(30));
+
 
         JSeparator separator = new JSeparator(1);
         container.add(separator);
@@ -108,7 +112,6 @@ public class MainWindow extends JFrame {
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            //abrir formulario crear
             backToMain(this.panelPrincipal);
         });
         //toolbar.addSeparator();
