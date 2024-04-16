@@ -29,7 +29,7 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Profesor p, Date fecha) {
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha) {
         return interfaceDaoClaseImp.busquedaClase(a, p, fecha);
     }
 
@@ -44,7 +44,7 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     }
 
     @Override
-    public boolean disponibleAlumno(String dni, Date fecha, Time hora) {
+    public boolean disponibleAlumno(String dni, String fecha, String hora) {
         return interfaceDaoClaseImp.disponibleAlumno(dni, fecha, hora);
     }
 
@@ -54,7 +54,7 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     }
 
     @Override
-    public boolean disponibleProfesor(String dni, Date fecha, Time hora) {
+    public boolean disponibleProfesor(String dni, String fecha, String hora) {
         return interfaceDaoClaseImp.disponibleProfesor(dni, fecha, hora);
     }
 
@@ -64,7 +64,7 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     }
 
     @Override
-    public boolean disponibleVehiculo(String matricula, Date fecha, Time hora) {
+    public boolean disponibleVehiculo(String matricula, String fecha, String hora) {
         return interfaceDaoClaseImp.disponibleVehiculo(matricula, fecha, hora);
     }
 }

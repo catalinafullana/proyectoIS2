@@ -3,13 +3,25 @@ package proyectoIS.modelo_de_dominio;
 import proyectoIS.misc.TipoCarnet;
 
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 
 public class Clase {
-    public Clase(TipoCarnet _tipo_carnet, Date _fecha, Profesor _profesor, Alumno _alumno, Time _hora, Vehiculo _vehiculo, String _id_clase) {
+
+
+    private TipoCarnet _tipo_carnet;
+    private String _fecha;
+    private Profesor _profesor;
+    private Alumno _alumno;
+    private String _hora;
+    private Vehiculo _vehiculo;
+    private String _id_clase;
+
+    public Clase(TipoCarnet _tipo_carnet, String _fecha, Profesor _profesor, Alumno _alumno, String _hora, Vehiculo _vehiculo, String _id_clase) {
         this._tipo_carnet = _tipo_carnet;
         this._fecha = _fecha;
         this._profesor = _profesor;
@@ -19,14 +31,6 @@ public class Clase {
         this._id_clase = _id_clase;
     }
 
-    private TipoCarnet _tipo_carnet;
-    private Date _fecha;
-    private Profesor _profesor;
-    private Alumno _alumno;
-    private Time _hora;
-    private Vehiculo _vehiculo;
-    private String _id_clase;
-
     public TipoCarnet get_tipo_carnet() {
         return _tipo_carnet;
     }
@@ -35,11 +39,11 @@ public class Clase {
         this._tipo_carnet = _tipo_carnet;
     }
 
-    public Date get_fecha() {
+    public String get_fecha() {
         return _fecha;
     }
 
-    public void set_fecha(Date _fecha) {
+    public void set_fecha(String _fecha) {
         this._fecha = _fecha;
     }
 
@@ -59,11 +63,11 @@ public class Clase {
         this._alumno = _alumno;
     }
 
-    public Time get_hora() {
+    public String get_hora() {
         return _hora;
     }
 
-    public void set_hora(Time _hora) {
+    public void set_hora(String _hora) {
         this._hora = _hora;
     }
 
@@ -82,6 +86,4 @@ public class Clase {
     public void set_id_clase(String _id_clase) {
         this._id_clase = _id_clase;
     }
-
-
 }
