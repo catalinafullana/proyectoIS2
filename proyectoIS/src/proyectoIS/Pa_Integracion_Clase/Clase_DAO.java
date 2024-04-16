@@ -70,7 +70,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
                 TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
-                listaClase.add(new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r));
+                //listaClase.add(new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r));
             }
             return listaClase;
         }catch (SQLException e){
@@ -78,7 +78,6 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
         }
 
 
-        return null;
     }
 
     @Override
@@ -110,7 +109,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             Alumno a = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
                     rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
             Profesor p = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
-                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"), /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
+                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),"d") /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
             Vehiculo v = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
 
             return new Clase(r,rs.getString("fecha"), p, a, rs.getString("hora"), v, rs.getString("id_clase"));
