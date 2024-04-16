@@ -39,7 +39,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
         JPanel pAux = new JPanel();
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
         creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
@@ -53,7 +53,6 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         panelDatos.add(tipo_vehiculo);
 
         creaDesplegable(panelDatos, new JLabel("Tipo: "), tipo_vehiculo);
-
 
 
         panelPrincipal.add(panelDatos);

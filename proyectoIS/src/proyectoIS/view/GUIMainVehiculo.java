@@ -87,7 +87,6 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     }
 
     private void createButtonsInHeader(JPanel headerPanel) {
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
