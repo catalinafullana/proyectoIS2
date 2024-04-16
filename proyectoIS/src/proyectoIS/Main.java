@@ -1,6 +1,6 @@
 package proyectoIS;
 import proyectoIS.controller.ControlAlumno;
-import proyectoIS.controller.ControlClases;
+import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControlStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.view.MainWindow;
@@ -14,7 +14,7 @@ public class Main {
 		ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
 		ControlAlumno ctrlAlumno = new ControlAlumno();
 		ControlStaff ctrlStaff = new ControlStaff();
-		ControlClases ctrlClases = new ControlClases();
+		ControladorClase ctrlClases = new ControladorClase();
 		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo));
 	}
 
