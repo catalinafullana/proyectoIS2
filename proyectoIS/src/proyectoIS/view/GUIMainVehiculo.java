@@ -67,8 +67,9 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         //addSeparator(p, new Dimension(MainWindow.width, 10), JToolBar.Separator.HORIZONTAL);
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
+        //headerPanel.setMinimumSize(new Dimension(MainWindow.width, 200000));
         //headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), 40));
-        //headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), headerPanel.getPreferredSize().height));
+        headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), (int)(MainWindow.height*0.1)));
 
 
         /*
@@ -86,7 +87,6 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     }
 
     private void createButtonsInHeader(JPanel headerPanel) {
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
