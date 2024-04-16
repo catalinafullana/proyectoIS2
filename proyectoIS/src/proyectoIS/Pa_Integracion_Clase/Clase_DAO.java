@@ -193,8 +193,18 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     }
 
     @Override
-    public boolean disponibleAlumno(String dni, String  fecha, String hora) {
-        return false;
+    public boolean disponibleAlumno(String dni, String fecha, String hora) {
+        String sql = "select * from Tabla_clases where dni_alumno ='" + dni + "' and fecha ='" + fecha + "' and hora = '" + hora + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            return rs.getRow() <= 0;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -218,7 +228,17 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
     @Override
     public boolean disponibleProfesor(String dni, String fecha, String hora) {
-        return false;
+        String sql = "select * from Tabla_clases where dni_profesor ='" + dni + "' and fecha ='" + fecha + "' and hora = '" + hora + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            return rs.getRow() <= 0;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -242,7 +262,17 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
     @Override
     public boolean disponibleVehiculo(String matricula, String fecha, String hora) {
-        return false;
+        String sql = "select * from Tabla_clases where matricula_vehiculo ='" + matricula + "' and fecha ='" + fecha + "' and hora = '" + hora + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            return rs.getRow() <= 0;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -284,6 +314,12 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
                 Preferencia_clase.MANYANA), "16:00",v.consulta("21"), "1"));
 
          */
+        if(d.disponibleAlumno("111111", "16/02/2024", "17:00")){
+            System.out.println("Dispo");
+        }else{
+            System.out.println("No Dispo");
+
+        }
 
         Clase c = d.consultaClase("1");
         System.out.println(c.get_id_clase() + " " + c.get_hora() + " " + c.get_fecha() + " " + c.get_alumno().get_dni() + " " + c.get_profesor().get_dni() + " " + c.get_vehiculo().get_matricula() + " " + c.get_tipo_carnet());
