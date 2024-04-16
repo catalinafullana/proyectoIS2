@@ -50,6 +50,10 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
+        home.addActionListener(e-> {
+            //abrir formulario crear
+            mainWindow.backToMain(this);
+        });
         //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));
 

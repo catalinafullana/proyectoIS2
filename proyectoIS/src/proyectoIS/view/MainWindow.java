@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
     private GUIMainVehiculo guiMainVehiculo;
     //TODO GUI Alumno
     //TODO GUI Staff
-    //TODO GUI Clases
+    private GUIMainClase guiMainClase;
 
 
     public MainWindow(ControladorVehiculo controladorVehiculo /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
@@ -36,14 +36,19 @@ public class MainWindow extends JFrame {
 
     private void initGUI() {
         this.panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+        //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+        //panelPrincipal.add(Box.createVerticalGlue());
+        panelPrincipal.setPreferredSize(new Dimension(width, height));
+        JPanel panelB = new JPanel();
+        panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
+
+
+        toolbar(panelPrincipal);
+        addButtons(panelB);
+
         panelPrincipal.add(Box.createVerticalGlue());
 
-        toolbar();
-        addButtons(panelPrincipal);
-
-        panelPrincipal.add(Box.createVerticalGlue());
-
+        panelPrincipal.add(panelB);
         add(panelPrincipal);
 
 
@@ -71,9 +76,8 @@ public class MainWindow extends JFrame {
     private void addButtons(JPanel panelPrincipal) {
         Dimension buttonSize = new Dimension(500, 50);
         _boton_clases= addButton("Clases",buttonSize, panelPrincipal );
-
         _boton_clases.addActionListener(e-> {
-
+            changeJPanel(this.panelPrincipal, guiMainClase);
         });
 
         _boton_alumnos= addButton("Alumnos",buttonSize, panelPrincipal );
@@ -94,17 +98,23 @@ public class MainWindow extends JFrame {
         });
     }
 
-    public void toolbar() {
+    public void toolbar(JPanel p) {
         JToolBar toolbar = new JToolBar();
         toolbar.setBackground(Color.decode("#274060"));
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
         toolbar.setPreferredSize(new Dimension(width, 50));
-        
+
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
+        home.addActionListener(e-> {
+            //abrir formulario crear
+            backToMain(this.panelPrincipal);
+        });
+        //toolbar.addSeparator();
+        toolbar.add(Box.createHorizontalStrut(10));
 
-        add(toolbar, BorderLayout.PAGE_START);
+        p.add(toolbar, BorderLayout.PAGE_START);
     }
 
     private JButton createButton(String toolTipText, String iconFileNamePath, Dimension iconSize){
@@ -120,6 +130,14 @@ public class MainWindow extends JFrame {
             viejo.setVisible(false);
             setContentPane(nuevo);
             nuevo.setVisible(true);
+        }
+    }
+
+    public void backToMain(JPanel nuevo){
+        if(nuevo != null){
+            nuevo.setVisible(false);
+            setContentPane(this.panelPrincipal);
+            this.panelPrincipal.setVisible(true);
         }
     }
 }
