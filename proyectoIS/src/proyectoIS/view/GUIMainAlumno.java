@@ -1,5 +1,6 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorVehiculo;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 
 public class GUIMainAlumno extends JPanel implements VehiculoObserver{
 
-    ControladorVehiculo controladorVehiculo;
+    ControladorAlumno controladorAlumno;
     private JButton home;
 
     //JButton eraseVehicle;
@@ -20,8 +21,8 @@ public class GUIMainAlumno extends JPanel implements VehiculoObserver{
     MainWindow mainWindow;
 
 
-    public GUIMainAlumno(ControladorVehiculo controladorVehiculo, MainWindow mainWindow) {
-        this.controladorVehiculo = controladorVehiculo;
+    public GUIMainAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow) {
+        this.controladorAlumno = controladorAlumno;
         this.mainWindow = mainWindow;
         //this.guiAltaVehiculo = new GUIAltaVehiculo(this.controladorVehiculo, this.mainWindow, this);
         init_GUI();

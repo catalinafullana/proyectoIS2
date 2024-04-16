@@ -1,4 +1,4 @@
 package proyectoIS.controller;
 
-public class ControlAlumno {
+public class ControladorAlumno {
 }
