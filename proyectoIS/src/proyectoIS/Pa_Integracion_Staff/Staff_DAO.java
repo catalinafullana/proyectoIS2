@@ -12,7 +12,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
     @Override
     public boolean altaStaff(Staff staff) {
-        String sql = "insert into Tabla_vehiculos (nombre, apellido1, apellido2, dni, tlf, email, idTrabajador)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "','" + staff.get_id_trabajador() + "')";
+        String sql = "insert into Tabla_vehiculos (nombre, apellido1, apellido2, dni, tlf, email, idTrabajador)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "','" +  "')";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
@@ -46,7 +46,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
     @Override
     public boolean modificarStaff(Staff staff) {
-        String sql = "update Tabla_staff set nombre ='" + staff.get_nombre() + "', apellido1 ='" + staff.get_apellido1() + "' where apellido2='" + staff.get_apellido2() + "' where dni='" + staff.get_dni() + "' where tlf='" + staff.get_tlf() + "' where email='" + staff.get_email() + "' where id_trabajador='" + staff.get_id_trabajador() + "'";
+        String sql = "update Tabla_staff set nombre ='" + staff.get_nombre() + "', apellido1 ='" + staff.get_apellido1() + "' where apellido2='" + staff.get_apellido2() + "' where dni='" + staff.get_dni() + "' where tlf='" + staff.get_tlf() + "' where email='" + staff.get_email() + "' where id_trabajador='" + "'";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
@@ -90,7 +90,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                listaStaff.add(new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"), rs.getString("id_trabajador")));
+                listaStaff.add(new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email")));
             }
             return listaStaff;
         }catch (SQLException e){
@@ -107,7 +107,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
-            return new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"), rs.getString("id_trabajador"));
+            return new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"));
 
         }catch (SQLException e){
             throw new RuntimeException(e);
