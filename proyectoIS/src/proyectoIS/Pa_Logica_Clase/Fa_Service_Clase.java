@@ -27,7 +27,7 @@ public class Fa_Service_Clase implements Interface_Fa_Service_Clase{
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Profesor p, Date fecha) {
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha) {
         return interfaceServiceClase.busquedaClase(a, p, fecha);
     }
 

@@ -11,6 +11,6 @@ public interface Interface_Fa_Service_Clase {
     public boolean altaClase(Clase clase);
     public boolean bajaClase(String id); //TODO: PARAMETROS
     public boolean modificarClase(Clase clase);
-    public List<Clase> busquedaClase(Alumno a, Profesor p, Date fecha); //TODO: PARAMETROS
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha); //TODO: PARAMETROS
     public Clase consultaClase(String id); //TODO: PARAMETROS
 }

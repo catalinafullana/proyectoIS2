@@ -15,7 +15,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
 
         if(comprobarDatos(clase)){
-            faDAOClase.altaClase(clase);
+            return faDAOClase.altaClase(clase);
         }
 
         return false;
@@ -23,6 +23,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public boolean bajaClase(String id) {
+        // TODO: NECESITO UNA FUNCION DE EXISTE CLASE
         return false;
     }
 
@@ -32,8 +33,11 @@ public class Service_Clase implements Interface_Service_Clase{
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Profesor p, Date fecha) {
-        return null;
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha) {
+        Fa_DAO_Clase faDaoClase = new Fa_DAO_Clase();
+
+        return faDaoClase.busquedaClase(a, p, fecha);
+
     }
 
     @Override
@@ -43,6 +47,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
     private boolean comprobarDatos(Clase clase){
         Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+
         String dni_alumno = clase.get_alumno().get_dni();
         String dni_profesor = clase.get_profesor().get_dni();
         String matricula = clase.get_vehiculo().get_matricula();
