@@ -67,4 +67,9 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     public boolean disponibleVehiculo(String matricula, String fecha, String hora) {
         return interfaceDaoClaseImp.disponibleVehiculo(matricula, fecha, hora);
     }
+
+    @Override
+    public boolean existeClase(String id) {
+        return interfaceDaoClaseImp.existeClase(id);
+    }
 }

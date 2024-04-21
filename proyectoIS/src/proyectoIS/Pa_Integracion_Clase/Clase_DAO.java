@@ -275,6 +275,25 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
         }
     }
 
+    @Override
+    public boolean existeClase(String id) {
+        String sql = "select * from Tabla_clases where id_clase ='" + id + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            if(rs.getRow() > 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
     // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
     private TipoCarnet getCarnet(String s) {
@@ -301,31 +320,6 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
         }
         return p;
     }
-
-
-    public static void main(String[] args) throws Exception{
-        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
-        Connection con = Conexion.obtenerConexion();
-        Clase_DAO d = new Clase_DAO();
-        Vehiculo_DAO v = new Vehiculo_DAO();
-        /*
-        d.altaClase(new Clase(TipoCarnet.A1,"16/02/2024",new Profesor("Manuel", "Fernandez", "Dominguez", "0000000", "5667744", "ajsbndasda",
-                Preferencia_clase.MANYANA), new Alumno("Rodrigo", "Martin", "Gonzalez", "111111", "6677665", "bbbbbbbb",
-                Preferencia_clase.MANYANA), "16:00",v.consulta("21"), "1"));
-
-         */
-        if(d.disponibleAlumno("111111", "16/02/2024", "17:00")){
-            System.out.println("Dispo");
-        }else{
-            System.out.println("No Dispo");
-
-        }
-
-        Clase c = d.consultaClase("1");
-        System.out.println(c.get_id_clase() + " " + c.get_hora() + " " + c.get_fecha() + " " + c.get_alumno().get_dni() + " " + c.get_profesor().get_dni() + " " + c.get_vehiculo().get_matricula() + " " + c.get_tipo_carnet());
-
-    }
-
 
 }
 

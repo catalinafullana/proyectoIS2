@@ -13,22 +13,29 @@ public class Service_Clase implements Interface_Service_Clase{
     public boolean altaClase(Clase clase) {
         Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
 
-
         if(comprobarDatos(clase)){
             return faDAOClase.altaClase(clase);
         }
-
         return false;
     }
 
     @Override
     public boolean bajaClase(String id) {
-        // TODO: NECESITO UNA FUNCION DE EXISTE CLASE
+        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+
+        if(faDAOClase.existeClase(id)){
+            return faDAOClase.bajaClase(id);
+        }
         return false;
     }
 
     @Override
     public boolean modificarClase(Clase clase) {
+        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+
+        if(faDAOClase.existeClase(clase.get_id_clase())){
+            return faDAOClase.modificarClase(clase);
+        }
         return false;
     }
 
@@ -42,9 +49,15 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public Clase consultaClase(String id) {
+        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+
+        if(faDAOClase.existeClase(id)){
+            return faDAOClase.consultaClase(id);
+        }
         return null;
     }
 
+    // FUNCION PARA COMPROBAR EXISTENCIA Y DISPONIBILIDAD DEL ALUMNO, PROFESOR Y COCHE
     private boolean comprobarDatos(Clase clase){
         Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
 

@@ -10,14 +10,15 @@ import java.util.List;
 
 public interface Interface_Fa_DAO_Clase_Imp {
     public boolean altaClase(Clase clase);
-    public boolean bajaClase(String id); //TODO: PARAMETROS
+    public boolean bajaClase(String id);
     public boolean modificarClase(Clase clase);
-    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha); //TODO: PARAMETROS
-    public Clase consultaClase(String id); //TODO: PARAMETROS
+    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha);
+    public Clase consultaClase(String id);
     public boolean existeAlumno(String dni);
     public boolean disponibleAlumno(String dni, String fecha, String hora);
     public boolean existeProfesor(String dni);
     public boolean disponibleProfesor(String dni, String fecha, String hora);
     public boolean existeVehiculo(String matricula);
     public boolean disponibleVehiculo(String matricula, String fecha, String hora);
+    public boolean existeClase(String id); // TODO: COMPROBAR QUE PUEDO HACER ESTO
 }
