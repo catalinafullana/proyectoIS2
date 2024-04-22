@@ -11,7 +11,7 @@ public class Service_Alumno implements Interface_Service_Alumno{
     public boolean altaAlumno(Alumno alumno) {
         Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
 
-        if(comprobarDatos(alumno)){
+        if(!faDaoAlumno.existeAlumno(alumno.get_dni())){
             return faDaoAlumno.altaAlumno(alumno);
         }
         return false;
@@ -54,10 +54,4 @@ public class Service_Alumno implements Interface_Service_Alumno{
         return null;
     }
 
-
-    //TODO: FUNCION COMPROBAR DATOS
-    private boolean comprobarDatos(Alumno alumno) {
-
-        return false;
-    }
 }

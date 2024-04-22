@@ -67,7 +67,8 @@ public class Service_Clase implements Interface_Service_Clase{
         String fecha = clase.get_fecha();
         String hora = clase.get_hora();
 
-        return faDAOClase.existeAlumno(dni_alumno) && faDAOClase.existeProfesor(dni_profesor) && faDAOClase.existeVehiculo(matricula) && faDAOClase.disponibleAlumno(dni_alumno, fecha, hora) &&
+        return faDAOClase.existeAlumno(dni_alumno) && faDAOClase.existeProfesor(dni_profesor) &&
+                faDAOClase.existeVehiculo(matricula) && faDAOClase.disponibleAlumno(dni_alumno, fecha, hora) &&
                 faDAOClase.disponibleProfesor(dni_profesor, fecha, hora) && faDAOClase.disponibleVehiculo(matricula, fecha, hora);
     }
 
