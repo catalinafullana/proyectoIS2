@@ -1,6 +1,9 @@
 package proyectoIS.Pa_Integracion_Staff;
 
 import proyectoIS.Conexion;
+import proyectoIS.misc.Preferencia_clase;
+import proyectoIS.misc.TipoCarnet;
+import proyectoIS.modelo_de_dominio.Profesor;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import java.sql.*;
@@ -12,7 +15,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
     @Override
     public boolean altaStaff(Staff staff) {
-        String sql = "insert into Tabla_staff (nombre, apellido1, apellido2, dni, tlf, email, idTrabajador)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "','" +  "')";
+        String sql = "insert into Tabla_staff (nombre, apellido1, apellido2, dni, tlf, email)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "','" +  "')";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
@@ -90,7 +93,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                listaStaff.add(new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email")));
+                listaStaff.add(new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"), getPrefClase(rs.getString("horario"))));
             }
             return listaStaff;
         }catch (SQLException e){
@@ -107,7 +110,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
-            return new Staff(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"));
+            return new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"),getPrefClase(rs.getString("horario")));
 
         }catch (SQLException e){
             throw new RuntimeException(e);
@@ -132,6 +135,17 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+    private Preferencia_clase getPrefClase(String s){
+        Preferencia_clase p = null;
+
+        switch (s){
+            case "MAÑANA" -> p = Preferencia_clase.MANYANA;
+            case "TARDE" -> p = Preferencia_clase.TARDE;
+            case "AMBOS" -> p = Preferencia_clase.AMBOS;
+        }
+        return p;
     }
 
 }
