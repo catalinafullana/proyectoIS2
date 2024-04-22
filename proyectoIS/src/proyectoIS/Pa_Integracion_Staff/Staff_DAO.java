@@ -15,7 +15,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
     @Override
     public boolean altaStaff(Staff staff) {
-        String sql = "insert into Tabla_staff (nombre, apellido1, apellido2, dni, tlf, email)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "','" +  "')";
+        String sql = "insert into Tabla_staff (nombre, apellido1, apellido2, dni, tlf, email, horario)" +  "values ('" + staff.get_nombre() + "','" + staff.get_apellido1() + "','" + staff.get_apellido2() + "','" + staff.get_dni() + "','" + staff.get_tlf() + "','" + staff.get_email() + "')";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);

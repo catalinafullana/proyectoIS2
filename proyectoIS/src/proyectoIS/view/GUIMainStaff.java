@@ -2,9 +2,12 @@ package proyectoIS.view;
 
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
+import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUIMainStaff extends JPanel implements StaffObserver{
 
@@ -31,10 +34,16 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         JPanel panelPrincipal = new JPanel();
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
-        add(panelPrincipal);
 
-        StaffModelTable model = new StaffModelTable();
+        ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+
+        StaffModelTable model = new StaffModelTable(arrayStaff);
         JTable staffs = new JTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(staffs);
+        panelPrincipal.add(scrollPane);
+
+        add(panelPrincipal);
         staffs.setVisible(true);
     }
 

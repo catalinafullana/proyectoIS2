@@ -12,10 +12,15 @@ import java.util.List;
 public class StaffModelTable extends AbstractTableModel {
 
     String[] _headers = {"Nombre", "Apellido 1", "Apellido 2", "DNI", "Teléfono", "Email", "Horario"};
-    List<Profesor> staffs;
+    List<Staff> staffs;
 
-    public StaffModelTable() {
-        staffs = new ArrayList<Profesor>();
+    public StaffModelTable(ArrayList<Staff> arr) {
+        staffs = arr;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return _headers[column];
     }
 
     @Override
@@ -31,29 +36,32 @@ public class StaffModelTable extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object ret = null;
-        Profesor profesor = staffs.get(rowIndex);
+        //Profesor profesor = staffs.get(rowIndex);
+        Staff staff = staffs.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                ret = profesor.get_nombre();
+                ret = staff.get_nombre();
                 break;
             case 1:
-                ret = profesor.get_apellido1();
+                ret = staff.get_apellido1();
                 break;
             case 2:
-                ret = profesor.get_apellido2();
+                ret = staff.get_apellido2();
                 break;
             case 3:
-                ret = profesor.get_dni();
+                ret = staff.get_dni();
                 break;
             case 4:
-                ret = profesor.get_tlf();
+                ret = staff.get_tlf();
                 break;
             case 5:
-                ret = profesor.get_email();
-                break;
-            case 6:
-                ret = profesor.get_preferencia_horario();
+                ret = staff.get_email();
+                //break;
+            //case 6:
+                //ret = staff.get_preferencia_horario();
         }
+        fireTableDataChanged();
+        fireTableStructureChanged();
         return ret;
     }
 }
