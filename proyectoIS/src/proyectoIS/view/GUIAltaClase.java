@@ -13,6 +13,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 public class GUIAltaClase extends JPanel implements ClaseObserver {
 
@@ -105,9 +106,13 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
          */
         _anyadir = new JButton("Añadir");
-        String[] s = new String[]{_vehiculo_clase_comboBox.getSelectedItem().toString()};
 
-        Vehiculo v = controladorVehiculo.busqueda(s[0], "", null).get(0);
+        String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
+        Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).get(0);
+
+        String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
+        Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
+
         _anyadir.addActionListener(e->{
             //controladorClase.altaClase(new Clase());
         });
