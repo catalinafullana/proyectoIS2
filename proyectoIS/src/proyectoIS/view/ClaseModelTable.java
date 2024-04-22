@@ -9,11 +9,16 @@ import java.util.List;
 
 public class ClaseModelTable extends AbstractTableModel {
 
-    String[] _headers = {"Alumno", "Profesor", "Fecha"};
+    String[] _headers = {"ID Clase", "Alumno", "Profesor", "Vehiculo", "Fecha", "Hora"};
     List<Clase> clases;
 
-    public ClaseModelTable() {
-        clases = new ArrayList<Clase>();
+    public ClaseModelTable(ArrayList<Clase> arr) {
+        clases = arr;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return _headers[column];
     }
 
     @Override
@@ -32,14 +37,27 @@ public class ClaseModelTable extends AbstractTableModel {
         Clase clase = clases.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                ret = clase.get_alumno();
+                ret = clase.get_id_clase();
                 break;
             case 1:
-                ret = clase.get_profesor();
+                ret = clase.get_alumno().get_nombre();
                 break;
             case 2:
+                ret = clase.get_profesor().get_nombre();
+                break;
+            case 3:
+                ret = clase.get_vehiculo().get_matricula();
+                break;
+            case 4:
                 ret = clase.get_fecha();
+                break;
+            case 5:
+                ret = clase.get_hora();
+                break;
         }
+
+        fireTableDataChanged();
+        fireTableStructureChanged();
         return ret;
     }
 }

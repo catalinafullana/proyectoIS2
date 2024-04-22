@@ -13,6 +13,10 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
 
     private Interface_DAO_Clase_Imp interfaceDaoClaseImp;
 
+    public Fa_DAO_Clase(){
+        this.interfaceDaoClaseImp = new Clase_DAO();
+    }
+
     @Override
     public boolean altaClase(Clase clase) {
         return interfaceDaoClaseImp.altaClase(clase);

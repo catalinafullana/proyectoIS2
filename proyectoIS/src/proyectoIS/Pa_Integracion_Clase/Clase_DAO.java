@@ -104,22 +104,24 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
                 String sql2 = "select * from Tabla_alumnos where dni='" + rs.getString("dni_alumno") + "'";
                 Statement s2 = con.createStatement();
                 ResultSet rs2 = s2.executeQuery(sql2);
-                rs.next();
+                rs2.next();
 
                 String sql3 = "select * from Tabla_staff where dni='" + rs.getString("dni_profesor") + "'";
                 Statement s3 = con.createStatement();
                 ResultSet rs3 = s3.executeQuery(sql3);
+                rs3.next();
 
-                String sql4 = "select * from Tabla_vehiculos where matricula='" + rs.getString("matricula") + "'";
+                String sql4 = "select * from Tabla_vehiculos where matricula='" + rs.getString("matricula_vehiculo") + "'";
                 Statement s4 = con.createStatement();
                 ResultSet rs4 = s4.executeQuery(sql4);
+                rs4.next();
 
 
 
                 Alumno a2 = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
                         rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
                 Profesor p2 = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
-                        rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("tipo_carnet"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
+                        rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("horario"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
                 Vehiculo v2 = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
 
                 listaClase.add(new Clase(r,rs.getString("fecha"), p2, a2, rs.getString("hora"), v2, rs.getString("id_clase")));
@@ -319,6 +321,21 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             case "AMBOS" -> p = Preferencia_clase.AMBOS;
         }
         return p;
+    }
+     public static void main(String[] args) throws Exception{
+        String sql = "select modelo from Tabla_vehiculos where matricula='2'";
+        Connection con = Conexion.obtenerConexion();
+        Clase_DAO d = new Clase_DAO();
+
+        Alumno a = new Alumno("s", "d", "d", "11111111B", "3333", "ddddd", Preferencia_clase.MANYANA);
+        Profesor p = new Profesor("d", "c", "c", "11111111A", "44444","ggggg", Preferencia_clase.MANYANA);
+        List<Clase> lista = d.busquedaClase(null, null, "");
+        for (Clase clase : lista) {
+            System.out.println("" + clase.get_id_clase() + clase.get_alumno().get_dni() + clase.get_profesor().get_dni() + clase.get_vehiculo().get_matricula() + clase.get_tipo_carnet().toString() + clase.get_fecha() + clase.get_hora());
+        }
+
+
+
     }
 
 }

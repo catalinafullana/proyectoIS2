@@ -11,6 +11,10 @@ public class Fa_Service_Clase implements Interface_Fa_Service_Clase{
 
     private Interface_Service_Clase interfaceServiceClase;
 
+    public Fa_Service_Clase(){
+        this.interfaceServiceClase = new Service_Clase();
+    }
+
     @Override
     public boolean altaClase(Clase clase) {
         return interfaceServiceClase.altaClase(clase);

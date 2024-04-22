@@ -1,9 +1,11 @@
 package proyectoIS.view;
 
 import proyectoIS.controller.ControladorClase;
+import proyectoIS.modelo_de_dominio.Clase;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUIMainClase extends JPanel implements ClaseObserver{
 
@@ -32,8 +34,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         createHeader(panelPrincipal);
         add(panelPrincipal);
 
-        ClaseModelTable model = new ClaseModelTable();
+        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+
+        ClaseModelTable model = new ClaseModelTable(arrayClases);
         JTable clases = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(clases);
+        panelPrincipal.add(scrollPane);
+
         clases.setVisible(true);
     }
 
@@ -116,6 +123,10 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
         headerPanel.add(buttonPanel);
+
+
+
+
     }
 
     private JButton createButton(String toolTipText, String iconFileNamePath, Dimension iconSize){

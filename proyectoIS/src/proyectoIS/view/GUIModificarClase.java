@@ -5,16 +5,11 @@ import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Staff;
-import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
-public class GUIAltaClase extends JPanel implements ClaseObserver {
+public class GUIModificarClase extends JPanel implements ClaseObserver {
 
     ControladorClase controladorClase;
     MainWindow mainWindow;
@@ -25,11 +20,11 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     JTextPane _fecha_clase_text_field;
     JTextPane _hora_clase_text_field;
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
-    //JButton _guardar;
-    JButton _anyadir;
-    //JButton _borrar;
+    JButton _guardar;
+    //JButton _anyadir;
+    JButton _borrar;
 
-    public GUIAltaClase(ControladorClase c, MainWindow mainWindow, GUIMainClase guiMainClase) {
+    public GUIModificarClase(ControladorClase c, MainWindow mainWindow, GUIMainClase guiMainClase){
         this.controladorClase = c;
         this.mainWindow = mainWindow;
         this.guiMainClase = guiMainClase;
@@ -40,6 +35,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         guiMainClase.toolbar(this);
 
         JPanel panelPrincipal = new JPanel();
+
         panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
         JPanel pAux = new JPanel();
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
@@ -97,7 +93,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
-        /*
+
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e->{
 
@@ -105,20 +101,13 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         });
         panelOpciones.add(_guardar);
 
-         */
-        _anyadir = new JButton("Añadir");
-        _anyadir.addActionListener(e->{
-            //controladorClase.altaClase();
-        });
-        panelOpciones.add(_anyadir);
-        /*
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
 
         });
         panelOpciones.add(_borrar);
 
-         */
+
 
         pAux.add(panelOpciones);
         panelPrincipal.add(pAux);
@@ -154,4 +143,5 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         }
         return s;
     }
+
 }
