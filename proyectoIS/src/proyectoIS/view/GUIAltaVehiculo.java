@@ -40,7 +40,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
         JPanel pAux = new JPanel();
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
         _matricula_vehiculo_text_field = new JTextPane();
@@ -61,24 +61,30 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
 
+
+/*
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
             controladorVehiculo.modificar(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString()) ));
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_guardar);
+        */
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
             controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_anyadir);
+        /*
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText());
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_borrar);
+
+         */
 
         pAux.add(panelOpciones);
         panelPrincipal.add(pAux);
