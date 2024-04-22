@@ -12,6 +12,8 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     ControladorAlumno controladorAlumno;
     MainWindow mainWindow;
     GUIMainAlumno guiMainAlumno;
+    GUIMainVehiculo guiMainVehiculo;
+    ControladorVehiculo controladorVehiculo;
     JTextPane _matricula_vehiculo_text_field;
     JComboBox _tipo_vehiculo;
     JTextPane _modelo_vehiculo_text_field;
