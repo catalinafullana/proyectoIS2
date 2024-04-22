@@ -1,6 +1,5 @@
 package proyectoIS.controller;
 
-import proyectoIS.Pa_Integracion_Vehiculo.Fa_DAO_Vehiculo;
 import proyectoIS.Pa_Logica_vehiculo.Fa_Service_Vehiculo;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Vehiculo;
@@ -22,15 +21,15 @@ public class ControladorVehiculo {
     }
 
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
-        return faServiceVehiculo.busqueda(matricula, modelo, tipo_vehiculo);
+        return faServiceVehiculo.busquedaVehiculo(matricula, modelo, tipo_vehiculo);
     }
 
     public Vehiculo consulta(String matricula) {
-        return faServiceVehiculo.consulta(matricula);
+        return faServiceVehiculo.consultaVehiculo(matricula);
     }
 
     public boolean modificar(Vehiculo vehiculo) {
-        return faServiceVehiculo.modificar(vehiculo);
+        return faServiceVehiculo.modificarVehiculo(vehiculo);
     }
 
 

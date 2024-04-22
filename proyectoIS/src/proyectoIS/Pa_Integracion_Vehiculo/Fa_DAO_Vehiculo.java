@@ -14,18 +14,18 @@ public class Fa_DAO_Vehiculo implements Interface_Fa_DAO_Vehiculo_Imp {
     }
 
     @Override
-    public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
-        return iDAOVehiculoImp.busqueda(matricula, modelo, tipo_vehiculo);
+    public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
+        return iDAOVehiculoImp.busquedaVehiculo(matricula, modelo, tipo_vehiculo);
     }
 
     @Override
-    public Vehiculo consulta(String matricula) {
-        return iDAOVehiculoImp.consulta(matricula);
+    public Vehiculo consultaVehiculo(String matricula) {
+        return iDAOVehiculoImp.consultaVehiculo(matricula);
     }
 
     @Override
-    public boolean modificar(Vehiculo vehiculo) {
-        return iDAOVehiculoImp.modificar(vehiculo);
+    public boolean modificarVehiculo(Vehiculo vehiculo) {
+        return iDAOVehiculoImp.modificarVehiculo(vehiculo);
     }
 
     @Override

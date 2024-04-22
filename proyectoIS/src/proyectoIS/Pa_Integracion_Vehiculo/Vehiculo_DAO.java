@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
     @Override
-    public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) { // TODO: CAMBIAR EL TIPO VEHICULO POR STRING QUE DEBERIA IR EN LA LOGICA
+    public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) { // TODO: CAMBIAR EL TIPO VEHICULO POR STRING QUE DEBERIA IR EN LA LOGICA
 
         List<Vehiculo> listaVehiculos = new ArrayList<>();
         String sql = "";
@@ -60,12 +60,12 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             case "B" -> r = TipoCarnet.B;
             case "C" -> r = TipoCarnet.C;
             case "D" -> r = TipoCarnet.D;
-
         }
         return r;
     }
 
     // FUNCION AUXILIAR QUE DEVUELVE STRING A PARTIR DE ENUM
+    //TODO: ESTO CAMBIAR A USAR UN .toString()
     private String getString(TipoCarnet t){
         String s = "";
         switch (t){
@@ -78,12 +78,13 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             case D -> s = "D";
             default -> s = "";
         }
+
         return s;
     }
 
 
         @Override
-    public Vehiculo consulta(String matricula) {
+    public Vehiculo consultaVehiculo(String matricula) {
 
         String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
         try{
@@ -101,8 +102,9 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
 
     @Override
-    public boolean modificar(Vehiculo vehiculo) {
-        String sql = "update Tabla_vehiculos set modelo ='" + vehiculo.get_modelo() + "', tipo_vehiculo ='" + vehiculo.get_tipo_vehiculo() + "' where matricula='" + vehiculo.get_matricula() + "'";
+    public boolean modificarVehiculo(Vehiculo vehiculo) {
+        String sql = "update Tabla_vehiculos set modelo ='" + vehiculo.get_modelo() + "', tipo_vehiculo ='" +
+                vehiculo.get_tipo_vehiculo() + "' where matricula='" + vehiculo.get_matricula() + "'";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);
