@@ -40,13 +40,13 @@ public class ClaseModelTable extends AbstractTableModel {
                 ret = clase.get_id_clase();
                 break;
             case 1:
-                ret = clase.get_alumno().get_nombre();
+                ret = clase.get_alumno().get_nombre() + clase.get_alumno().get_apellido1();
                 break;
             case 2:
-                ret = clase.get_profesor().get_nombre();
+                ret = clase.get_profesor().get_nombre() + clase.get_profesor().get_apellido1();
                 break;
             case 3:
-                ret = clase.get_vehiculo().get_matricula();
+                ret = clase.get_vehiculo().get_matricula() + clase.get_vehiculo().get_modelo();
                 break;
             case 4:
                 ret = clase.get_fecha();
