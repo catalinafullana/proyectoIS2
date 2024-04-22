@@ -5,10 +5,7 @@ import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Staff;
-import proyectoIS.modelo_de_dominio.Vehiculo;
+import proyectoIS.modelo_de_dominio.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +74,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Vehiculo de tipo: " + getString(vehiculo.get_tipo_vehiculo()));
+            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Vehiculo de tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
 
@@ -107,14 +104,19 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
          */
         _anyadir = new JButton("Añadir");
 
-        String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
-        Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).get(0);
-
-        String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
-        Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
 
         _anyadir.addActionListener(e->{
-            //controladorClase.altaClase(new Clase());
+            String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
+            Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).get(0);
+
+            String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
+            Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
+
+            String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
+            Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
+
+            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), (Profesor) p, a, _hora_clase_text_field.getText(), v, ""));
+            mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_anyadir);
         /*
@@ -146,18 +148,5 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         panel.add(combo);
     }
 
-    private String getString(TipoCarnet t){
-        String s = "";
-        switch (t){
-            case A -> s = "A";
-            case A1 -> s = "A1";
-            case A2 -> s = "A2";
-            case AM -> s = "AM";
-            case B -> s = "B";
-            case C -> s = "C";
-            case D -> s = "D";
-            default -> s = "";
-        }
-        return s;
-    }
+
 }

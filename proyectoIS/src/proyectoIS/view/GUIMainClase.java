@@ -16,6 +16,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     JTextField search_alumno;
     JTextField search_profesor;
     JTextField search_fecha;
+    JTable _clases;
 
     GUIAltaClase guiAltaClase;
     MainWindow mainWindow;
@@ -37,15 +38,15 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
 
         ClaseModelTable model = new ClaseModelTable(arrayClases);
+        _clases = new JTable(model);
 
-        JTable clases = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(_clases);
 
-        JScrollPane scrollPane = new JScrollPane(clases);
         panelPrincipal.add(scrollPane);
 
         add(panelPrincipal);
 
-        clases.setVisible(true);
+        _clases.setVisible(true);
     }
 
     protected void toolbar(JPanel p){
@@ -146,6 +147,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         s.setPreferredSize(dim);
         p.add(s);
     }
+
 
 
 }
