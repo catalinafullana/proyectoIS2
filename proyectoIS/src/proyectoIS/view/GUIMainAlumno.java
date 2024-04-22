@@ -13,18 +13,19 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     //JButton eraseVehicle;
     JButton addVehicle;
-    JTextField search_matricula;
-    JTextField search_modelo;
-    JTextField search_tipo;
+    JTextField search_nombre;
+    JTextField search_apellido1;
 
-    //GUIAltaVehiculo guiAltaVehiculo;
+    JTextField search_apellido2;
+
+    GUIAltaAlumno guiAltaAlumno;
     MainWindow mainWindow;
 
 
     public GUIMainAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow) {
         this.controladorAlumno = controladorAlumno;
         this.mainWindow = mainWindow;
-        //this.guiAltaVehiculo = new GUIAltaVehiculo(this.controladorVehiculo, this.mainWindow, this);
+        //this.guiAltaAlumno = new GUIAltaAlumno(this.controladorAlumno, this.mainWindow, this);
         init_GUI();
     }
 
@@ -104,26 +105,26 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
 
-        search_matricula = new JTextField("Matrícula");
-        search_matricula.setPreferredSize(new Dimension(100, 30));
-        search_matricula.addActionListener(e-> {
+        search_nombre = new JTextField("Nombre");
+        search_nombre.setPreferredSize(new Dimension(100, 30));
+        search_nombre.addActionListener(e-> {
             //actualizar tabla en funcion de los contenidos del search
         });
-        buttonPanel.add(search_matricula);
+        buttonPanel.add(search_nombre);
 
-        search_modelo = new JTextField("Modelo");
-        search_modelo.setPreferredSize(new Dimension(100, 30));
-        search_modelo.addActionListener(e-> {
+        search_apellido1 = new JTextField("Apellido 1");
+        search_apellido1.setPreferredSize(new Dimension(100, 30));
+        search_apellido1.addActionListener(e-> {
             //actualizar tabla en funcion de los contenidos del search
         });
-        buttonPanel.add(search_modelo);
+        buttonPanel.add(search_apellido1);
 
-        search_tipo = new JTextField("Tipo");
-        search_tipo.setPreferredSize(new Dimension(100, 30));
-        search_tipo.addActionListener(e-> {
+        search_apellido2 = new JTextField("Apellido 2");
+        search_apellido2.setPreferredSize(new Dimension(100, 30));
+        search_apellido2.addActionListener(e-> {
             //actualizar tabla en funcion de los contenidos del search
         });
-        buttonPanel.add(search_tipo);
+        buttonPanel.add(search_apellido2);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
     /*
