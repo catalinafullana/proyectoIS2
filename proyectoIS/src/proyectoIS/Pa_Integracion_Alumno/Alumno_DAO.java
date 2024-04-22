@@ -13,7 +13,7 @@ import java.util.List;
 public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
     @Override
     public boolean altaAlumno(Alumno alumno) {
-        String sql = "insert into Tabla_alumnos (nombre, apellido1, apellido2, dni, tlf, email, preferencia_clase)" + "values ('" + alumno.get_nombre() + "','" + alumno.get_apellido1() + "','" + alumno.get_apellido2() + "','" + alumno.get_dni() + "','" + alumno.get_tlf() + "','" + alumno.get_email() + "','" + alumno.getPreferencia_clase() + "')";
+        String sql = "insert into Tabla_alumnos (nombre, apellido1, apellido2, dni, tlf, email, preferencia_clase)" + " values ('" + alumno.get_nombre() + "','" + alumno.get_apellido1() + "','" + alumno.get_apellido2() + "','" + alumno.get_dni() + "','" + alumno.get_tlf() + "','" + alumno.get_email() + "','" + alumno.getPreferencia_clase() + "')";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);

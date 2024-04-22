@@ -79,9 +79,14 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
             //controladorAlumno.altaAlumno(new Alumno(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
-            controladorAlumno.altaAlumno(new Alumno(_nombre_alumno_text_field.getText(), _apellido1_alumno_text_field.getText(),
-                    _apellido2_alumno_text_field.getText(), _dni_alumno_text_field.getText(), _telefono_alumno_text_field.getText(),
-                    _email_alumno_text_field.getText(), Preferencia_clase.cast(_preferencia_clase_combobox.getSelectedItem().toString())));
+            String nombre=_nombre_alumno_text_field.getText();
+            String apellido1= _apellido1_alumno_text_field.getText();
+            String apellido2= _apellido2_alumno_text_field.getText();
+            String dni= _dni_alumno_text_field.getText();
+            String telefono= _telefono_alumno_text_field.getText();
+            String email= _email_alumno_text_field.getText();
+            Preferencia_clase preferencia_clase = Preferencia_clase.cast(_preferencia_clase_combobox.getSelectedItem().toString());
+            controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni,telefono, email, preferencia_clase));
             mainWindow.changeJPanel(this, guiMainAlumno);
         });
         panelOpciones.add(_anyadir);
@@ -105,7 +110,4 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         panel.add(combo);
     }
 
-    public Preferencia_clase getPreferenciaClase(){
-        return null;
-    }
 }
