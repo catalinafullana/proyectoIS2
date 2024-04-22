@@ -81,7 +81,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             sql = "select * from Tabla_staff where apellido1='" + apellido1 + "' and apellido2='" + apellido2 + "'";
         }else if(!apellido1.isEmpty()){
             sql = "select * from Tabla_staff where apellido1='" + apellido1 + "'";
-        }else if(apellido2.isEmpty()){
+        }else if(!apellido2.isEmpty()){
             sql = "select * from Tabla_staff where apellido2='" + apellido2 + "'";
         }else{
             sql = "select * from Tabla_staff";

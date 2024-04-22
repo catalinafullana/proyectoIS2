@@ -52,36 +52,34 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         DefaultComboBoxModel<String> tipo_model_alumno = new DefaultComboBoxModel<String>();
         ControladorAlumno controladorAlumno = new ControladorAlumno();
-        /*
+
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + alumno.get_apellido1() + alumno.get_apellido2());
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
         }
 
-         */
+
 
         ControladorStaff controladorStaff = new ControladorStaff();
         DefaultComboBoxModel<String> tipo_model_staff = new DefaultComboBoxModel<String>();
-        /*
+
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + staff.get_apellido1() + staff.get_apellido2());
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
         }
-
-         */
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
         DefaultComboBoxModel<String> tipo_model_vehiculo = new DefaultComboBoxModel<String>();
-        /*
+
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + "Vehiculo de tipo: " + getString(vehiculo.get_tipo_vehiculo()));
+            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Vehiculo de tipo: " + getString(vehiculo.get_tipo_vehiculo()));
         }
 
-         */
+
 
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
@@ -107,8 +105,11 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
          */
         _anyadir = new JButton("Añadir");
+        String[] s = new String[]{_vehiculo_clase_comboBox.getSelectedItem().toString()};
+
+        Vehiculo v = controladorVehiculo.busqueda(s[0], "", null).get(0);
         _anyadir.addActionListener(e->{
-            //controladorClase.altaClase();
+            //controladorClase.altaClase(new Clase());
         });
         panelOpciones.add(_anyadir);
         /*

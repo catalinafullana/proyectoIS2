@@ -7,6 +7,10 @@ import java.util.List;
 public class Fa_DAO_Staff implements Interface_Fa_DAO_Staff_Imp {
     private Interface_DAO_Staff_Imp iDAOStaffImp;
 
+    public Fa_DAO_Staff(){
+        this.iDAOStaffImp = new Staff_DAO();
+    }
+
     @Override
     public List<Staff> busquedaStaff(String nombre, String apellido1, String apellido2) {
         return iDAOStaffImp.busquedaStaff(nombre, apellido1, apellido2);

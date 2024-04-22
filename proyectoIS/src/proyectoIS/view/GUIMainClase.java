@@ -4,6 +4,7 @@ import proyectoIS.controller.ControladorClase;
 import proyectoIS.modelo_de_dominio.Clase;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -32,14 +33,17 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         JPanel panelPrincipal = new JPanel();
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
-        add(panelPrincipal);
 
         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
 
         ClaseModelTable model = new ClaseModelTable(arrayClases);
+
         JTable clases = new JTable(model);
+
         JScrollPane scrollPane = new JScrollPane(clases);
         panelPrincipal.add(scrollPane);
+
+        add(panelPrincipal);
 
         clases.setVisible(true);
     }
