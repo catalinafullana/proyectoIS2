@@ -29,7 +29,7 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     }
 
     private void initGUI() {
-        guiMainVehiculo.toolbar(this);
+        guiMainAlumno.toolbar(this);
 
         //setBackground(Color.decode("#D0CCD0"));
         //setLayout(new BorderLayout());

@@ -92,7 +92,9 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
         } // si solo esta el dni
         else if (!dni.isEmpty()) {
             sql = "select * from Tabla_alumnos where dni ='" + dni + "'";
-
+        } // si esta todo vacio
+        else{
+            sql= "select * from Tabla_alumnos";
         }
 
 

@@ -14,7 +14,7 @@ public class ControladorAlumno {
     private Fa_Service_Alumno faServiceAlumno;
 
     public  ControladorAlumno(){
-        //this.faServiceAlumno = new Fa_Service_Alumno();
+        this.faServiceAlumno = new Fa_Service_Alumno();
     }
 
     public boolean altaAlumno(Alumno alumno){
@@ -27,14 +27,14 @@ public class ControladorAlumno {
         return false;
     }
 
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2){
-        //return this.faServiceAlumno.busquedaAlumno(nombre, apellido1, apellido2);
-        return null;
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni){
+        return this.faServiceAlumno.busquedaAlumno(nombre, apellido1, dni);
+        //return null;
     }
 
-    public Clase consultaAlumno(String dni){
-        //return this.faServiceAlumno.consultaAlumno(dni);
-        return null;
+    public Alumno consultaAlumno(String dni){
+        return this.faServiceAlumno.consultaAlumno(dni);
+        //return null;
     }
 
     public boolean modificarAlumno(String dni){

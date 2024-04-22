@@ -1,5 +1,6 @@
 package proyectoIS.Pa_Integracion_Alumno;
 
+import proyectoIS.Pa_Integracion_Clase.Clase_DAO;
 import proyectoIS.modelo_de_dominio.Alumno;
 
 import java.util.List;
@@ -7,6 +8,10 @@ import java.util.List;
 public class Fa_DAO_Alumno implements Interface_Fa_DAO_Alumno_Imp{
 
     private Interface_DAO_Alumno_Imp interface_dao_alumno_imp;
+
+    public Fa_DAO_Alumno(){
+        interface_dao_alumno_imp= new Alumno_DAO();
+    }
     @Override
     public boolean altaAlumno(Alumno alumno) {
         return interface_dao_alumno_imp.altaAlumno(alumno);

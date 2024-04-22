@@ -9,6 +9,9 @@ import java.util.List;
 public class Fa_Service_Alumno implements Interface_Fa_Service_Alumno{
 
     private Interface_Service_Alumno interfaceServiceAlumno;
+    public Fa_Service_Alumno(){
+        interfaceServiceAlumno= new Service_Alumno();
+    }
     @Override
     public boolean altaAlumno(Alumno alumno) {
         return interfaceServiceAlumno.altaAlumno(alumno);

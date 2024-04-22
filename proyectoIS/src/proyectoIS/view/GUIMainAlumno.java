@@ -1,10 +1,11 @@
 package proyectoIS.view;
 
 import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.modelo_de_dominio.Alumno;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
@@ -25,21 +26,29 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
     public GUIMainAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow) {
         this.controladorAlumno = controladorAlumno;
         this.mainWindow = mainWindow;
-        //this.guiAltaAlumno = new GUIAltaAlumno(this.controladorAlumno, this.mainWindow, this);
+        this.guiAltaAlumno = new GUIAltaAlumno(this.controladorAlumno, this.mainWindow, this);
         init_GUI();
     }
 
     private void init_GUI() {
         setLayout(new BorderLayout());
-        //setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
         JPanel panelPrincipal = new JPanel();
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
         add(panelPrincipal);
 
-        VehiculosModelTable model = new VehiculosModelTable();
-        JTable vehiculos = new JTable(model);
-        vehiculos.setVisible(true);
+        ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "",""));
+
+        AlumnoModelTable model = new AlumnoModelTable(arrayAlumnos);
+        JTable alumnos = new JTable(model);
+
+        JPanel panelTabla = new JPanel(new BorderLayout());
+        panelPrincipal.add(panelTabla, BorderLayout.CENTER);
+
+        panelTabla.add(new JScrollPane(alumnos), BorderLayout.CENTER);
+
+        alumnos.setVisible(true);
     }
 
     protected void toolbar(JPanel p) {
@@ -55,11 +64,9 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
             //abrir formulario crear
             mainWindow.backToMain(this);
         });
-        //toolbar.addSeparator();
+
         toolbar.add(Box.createHorizontalStrut(10));
 
-
-        //JLabel header = new JLabel("Vehículos");
         JLabel header = new JLabel("<html><font size='25' color=white> Alumnos </font></html>");
         header.setFont(new Font("Arial", Font.BOLD, 25));
         header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
@@ -69,22 +76,11 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
     }
 
     private void createHeader(JPanel p) {
-        //addSeparator(p, new Dimension(MainWindow.width, 10), JToolBar.Separator.HORIZONTAL);
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
-        //headerPanel.setMinimumSize(new Dimension(MainWindow.width, 200000));
-        //headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), 40));
+
         headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), (int)(MainWindow.height*0.1)));
 
-
-    /*
-    JLabel header = new JLabel("Vehículos");
-    header.setFont(new Font("Arial", Font.BOLD, 25));
-    header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
-
-    headerPanel.add(header);
-
-     */
         createButtonsInHeader(headerPanel);
         headerPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#274060")));
 
@@ -99,7 +95,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         addVehicle.setPreferredSize(new Dimension(40, 40));
         addVehicle.addActionListener(e-> {
             //abrir formulario crear
-            //mainWindow.changeJPanel(this, guiAltaVehiculo);
+            mainWindow.changeJPanel(this, guiAltaAlumno);
         });
         buttonPanel.add(addVehicle);
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
