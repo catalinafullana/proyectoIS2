@@ -14,8 +14,8 @@ public class Main {
 		ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
 		ControladorAlumno ctrlAlumno = new ControladorAlumno();
 		ControlStaff ctrlStaff = new ControlStaff();
-		ControladorClase ctrlClases = new ControladorClase();
-		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo));
+		ControladorClase controladorClase = new ControladorClase();
+		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo, controladorClase));
 	}
 
 }

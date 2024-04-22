@@ -1,5 +1,6 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorVehiculo;
 
 import javax.swing.*;
@@ -24,12 +25,12 @@ public class MainWindow extends JFrame {
     private GUIMainClase guiMainClase;
 
 
-    public MainWindow(ControladorVehiculo controladorVehiculo /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
+    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorClase controladorClase /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         //TODO GUI Alumno
         //TODO GUI Staff
-        //TODO GUI Clases
+        this.guiMainClase = new GUIMainClase(controladorClase, this);
 
         initGUI();
     }
