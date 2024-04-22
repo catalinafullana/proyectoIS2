@@ -13,9 +13,8 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     MainWindow mainWindow;
     GUIMainAlumno guiMainAlumno;
     JComboBox _preferencia_clase_combobox;
-    JButton _guardar;
     JButton _anyadir;
-    JButton _borrar;
+
     JTextPane _apellido1_alumno_text_field;
     JTextPane _apellido2_alumno_text_field;
     JTextPane _nombre_alumno_text_field;
@@ -34,14 +33,17 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         guiMainAlumno.toolbar(this);
 
         JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
+        panelPrincipal.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
 
-        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
+        JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
+        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.5)));
+
         JPanel pAux = new JPanel();
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
+
 
         _nombre_alumno_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_alumno_text_field);
@@ -52,30 +54,28 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         _apellido2_alumno_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Apellido 2: "), _apellido2_alumno_text_field);
 
+        _dni_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("DNI: "), _dni_alumno_text_field);
 
-        //creaCampo(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo_text_field);
-        DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();
-        for(TipoCarnet t : TipoCarnet.values()){
+        _telefono_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("Telefono: "), _telefono_alumno_text_field);
+
+        _email_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("E-mail: "), _email_alumno_text_field);
+
+
+        DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<>();
+        for(Preferencia_clase t : Preferencia_clase.values()){
             tipo_model.addElement(t.toString());
         }
         _preferencia_clase_combobox = new JComboBox(tipo_model);
-        panelDatos.add(_preferencia_clase_combobox);
-
-        //creaDesplegable(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo);
+        creaDesplegable(panelDatos, new JLabel("Preferencia clase: "), _preferencia_clase_combobox);
 
 
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
 
 
-/*
-        _guardar = new JButton("Guardar");
-        _guardar.addActionListener(e -> {
-            controladorVehiculo.modificar(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString()) ));
-            mainWindow.changeJPanel(this, guiMainVehiculo);
-        });
-        panelOpciones.add(_guardar);
-        */
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
             //controladorAlumno.altaAlumno(new Alumno(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
@@ -85,15 +85,7 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
             mainWindow.changeJPanel(this, guiMainAlumno);
         });
         panelOpciones.add(_anyadir);
-        /*
-        _borrar = new JButton("Borrar");
-        _borrar.addActionListener(e->{
-            controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText());
-            mainWindow.changeJPanel(this, guiMainVehiculo);
-        });
-        panelOpciones.add(_borrar);
 
-         */
 
         pAux.add(panelOpciones);
         panelPrincipal.add(pAux);
@@ -104,8 +96,6 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
-        //area_texto = new JTextPane();
-        //area_texto.setPreferredSize(new Dimension(100, 50));
         panel.add(label);
         panel.add(area_texto);
     }

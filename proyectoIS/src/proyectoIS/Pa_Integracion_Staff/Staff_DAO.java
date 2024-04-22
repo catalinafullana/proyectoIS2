@@ -136,16 +136,4 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             throw new RuntimeException(e);
         }
     }
-
-    private Preferencia_clase getPrefClase(String s){
-        Preferencia_clase p = null;
-
-        switch (s){
-            case "MAÑANA" -> p = Preferencia_clase.MANYANA;
-            case "TARDE" -> p = Preferencia_clase.TARDE;
-            case "AMBOS" -> p = Preferencia_clase.AMBOS;
-        }
-        return p;
-    }
-
 }

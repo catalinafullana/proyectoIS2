@@ -86,7 +86,10 @@ public class GUIAltaStaff extends JPanel implements ClaseObserver {
         panelOpciones.add(_guardar);
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-            controladorStaff.altaStaff(new Profesor(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(), _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(), _tlf_staff_text_field.getText(), _email_staff_text_field.getText(), getPreferencia(_preferencia_horario_combo.getSelectedItem().toString())));
+            controladorStaff.altaStaff(new Profesor(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
+                    _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
+                    _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
+                    Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString())));
             mainWindow.changeJPanel(this, guiMainStaff);
         });
         panelOpciones.add(_anyadir);
@@ -114,16 +117,6 @@ public class GUIAltaStaff extends JPanel implements ClaseObserver {
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
         panel.add(label);
         panel.add(combo);
-    }
-
-    private Preferencia_clase getPreferencia(String s) {
-        Preferencia_clase r = null;
-        switch (s) {
-            case "MANYANA" -> r = Preferencia_clase.MANYANA;
-            case "TARDE" -> r = Preferencia_clase.TARDE;
-            case "AMBOS" -> r = Preferencia_clase.AMBOS;
-        }
-        return r;
     }
 
 }
