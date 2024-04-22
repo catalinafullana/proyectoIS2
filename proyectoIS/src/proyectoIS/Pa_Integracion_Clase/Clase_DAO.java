@@ -17,7 +17,7 @@ import java.util.List;
 public class Clase_DAO implements Interface_DAO_Clase_Imp{
     @Override
     public boolean altaClase(Clase clase) {
-        String sql = "insert into Tabla_clases (id_clase, dni_alumno, dni_profesor, matricula_vehiculo, fecha, hora, tipo_carnet)" + "values('" + clase.get_id_clase() + "','" +
+        String sql = "insert into Tabla_clases (dni_alumno, dni_profesor, matricula_vehiculo, fecha, hora, tipo_carnet)" + "values('" +
                 clase.get_alumno().get_dni() + "','" + clase.get_profesor().get_dni() + "','" + clase.get_vehiculo().get_matricula() + "','" + clase.get_fecha() + "','" +
                 clase.get_hora() + "','" + clase.get_tipo_carnet() + "')";
         try {

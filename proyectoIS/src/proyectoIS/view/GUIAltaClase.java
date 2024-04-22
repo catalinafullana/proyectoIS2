@@ -1,6 +1,5 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControlStaff;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
@@ -42,6 +41,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
+        JPanel pAux = new JPanel();
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
@@ -52,31 +52,42 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         DefaultComboBoxModel<String> tipo_model_alumno = new DefaultComboBoxModel<String>();
         ControladorAlumno controladorAlumno = new ControladorAlumno();
-        List<Alumno> lista_alumnos = controladorAlumno.busqueda("", "", "");
+        /*
+        List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
             tipo_model_alumno.addElement(alumno.get_nombre() + alumno.get_apellido1() + alumno.get_apellido2());
         }
 
+         */
+
         ControladorStaff controladorStaff = new ControladorStaff();
         DefaultComboBoxModel<String> tipo_model_staff = new DefaultComboBoxModel<String>();
-        List<Staff> lista_staff = controladorStaff.busqueda("","","");
+        /*
+        List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
             tipo_model_staff.addElement(staff.get_nombre() + staff.get_apellido1() + staff.get_apellido2());
         }
 
+         */
+
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
         DefaultComboBoxModel<String> tipo_model_vehiculo = new DefaultComboBoxModel<String>();
+        /*
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
             tipo_model_vehiculo.addElement(vehiculo.get_matricula() + "Vehiculo de tipo: " + getString(vehiculo.get_tipo_vehiculo()));
         }
 
+         */
+
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
+        _fecha_clase_text_field = new JTextPane();
+        _hora_clase_text_field = new JTextPane();
 
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
@@ -85,15 +96,17 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         creaCampo(panelDatos, new JLabel("Hora: "), _hora_clase_text_field);
 
         panelPrincipal.add(panelDatos);
+        pAux.add(Box.createVerticalStrut(20));
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e->{
-            controladorClase.modificarClase(new Clase());
+
+            //controladorClase.modificarClase(new Clase());
         });
         panelOpciones.add(_guardar);
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-
+            //controladorClase.altaClase();
         });
         panelOpciones.add(_anyadir);
         _borrar = new JButton("Borrar");
@@ -102,8 +115,8 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         });
         panelOpciones.add(_borrar);
 
-        panelPrincipal.add(panelOpciones);
-
+        pAux.add(panelOpciones);
+        panelPrincipal.add(pAux);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
@@ -112,7 +125,6 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
-        area_texto = new JTextPane();
         //area_texto.setPreferredSize(new Dimension(100, 30));
         panel.add(label);
         panel.add(area_texto);
