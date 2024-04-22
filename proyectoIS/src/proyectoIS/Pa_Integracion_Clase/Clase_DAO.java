@@ -106,7 +106,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
                 ResultSet rs2 = s2.executeQuery(sql2);
                 rs.next();
 
-                String sql3 = "select * from Tabla_profesores where dni='" + rs.getString("dni_profesor") + "'";
+                String sql3 = "select * from Tabla_staff where dni='" + rs.getString("dni_profesor") + "'";
                 Statement s3 = con.createStatement();
                 ResultSet rs3 = s3.executeQuery(sql3);
 
@@ -149,7 +149,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             ResultSet rs2 = s2.executeQuery(sql2);
             rs2.next();
 
-            String sql3 = "select * from Tabla_profesores where dni='" + rs.getString("dni_profesor") + "'";
+            String sql3 = "select * from Tabla_staff where dni='" + rs.getString("dni_profesor") + "'";
             Statement s3 = con.createStatement();
             ResultSet rs3 = s3.executeQuery(sql3);
             rs3.next();
@@ -209,7 +209,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
     @Override
     public boolean existeProfesor(String dni) {
-        String sql = "select * from Tabla_profesores where dni ='" + dni + "'";
+        String sql = "select * from Tabla_staff where dni ='" + dni + "'";
         try{
             Connection con = Conexion.obtenerConexion();
             Statement s = con.createStatement();
