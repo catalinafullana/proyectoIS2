@@ -59,7 +59,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
 
         //JLabel header = new JLabel("Vehículos");
-        JLabel header = new JLabel("<html><font size='25' color=white> Vehículos </font></html>");
+        JLabel header = new JLabel("<html><font size='25' color=white> Alumnos </font></html>");
         header.setFont(new Font("Arial", Font.BOLD, 25));
         header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
         toolbar.add(header);
