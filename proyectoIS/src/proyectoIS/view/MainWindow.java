@@ -1,5 +1,6 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
@@ -21,15 +22,16 @@ public class MainWindow extends JFrame {
     private JPanel panelPrincipal;
 
     private GUIMainVehiculo guiMainVehiculo;
-    //TODO GUI Alumno
+
+    private GUIMainAlumno guiMainAlumno;
     private GUIMainStaff guiMainStaff;
     private GUIMainClase guiMainClase;
 
 
-    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorClase controladorClase, ControladorStaff controladorStaff /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
+    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff) {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
-        //TODO GUI Alumno
+        this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
 
@@ -88,7 +90,7 @@ public class MainWindow extends JFrame {
 
         _boton_alumnos= addButton("Alumnos",buttonSize, panelPrincipal );
         _boton_alumnos.addActionListener(e-> {
-
+            changeJPanel(this.panelPrincipal, guiMainAlumno);
         });
 
         _boton_staff= addButton("Staff",buttonSize, panelPrincipal );

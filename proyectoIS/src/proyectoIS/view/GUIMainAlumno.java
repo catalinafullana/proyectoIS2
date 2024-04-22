@@ -6,7 +6,7 @@ import proyectoIS.controller.ControladorVehiculo;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIMainAlumno extends JPanel implements VehiculoObserver{
+public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     ControladorAlumno controladorAlumno;
     private JButton home;

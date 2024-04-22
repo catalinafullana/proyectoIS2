@@ -12,10 +12,10 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 		ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
-		ControladorAlumno ctrlAlumno = new ControladorAlumno();
+		ControladorAlumno controladorAlumno = new ControladorAlumno();
 		ControladorStaff controladorStaff = new ControladorStaff();
 		ControladorClase controladorClase = new ControladorClase();
-		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo, controladorClase, controladorStaff));
+		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff));
 	}
 
 }
