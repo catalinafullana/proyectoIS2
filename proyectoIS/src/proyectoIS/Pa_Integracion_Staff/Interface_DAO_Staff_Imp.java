@@ -6,14 +6,9 @@ import java.util.List;
 
 public interface Interface_DAO_Staff_Imp {
     public boolean altaStaff(Staff staff);
-
     public boolean bajaStaff(String dni);
-
     public boolean modificarStaff(Staff staff);
-
     public List<Staff> busquedaStaff(String nombre, String apellido1, String Apellido2);
-
     public Staff consultaStaff(String dni);
-
     public boolean existeStaff(String dni);
 }

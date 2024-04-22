@@ -17,10 +17,6 @@ public class Fa_DAO_Staff implements Interface_Fa_DAO_Staff_Imp {
         return iDAOStaffImp.consultaStaff(dni);
     }
 
-    @Override
-    public boolean modificarSatff(Staff staff) {
-        return false;
-    }
 
     @Override
     public boolean modificarStaff(Staff staff) {
