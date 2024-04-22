@@ -1,5 +1,6 @@
 package proyectoIS.view;
 
+import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.table.AbstractTableModel;
@@ -10,8 +11,13 @@ public class VehiculosModelTable extends AbstractTableModel {
     String[] _headers = {"Matricula", "Tipo", "Modelo"};
     List<Vehiculo> vehiculos;
 
-    public VehiculosModelTable() {
-        vehiculos = new ArrayList<Vehiculo>();
+    public VehiculosModelTable(ArrayList<Vehiculo> arr) {
+        vehiculos = arr;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return _headers[column];
     }
 
     @Override
@@ -38,6 +44,8 @@ public class VehiculosModelTable extends AbstractTableModel {
             case 2:
                 ret = vehiculo.get_modelo();
         }
+        fireTableDataChanged();
+        fireTableStructureChanged();
         return ret;
     }
 }

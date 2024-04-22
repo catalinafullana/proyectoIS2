@@ -2,9 +2,12 @@ package proyectoIS.view;
 
 import proyectoIS.Main;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
@@ -36,8 +39,16 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         createHeader(panelPrincipal);
         add(panelPrincipal);
 
-        VehiculosModelTable model = new VehiculosModelTable();
+        ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
+
+        VehiculosModelTable model = new VehiculosModelTable(arrayVehiculos);
+
         JTable vehiculos = new JTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(vehiculos);
+        panelPrincipal.add(scrollPane);
+
+        add(panelPrincipal);
         vehiculos.setVisible(true);
     }
 
