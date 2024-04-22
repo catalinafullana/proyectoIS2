@@ -9,6 +9,10 @@ public class Fa_DAO_Vehiculo implements Interface_Fa_DAO_Vehiculo_Imp {
 
     private Interface_DAO_Vehiculo_Imp iDAOVehiculoImp;
 
+    public Fa_DAO_Vehiculo(){
+        iDAOVehiculoImp = new Vehiculo_DAO();
+    }
+
     @Override
     public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
         return iDAOVehiculoImp.busqueda(matricula, modelo, tipo_vehiculo);

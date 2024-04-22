@@ -53,6 +53,7 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     private TipoCarnet getCarnet(String s) {
         TipoCarnet r = null;
         switch (s) {
+            case "A" -> r = TipoCarnet.A;
             case "A1" -> r = TipoCarnet.A1;
             case "A2" -> r = TipoCarnet.A2;
             case "AM" -> r = TipoCarnet.AM;
@@ -68,6 +69,7 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
     private String getString(TipoCarnet t){
         String s = "";
         switch (t){
+            case A -> s = "A";
             case A1 -> s = "A1";
             case A2 -> s = "A2";
             case AM -> s = "AM";
