@@ -34,14 +34,16 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
+
+        panelPrincipal.add(new JLabel("<html><font size='20'> Nueva clase </font></html>"));
         creaCampo(panelDatos, new JLabel("Alumno: "), _alumno_clase_text_field);
         creaCampo(panelDatos, new JLabel("Profesor: "), _profesor_clase_text_field);
         creaCampo(panelDatos, new JLabel("Fecha: "), _fecha_clase_text_field);
 
         panelPrincipal.add(panelDatos);
+
 
         _guardar = new JButton("Guardar");
         panelOpciones.add(_guardar);
@@ -51,6 +53,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         panelOpciones.add(_borrar);
 
         panelPrincipal.add(panelOpciones);
+
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));

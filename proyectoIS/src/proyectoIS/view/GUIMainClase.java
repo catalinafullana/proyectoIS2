@@ -46,17 +46,28 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
+        home.addActionListener(e-> {
+            //abrir formulario crear
+            mainWindow.backToMain(this);
+        });
+
         toolbar.add(Box.createHorizontalStrut(10));
 
-        JLabel header = new JLabel("<html><font size='25' color=white> Vehículos </font></html>");
+
+
+        JLabel header = new JLabel("<html><font size='25' color=white> Clases </font></html>");
         header.setFont(new Font("Arial", Font.BOLD, 25));
         header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
         toolbar.add(header);
+
+        p.add(toolbar, BorderLayout.PAGE_START);
     }
 
     private void createHeader(JPanel p) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
+
+        headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), (int)(MainWindow.height*0.1)));
 
         createButtonsInHeader(headerPanel);
         headerPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#274060")));
@@ -68,6 +79,8 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+
 
         addClase = new JButton(new ImageIcon("resources/icons/add.png"));
         addClase.setPreferredSize(new Dimension(40, 40));
@@ -84,6 +97,8 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             //actualizar tabla en funcion de los contenidos del search
         });
         buttonPanel.add(search_alumno);
+
+
 
         search_profesor = new JTextField("Profesor");
         search_profesor.setPreferredSize(new Dimension(100, 30));
