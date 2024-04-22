@@ -72,7 +72,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         */
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-            controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
+            controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString())));
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_anyadir);
@@ -106,19 +106,5 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         panel.add(combo);
     }
 
-    private TipoCarnet getCarnet(String s) {
-        TipoCarnet r = null;
-        switch (s) {
-            case "A" -> r = TipoCarnet.A;
-            case "A1" -> r = TipoCarnet.A1;
-            case "A2" -> r = TipoCarnet.A2;
-            case "AM" -> r = TipoCarnet.AM;
-            case "B" -> r = TipoCarnet.B;
-            case "C" -> r = TipoCarnet.C;
-            case "D" -> r = TipoCarnet.D;
-
-        }
-        return r;
-    }
 
 }

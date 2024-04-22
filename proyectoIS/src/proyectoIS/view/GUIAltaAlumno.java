@@ -1,9 +1,9 @@
 package proyectoIS.view;
 
 import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Vehiculo;
+import proyectoIS.modelo_de_dominio.Alumno;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +12,16 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     ControladorAlumno controladorAlumno;
     MainWindow mainWindow;
     GUIMainAlumno guiMainAlumno;
-    GUIMainVehiculo guiMainVehiculo;
-    ControladorVehiculo controladorVehiculo;
-    JTextPane _matricula_vehiculo_text_field;
-    JComboBox _tipo_vehiculo;
-    JTextPane _modelo_vehiculo_text_field;
+    JComboBox _preferencia_clase_combobox;
     JButton _guardar;
     JButton _anyadir;
     JButton _borrar;
+    JTextPane _apellido1_alumno_text_field;
+    JTextPane _apellido2_alumno_text_field;
+    JTextPane _nombre_alumno_text_field;
+    JTextPane _dni_alumno_text_field;
+    JTextPane _telefono_alumno_text_field;
+    JTextPane _email_alumno_text_field;
 
     public GUIAltaAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow, GUIMainAlumno guiMainAlumno) {
         this.controladorAlumno = controladorAlumno;
@@ -31,12 +33,6 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
     private void initGUI() {
         guiMainAlumno.toolbar(this);
 
-        //setBackground(Color.decode("#D0CCD0"));
-        //setLayout(new BorderLayout());
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));  //box layout
-
-        //guiMainVehiculo.toolbar();
-
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
@@ -45,20 +41,27 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         JPanel pAux = new JPanel();
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
-        _matricula_vehiculo_text_field = new JTextPane();
-        creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
-        _modelo_vehiculo_text_field = new JTextPane();
-        creaCampo(panelDatos, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
+        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
+
+        _nombre_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_alumno_text_field);
+
+        _apellido1_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("Apellido 1: "), _apellido1_alumno_text_field);
+
+        _apellido2_alumno_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("Apellido 2: "), _apellido2_alumno_text_field);
+
+
         //creaCampo(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo_text_field);
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();
         for(TipoCarnet t : TipoCarnet.values()){
             tipo_model.addElement(t.toString());
         }
-        _tipo_vehiculo = new JComboBox(tipo_model);
-        panelDatos.add(_tipo_vehiculo);
+        _preferencia_clase_combobox = new JComboBox(tipo_model);
+        panelDatos.add(_preferencia_clase_combobox);
 
-        creaDesplegable(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo);
+        //creaDesplegable(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo);
 
 
         panelPrincipal.add(panelDatos);
@@ -75,8 +78,11 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         */
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-            controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
-            mainWindow.changeJPanel(this, guiMainVehiculo);
+            //controladorAlumno.altaAlumno(new Alumno(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
+            controladorAlumno.altaAlumno(new Alumno(_nombre_alumno_text_field.getText(), _apellido1_alumno_text_field.getText(),
+                    _apellido2_alumno_text_field.getText(), _dni_alumno_text_field.getText(), _telefono_alumno_text_field.getText(),
+                    _email_alumno_text_field.getText(), Preferencia_clase.cast(_preferencia_clase_combobox.getSelectedItem().toString())));
+            mainWindow.changeJPanel(this, guiMainAlumno);
         });
         panelOpciones.add(_anyadir);
         /*
@@ -109,19 +115,7 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
         panel.add(combo);
     }
 
-    private TipoCarnet getCarnet(String s) {
-        TipoCarnet r = null;
-        switch (s) {
-            case "A" -> r = TipoCarnet.A;
-            case "A1" -> r = TipoCarnet.A1;
-            case "A2" -> r = TipoCarnet.A2;
-            case "AM" -> r = TipoCarnet.AM;
-            case "B" -> r = TipoCarnet.B;
-            case "C" -> r = TipoCarnet.C;
-            case "D" -> r = TipoCarnet.D;
-
-        }
-        return r;
+    public Preferencia_clase getPreferenciaClase(){
+        return null;
     }
-
 }

@@ -17,19 +17,19 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
         List<Vehiculo> listaVehiculos = new ArrayList<>();
         String sql = "";
         if(!matricula.isEmpty() && !modelo.isEmpty() && tipo_vehiculo != null){
-           sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' and modelo='" + modelo + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+           sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "' and modelo='" + modelo + "' and tipo_vehiculo='" + tipo_vehiculo.toString() + "'";
         } else if (!matricula.isEmpty() && !modelo.isEmpty()) {
             sql = "select  * from Tabla_vehiculos where matricula ='" + matricula + "' and modelo='" + modelo + "'";
         }else if(!matricula.isEmpty() && tipo_vehiculo != null){
-            sql = "select * from Tabla_vehiculos where matricula='" + matricula + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+            sql = "select * from Tabla_vehiculos where matricula='" + matricula + "' and tipo_vehiculo='" + tipo_vehiculo.toString() + "'";
         }else if(!matricula.isEmpty()){
             sql = "select * from Tabla_vehiculos where matricula='" + matricula + "'";
         }else if(!modelo.isEmpty() && tipo_vehiculo != null){
-            sql = "select * from Tabla_vehiculos where modelo='" + modelo + "' and tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+            sql = "select * from Tabla_vehiculos where modelo='" + modelo + "' and tipo_vehiculo='" + tipo_vehiculo.toString() + "'";
         }else if(!modelo.isEmpty()){
             sql = "select * from Tabla_vehiculos where modelo='" + modelo + "'";
         }else if(tipo_vehiculo != null){
-            sql = "select * from Tabla_vehiculos where tipo_vehiculo='" + getString(tipo_vehiculo) + "'";
+            sql = "select * from Tabla_vehiculos where tipo_vehiculo='" + tipo_vehiculo.toString() + "'";
         }else{
             sql = "select * from Tabla_vehiculos";
         }
@@ -39,51 +39,17 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
+                TipoCarnet r = TipoCarnet.cast(rs.getString("tipo_vehiculo"));
                 listaVehiculos.add(new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r));
             }
             return listaVehiculos;
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-
-    }
-
-    // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
-    private TipoCarnet getCarnet(String s) {
-        TipoCarnet r = null;
-        switch (s) {
-            case "A" -> r = TipoCarnet.A;
-            case "A1" -> r = TipoCarnet.A1;
-            case "A2" -> r = TipoCarnet.A2;
-            case "AM" -> r = TipoCarnet.AM;
-            case "B" -> r = TipoCarnet.B;
-            case "C" -> r = TipoCarnet.C;
-            case "D" -> r = TipoCarnet.D;
-        }
-        return r;
-    }
-
-    // FUNCION AUXILIAR QUE DEVUELVE STRING A PARTIR DE ENUM
-    //TODO: ESTO CAMBIAR A USAR UN .toString()
-    private String getString(TipoCarnet t){
-        String s = "";
-        switch (t){
-            case A -> s = "A";
-            case A1 -> s = "A1";
-            case A2 -> s = "A2";
-            case AM -> s = "AM";
-            case B -> s = "B";
-            case C -> s = "C";
-            case D -> s = "D";
-            default -> s = "";
-        }
-
-        return s;
     }
 
 
-        @Override
+    @Override
     public Vehiculo consultaVehiculo(String matricula) {
 
         String sql = "select * from Tabla_vehiculos where matricula ='" + matricula + "'";
@@ -92,7 +58,7 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
-            TipoCarnet r = getCarnet(rs.getString("tipo_vehiculo"));
+            TipoCarnet r = TipoCarnet.cast(rs.getString("tipo_vehiculo"));
             return new Vehiculo(rs.getString("matricula"), rs.getString("modelo"), r);
 
         }catch (SQLException e){

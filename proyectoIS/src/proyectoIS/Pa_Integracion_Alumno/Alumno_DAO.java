@@ -103,7 +103,7 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
-                Preferencia_clase pref_clase = getPrefClase(rs.getString("preferencia_clase"));
+                Preferencia_clase pref_clase = Preferencia_clase.cast(rs.getString("preferencia_clase"));
 
                 listaAlumnos.add(new Alumno(rs.getString("nombre"), rs.getString("apellido1"),
                         rs.getString("apellido2"), rs.getString("dni"),
@@ -124,7 +124,7 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             ResultSet rs = s.executeQuery(sql);
             rs.next();
 
-            Preferencia_clase pref_clase = getPrefClase(rs.getString("preferencia_clase"));
+            Preferencia_clase pref_clase = Preferencia_clase.cast(rs.getString("preferencia_clase"));
 
             return new Alumno(rs.getString("nombre"), rs.getString("apellido1"),
                     rs.getString("apellido2"), rs.getString("dni"),
@@ -155,23 +155,5 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             throw new RuntimeException(e);
         }
     }
-
-
-    //TODO: SI NO SE CASTEA BIEN LA PREF_CLASE DE LA BBDD ES POR ESTE FORMATO
-    private Preferencia_clase getPrefClase(String preferenciaClase) {
-        Preferencia_clase ret = null;
-        switch (preferenciaClase) {
-            case "MAÑANA":
-                ret = Preferencia_clase.MANYANA;
-                break;
-            case "TARDE":
-                ret = Preferencia_clase.TARDE;
-                break;
-            case "AMBOS":
-                ret = Preferencia_clase.AMBOS;
-        }
-
-        return ret;
-    }
-
+    
 }

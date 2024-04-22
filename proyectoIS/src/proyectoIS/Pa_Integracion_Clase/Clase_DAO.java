@@ -99,7 +99,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                TipoCarnet r = getCarnet(rs.getString("tipo_carnet"));
+                TipoCarnet r = TipoCarnet.cast(rs.getString("tipo_carnet"));
 
                 String sql2 = "select * from Tabla_alumnos where dni='" + rs.getString("dni_alumno") + "'";
                 Statement s2 = con.createStatement();
@@ -119,10 +119,10 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
 
                 Alumno a2 = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
-                        rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
+                        rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),Preferencia_clase.cast(rs2.getString("preferencia_clase")));
                 Profesor p2 = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
-                        rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("horario"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
-                Vehiculo v2 = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
+                        rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),Preferencia_clase.cast(rs3.getString("horario"))) /*TODO FALTA LO DE PREFERENCIA HORARIO)*/;
+                Vehiculo v2 = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), TipoCarnet.cast(rs4.getString("tipo_vehiculo")));
 
                 listaClase.add(new Clase(r,rs.getString("fecha"), p2, a2, rs.getString("hora"), v2, rs.getString("id_clase")));
 
@@ -144,7 +144,7 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             ResultSet rs = s.executeQuery(sql);
             rs.next();
 
-            TipoCarnet r = getCarnet(rs.getString("tipo_carnet"));
+            TipoCarnet r = TipoCarnet.cast(rs.getString("tipo_carnet"));
 
             String sql2 = "select * from Tabla_alumnos where dni='" + rs.getString("dni_alumno") + "'";
             Statement s2 = con.createStatement();
@@ -163,10 +163,10 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
 
             Alumno a = new Alumno(rs2.getString("nombre"), rs2.getString("apellido1"), rs2.getString("apellido2"),
-                    rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),getPrefClase(rs2.getString("preferencia_clase")));
+                    rs2.getString("dni"), rs2.getString("tlf"), rs2.getString("email"),Preferencia_clase.cast(rs2.getString("preferencia_clase")));
             Profesor p = new Profesor(rs3.getString("nombre"),rs3.getString("apellido1"), rs3.getString("apellido2"),
-                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),getPrefClase(rs3.getString("horario")));
-            Vehiculo v = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), getCarnet(rs4.getString("tipo_vehiculo")));
+                    rs3.getString("dni"), rs3.getString("tlf"), rs3.getString("email"),Preferencia_clase.cast(rs3.getString("horario")));
+            Vehiculo v = new Vehiculo(rs4.getString("matricula"), rs4.getString("modelo"), TipoCarnet.cast(rs4.getString("tipo_vehiculo")));
 
             return new Clase(r,rs.getString("fecha"), p, a, rs.getString("hora"), v, rs.getString("id_clase"));
 
@@ -297,31 +297,6 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     }
 
 
-    // FUNCION AUXILIAR QUE DEVUELVE ENUM A PARTIR DE STRING
-    private TipoCarnet getCarnet(String s) {
-        TipoCarnet r = null;
-        switch (s) {
-            case "A1" -> r = TipoCarnet.A1;
-            case "A2" -> r = TipoCarnet.A2;
-            case "AM" -> r = TipoCarnet.AM;
-            case "B" -> r = TipoCarnet.B;
-            case "C" -> r = TipoCarnet.C;
-            case "D" -> r = TipoCarnet.D;
-
-        }
-        return r;
-    }
-
-    private Preferencia_clase getPrefClase(String s){
-        Preferencia_clase p = null;
-
-        switch (s){
-            case "MAÑANA" -> p = Preferencia_clase.MANYANA;
-            case "TARDE" -> p = Preferencia_clase.TARDE;
-            case "AMBOS" -> p = Preferencia_clase.AMBOS;
-        }
-        return p;
-    }
      public static void main(String[] args) throws Exception{
         String sql = "select modelo from Tabla_vehiculos where matricula='2'";
         Connection con = Conexion.obtenerConexion();

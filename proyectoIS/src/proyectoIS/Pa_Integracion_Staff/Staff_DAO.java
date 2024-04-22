@@ -93,7 +93,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                listaStaff.add(new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"), getPrefClase(rs.getString("horario"))));
+                listaStaff.add(new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"), Preferencia_clase.cast(rs.getString("horario"))));
             }
             return listaStaff;
         }catch (SQLException e){
@@ -110,7 +110,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery(sql);
             rs.next();
-            return new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"),getPrefClase(rs.getString("horario")));
+            return new Profesor(rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"), rs.getString("dni"), rs.getString("tlf"), rs.getString("email"),Preferencia_clase.cast(rs.getString("horario")));
 
         }catch (SQLException e){
             throw new RuntimeException(e);

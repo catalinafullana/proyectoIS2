@@ -129,19 +129,4 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         panel.add(combo);
     }
 
-    private String getString(TipoCarnet t){
-        String s = "";
-        switch (t){
-            case A -> s = "A";
-            case A1 -> s = "A1";
-            case A2 -> s = "A2";
-            case AM -> s = "AM";
-            case B -> s = "B";
-            case C -> s = "C";
-            case D -> s = "D";
-            default -> s = "";
-        }
-        return s;
-    }
-
 }
