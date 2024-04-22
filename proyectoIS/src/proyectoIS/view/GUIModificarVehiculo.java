@@ -7,7 +7,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
+public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
     GUIMainVehiculo guiMainVehiculo;
@@ -15,10 +15,10 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     JComboBox _tipo_vehiculo;
     JTextPane _modelo_vehiculo_text_field;
     JButton _guardar;
-    JButton _anyadir;
+    //JButton _anyadir;
     JButton _borrar;
 
-    public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
+    public GUIModificarVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
         this.controladorVehiculo = c;
         this.mainWindow = mainWindow;
         this.guiMainVehiculo = guiMainVehiculo;
@@ -40,7 +40,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
         JPanel pAux = new JPanel();
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
         _matricula_vehiculo_text_field = new JTextPane();
@@ -52,7 +52,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         for(TipoCarnet t : TipoCarnet.values()){
             tipo_model.addElement(t.toString());
         }
-       _tipo_vehiculo = new JComboBox(tipo_model);
+        _tipo_vehiculo = new JComboBox(tipo_model);
         panelDatos.add(_tipo_vehiculo);
 
         creaDesplegable(panelDatos, new JLabel("Tipo: "), _tipo_vehiculo);
@@ -67,12 +67,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_guardar);
-        _anyadir = new JButton("Añadir");
-        _anyadir.addActionListener(e->{
-            controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
-            mainWindow.changeJPanel(this, guiMainVehiculo);
-        });
-        panelOpciones.add(_anyadir);
+
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText());
