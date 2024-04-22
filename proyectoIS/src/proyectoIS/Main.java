@@ -1,7 +1,7 @@
 package proyectoIS;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
-import proyectoIS.controller.ControlStaff;
+import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.view.MainWindow;
 
@@ -13,9 +13,9 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 		ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
 		ControladorAlumno ctrlAlumno = new ControladorAlumno();
-		ControlStaff ctrlStaff = new ControlStaff();
+		ControladorStaff controladorStaff = new ControladorStaff();
 		ControladorClase controladorClase = new ControladorClase();
-		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo, controladorClase));
+		SwingUtilities.invokeAndWait(() -> new MainWindow(controladorVehiculo, controladorClase, controladorStaff));
 	}
 
 }

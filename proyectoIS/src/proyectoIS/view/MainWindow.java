@@ -1,6 +1,7 @@
 package proyectoIS.view;
 
 import proyectoIS.controller.ControladorClase;
+import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 
 import javax.swing.*;
@@ -21,15 +22,15 @@ public class MainWindow extends JFrame {
 
     private GUIMainVehiculo guiMainVehiculo;
     //TODO GUI Alumno
-    //TODO GUI Staff
+    private GUIMainStaff guiMainStaff;
     private GUIMainClase guiMainClase;
 
 
-    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorClase controladorClase /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
+    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorClase controladorClase, ControladorStaff controladorStaff /*TODO PASAR COMO ARGUMENTO LOS DEMÁS CONTROLADORES*/) {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         //TODO GUI Alumno
-        //TODO GUI Staff
+        this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
 
         initGUI();
@@ -92,7 +93,7 @@ public class MainWindow extends JFrame {
 
         _boton_staff= addButton("Staff",buttonSize, panelPrincipal );
         _boton_staff.addActionListener(e-> {
-
+            changeJPanel(this.panelPrincipal, guiMainStaff);
         });
 
         _boton_vehiculos= addButton("Vehiculos",buttonSize, panelPrincipal );
