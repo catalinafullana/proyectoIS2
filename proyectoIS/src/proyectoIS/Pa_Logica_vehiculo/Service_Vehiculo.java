@@ -21,7 +21,7 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
     public Vehiculo consulta(String matricula) {
         Fa_DAO_Vehiculo faDAOVehiculo = new Fa_DAO_Vehiculo();
 
-        if(!faDAOVehiculo.existeVehiculo(matricula)) {
+        if(faDAOVehiculo.existeVehiculo(matricula)) {
             return faDAOVehiculo.consulta(matricula);
         }
         return null;
@@ -31,7 +31,7 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
     public boolean modificar(Vehiculo vehiculo) {
         Fa_DAO_Vehiculo faDAOVehiculo = new Fa_DAO_Vehiculo();
 
-        if(!faDAOVehiculo.existeVehiculo(vehiculo.get_matricula())){
+        if(faDAOVehiculo.existeVehiculo(vehiculo.get_matricula())){
             return faDAOVehiculo.modificar(vehiculo);
         }
         return false;
@@ -51,7 +51,7 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
     public boolean bajaVehiculo(String matricula) {
         Fa_DAO_Vehiculo faDAOVehiculo = new Fa_DAO_Vehiculo();
 
-        if(!faDAOVehiculo.existeVehiculo(matricula)){
+        if(faDAOVehiculo.existeVehiculo(matricula)){
             return faDAOVehiculo.bajaVehiculo(matricula);
         }
         return false;

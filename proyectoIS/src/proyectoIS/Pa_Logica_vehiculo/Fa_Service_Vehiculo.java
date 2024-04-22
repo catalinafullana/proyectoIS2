@@ -9,6 +9,9 @@ public class Fa_Service_Vehiculo implements Interface_Fa_Service_Vehiculo{
 
     private Interface_Service_Vehiculo interface_service_vehiculo;
 
+    public Fa_Service_Vehiculo(){
+        interface_service_vehiculo = new Service_Vehiculo();
+    }
 
     // TODO: COMPROBAR
     @Override
