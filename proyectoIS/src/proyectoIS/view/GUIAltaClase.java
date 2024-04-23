@@ -23,9 +23,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     JTextPane _fecha_clase_text_field;
     JTextPane _hora_clase_text_field;
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
-    //JButton _guardar;
     JButton _anyadir;
-    //JButton _borrar;
 
     public GUIAltaClase(ControladorClase c, MainWindow mainWindow, GUIMainClase guiMainClase) {
         this.controladorClase = c;
@@ -95,8 +93,6 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         pAux.add(Box.createVerticalStrut(20));
 
         _anyadir = new JButton("Añadir");
-
-
         _anyadir.addActionListener(e->{
             String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
             Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).get(0);

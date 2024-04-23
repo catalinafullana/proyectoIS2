@@ -1,23 +1,28 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
+import proyectoIS.controller.ControladorStaff;
+import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableColumnModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GUIMainClase extends JPanel implements ClaseObserver{
 
     ControladorClase controladorClase;
     private JButton home;
     JButton addClase;
+    JButton search;
     JTextField search_alumno;
     JTextField search_profesor;
     JTextField search_fecha;
     JTable _clases;
-
     GUIAltaClase guiAltaClase;
     MainWindow mainWindow;
 
@@ -30,7 +35,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
     private void init_GUI(){
         setLayout(new BorderLayout());
-
+        // TODO: EL PANELPRINCIPAL TIENE QUE SER UN ATRIBUTO MAS PARA PODER CAMBIAR LA TABLA
         JPanel panelPrincipal = new JPanel();
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
@@ -101,6 +106,9 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             mainWindow.changeJPanel(this, guiAltaClase);
         });
         buttonPanel.add(addClase);
+
+
+
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
         search_alumno = new JTextField("Alumno");
@@ -127,6 +135,31 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         buttonPanel.add(search_fecha);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
+
+        search = new JButton(new ImageIcon("resorces/icons/search.png"));
+        search.setPreferredSize(new Dimension(40, 40));
+        search.addActionListener(e->{
+            ControladorAlumno controladorAlumno = new ControladorAlumno();
+            String[] stringAlumno = this.search_alumno.getText().split(" ");
+            Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
+
+            ControladorStaff controladorStaff = new ControladorStaff();
+            String[] stringStaff = this.search_profesor.getText().split(" ");
+            Staff s = null;
+            if(stringStaff.length > 1){
+                s = controladorStaff.busquedaStaff(stringStaff[0],stringStaff[1], stringStaff[2]).getFirst();
+            }
+
+
+            ArrayList<Clase> listaClases = new ArrayList<>(controladorClase.busquedaClase(a, s, search_fecha.getText()));
+            // TODO: PARA ACTUALIZAR LA TABLA NECESITO QUE EL PANEL PRINCIPAL SEA UN ATRIBUTO
+            _clases.setModel(new ClaseModelTable(listaClases));
+
+
+        });
+
+        buttonPanel.add(search);
+
         headerPanel.add(buttonPanel);
 
 
