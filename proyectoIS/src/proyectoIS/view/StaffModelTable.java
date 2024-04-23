@@ -1,7 +1,7 @@
 package proyectoIS.view;
 
 import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Profesor;
+
 import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 

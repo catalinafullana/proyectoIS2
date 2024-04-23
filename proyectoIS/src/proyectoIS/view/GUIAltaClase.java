@@ -93,15 +93,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
-        /*
-        _guardar = new JButton("Guardar");
-        _guardar.addActionListener(e->{
 
-            //controladorClase.modificarClase(new Clase());
-        });
-        panelOpciones.add(_guardar);
-
-         */
         _anyadir = new JButton("Añadir");
 
 
@@ -119,14 +111,6 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_anyadir);
-        /*
-        _borrar = new JButton("Borrar");
-        _borrar.addActionListener(e->{
-
-        });
-        panelOpciones.add(_borrar);
-
-         */
 
         pAux.add(panelOpciones);
         panelPrincipal.add(pAux);

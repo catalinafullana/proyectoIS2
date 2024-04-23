@@ -6,7 +6,6 @@ import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Profesor;
 import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
@@ -86,7 +85,7 @@ public class GUIAltaStaff extends JPanel implements ClaseObserver {
         panelOpciones.add(_guardar);
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-            controladorStaff.altaStaff(new Profesor(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
+            controladorStaff.altaStaff(new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
                     _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
                     _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
                     Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString())));

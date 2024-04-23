@@ -65,7 +65,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
-            controladorVehiculo.modificar(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString()) ));
+            controladorVehiculo.modificar(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString())));
             mainWindow.changeJPanel(this, guiMainVehiculo);
         });
         panelOpciones.add(_guardar);

@@ -2,7 +2,7 @@ package proyectoIS.Pa_Logica_Alumno;
 
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Profesor;
+
 
 import java.util.List;
 
