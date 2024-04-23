@@ -15,13 +15,13 @@ public class Clase {
 
     private TipoCarnet _tipo_carnet;
     private String _fecha;
-    private Profesor _profesor;
+    private Staff _profesor;
     private Alumno _alumno;
     private String _hora;
     private Vehiculo _vehiculo;
     private String _id_clase;
 
-    public Clase(TipoCarnet _tipo_carnet, String _fecha, Profesor _profesor, Alumno _alumno, String _hora, Vehiculo _vehiculo, String _id_clase) {
+    public Clase(TipoCarnet _tipo_carnet, String _fecha, Staff _profesor, Alumno _alumno, String _hora, Vehiculo _vehiculo, String _id_clase) {
         this._tipo_carnet = _tipo_carnet;
         this._fecha = _fecha;
         this._profesor = _profesor;
@@ -47,11 +47,11 @@ public class Clase {
         this._fecha = _fecha;
     }
 
-    public Profesor get_profesor() {
+    public Staff get_profesor() {
         return _profesor;
     }
 
-    public void set_profesor(Profesor _profesor) {
+    public void set_profesor(Staff _profesor) {
         this._profesor = _profesor;
     }
 

@@ -115,7 +115,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
             Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
 
-            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), (Profesor) p, a, _hora_clase_text_field.getText(), v, ""));
+            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, _hora_clase_text_field.getText(), v, ""));
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_anyadir);

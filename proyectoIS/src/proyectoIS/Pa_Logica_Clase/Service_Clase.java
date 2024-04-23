@@ -3,7 +3,7 @@ package proyectoIS.Pa_Logica_Clase;
 import proyectoIS.Pa_Integracion_Clase.Fa_DAO_Clase;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Profesor;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import java.util.Date;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Service_Clase implements Interface_Service_Clase{
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Profesor p, String fecha) {
+    public List<Clase> busquedaClase(Alumno a, Staff p, String fecha) {
         Fa_DAO_Clase faDaoClase = new Fa_DAO_Clase();
 
         return faDaoClase.busquedaClase(a, p, fecha);
