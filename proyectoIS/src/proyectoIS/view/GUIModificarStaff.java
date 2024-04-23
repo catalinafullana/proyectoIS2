@@ -12,7 +12,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIAltaStaff extends JPanel implements StaffObserver {
+public class GUIModificarStaff extends JPanel implements StaffObserver {
 
     ControladorStaff controladorStaff;
     MainWindow mainWindow;
@@ -28,7 +28,7 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
     JButton _anyadir;
     JButton _borrar;
 
-    public GUIAltaStaff(ControladorStaff c, MainWindow mainWindow, GUIMainStaff guiMainStaff) {
+    public GUIModificarStaff(ControladorStaff c, MainWindow mainWindow, GUIMainStaff guiMainStaff) {
         this.controladorStaff = c;
         this.mainWindow = mainWindow;
         this.guiMainStaff = guiMainStaff;

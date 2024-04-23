@@ -20,14 +20,14 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
     JTextField search_apellido2;    //TODO revisar si hacemos asi la busqueda
 
     GUIAltaStaff guiAltaStaff;
-    GUIModificarClase guiModificarClase;
+    GUIModificarStaff guiModificarStaff;
     MainWindow mainWindow;
 
     public GUIMainStaff(ControladorStaff controladorStaff, MainWindow mainWindow){
         this.controladorStaff = controladorStaff;
         this.mainWindow = mainWindow;
         this.guiAltaStaff = new GUIAltaStaff(this.controladorStaff, this.mainWindow, this);
-        //this.guiModificarClase = new GUIModificarClase(this.controladorStaff, this.mainWindow, this);
+        this.guiModificarStaff = new GUIModificarStaff(this.controladorStaff, this.mainWindow, this);
         init_GUI();
     }
 
@@ -43,12 +43,15 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         StaffModelTable model = new StaffModelTable(arrayStaff);
         JTable staffs = new JTable(model);
 
+        staffs.setRowSelectionAllowed(true);
+
         staffs.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = staffs.rowAtPoint(evt.getPoint());
                 //int col = staffs.columnAtPoint(evt.getPoint());
-
+                System.out.println(row);
+                aModificar();
             }
         });
 
@@ -138,7 +141,12 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
-        searchStaff = new JButton(new ImageIcon("resources/icons/search.png"));
+        ImageIcon searchIcon = new ImageIcon("resources/icons/search.png");
+        Image resize = searchIcon.getImage();
+        resize = resize.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        searchIcon = new ImageIcon(resize);
+
+        searchStaff = new JButton(searchIcon);
         searchStaff.setPreferredSize(new Dimension(40, 40));
         searchStaff.addActionListener(e-> {
             //abrir formulario crear
@@ -161,6 +169,10 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         JSeparator s = new JSeparator(orientation);
         s.setPreferredSize(dim);
         p.add(s);
+    }
+
+    private void aModificar(){
+        mainWindow.changeJPanel(this, guiModificarStaff);
     }
 
 
