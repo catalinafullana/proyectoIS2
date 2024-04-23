@@ -118,4 +118,18 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         panel.add(combo);
     }
 
+    public void actualizarCampos(String dni){
+        Staff consultado = controladorStaff.consultaStaff(dni);
+        /*
+        _nombre_staff_text_field.setText(consultado.get_nombre());
+        _apellido1_staff_text_field.setText(consultado.get_apellido1());
+        _apellido2_staff_text_field.setText(consultado.get_apellido1());
+        _dni_staff_text_field.setText(consultado.get_dni());
+        _tlf_staff_text_field.setText(consultado.get_tlf());
+        _email_staff_text_field.setText(consultado.get_email());
+         */
+        _nombre_staff_text_field.setText("Prueba");
+
+    }
+
 }

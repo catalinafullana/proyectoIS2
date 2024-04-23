@@ -50,8 +50,9 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = staffs.rowAtPoint(evt.getPoint());
                 //int col = staffs.columnAtPoint(evt.getPoint());
-                System.out.println(row);
-                aModificar();
+                String dni = staffs.getModel().getValueAt(row, 3).toString();
+                System.out.println(row + " " + dni);
+                aModificar(dni);
             }
         });
 
@@ -171,7 +172,8 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         p.add(s);
     }
 
-    private void aModificar(){
+    private void aModificar(String dni){
+        guiModificarStaff.actualizarCampos(dni);
         mainWindow.changeJPanel(this, guiModificarStaff);
     }
 
