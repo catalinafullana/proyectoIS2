@@ -14,17 +14,20 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
     ControladorStaff controladorStaff;
     private JButton home;
     JButton addStaff;
+    JButton searchStaff;
     JTextField search_nombre;
     JTextField search_apellido1;
     JTextField search_apellido2;    //TODO revisar si hacemos asi la busqueda
 
     GUIAltaStaff guiAltaStaff;
+    GUIModificarClase guiModificarClase;
     MainWindow mainWindow;
 
     public GUIMainStaff(ControladorStaff controladorStaff, MainWindow mainWindow){
         this.controladorStaff = controladorStaff;
         this.mainWindow = mainWindow;
         this.guiAltaStaff = new GUIAltaStaff(this.controladorStaff, this.mainWindow, this);
+        //this.guiModificarClase = new GUIModificarClase(this.controladorStaff, this.mainWindow, this);
         init_GUI();
     }
 
@@ -125,6 +128,15 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         buttonPanel.add(search_apellido2);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
+
+        searchStaff = new JButton(new ImageIcon("resources/icons/search.png"));
+        searchStaff.setPreferredSize(new Dimension(40, 40));
+        searchStaff.addActionListener(e-> {
+            //abrir formulario crear
+            mainWindow.changeJPanel(this, guiAltaStaff);
+        });
+        buttonPanel.add(searchStaff);
+
         headerPanel.add(buttonPanel);
     }
 
