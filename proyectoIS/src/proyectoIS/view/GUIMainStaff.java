@@ -43,16 +43,11 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         StaffModelTable model = new StaffModelTable(arrayStaff);
         JTable staffs = new JTable(model);
 
-        staffs.setRowSelectionAllowed(true);
-
         staffs.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //int row = staffs.rowAtPoint(evt.getPoint());
+                int row = staffs.rowAtPoint(evt.getPoint());
                 //int col = staffs.columnAtPoint(evt.getPoint());
-                //int column = 3;
-                int row = staffs.getSelectedRow();
-                String dni = staffs.getModel().getValueAt(row, 3).toString();
 
             }
         });
