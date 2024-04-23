@@ -43,6 +43,15 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         StaffModelTable model = new StaffModelTable(arrayStaff);
         JTable staffs = new JTable(model);
 
+        staffs.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = staffs.rowAtPoint(evt.getPoint());
+                //int col = staffs.columnAtPoint(evt.getPoint());
+
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(staffs);
         panelPrincipal.add(scrollPane);
 
