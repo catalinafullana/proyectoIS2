@@ -25,6 +25,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -43,6 +45,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -62,6 +66,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -112,6 +118,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
             return listaAlumnos;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -132,6 +140,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -153,6 +163,8 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
     

@@ -31,6 +31,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -48,6 +50,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -67,6 +71,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -130,9 +136,9 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
             return listaClase;
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
-
-
     }
 
     @Override
@@ -172,6 +178,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -191,6 +199,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -206,6 +216,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -225,6 +237,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -240,6 +254,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -259,6 +275,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -274,6 +292,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -293,6 +313,8 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 

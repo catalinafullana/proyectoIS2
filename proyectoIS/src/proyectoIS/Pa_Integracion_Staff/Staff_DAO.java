@@ -26,6 +26,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -43,6 +45,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -60,6 +64,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -97,6 +103,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             return listaStaff;
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
 
     }
@@ -113,6 +121,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -133,6 +143,8 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 }

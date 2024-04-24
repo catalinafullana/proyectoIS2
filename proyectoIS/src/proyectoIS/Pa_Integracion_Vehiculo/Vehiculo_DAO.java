@@ -45,6 +45,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             return listaVehiculos;
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally{
+            Conexion.cerrarConexion();
         }
     }
 
@@ -63,6 +65,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -82,6 +86,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -99,6 +105,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -116,6 +124,8 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
@@ -129,13 +139,17 @@ public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
             ResultSet rs = s.executeQuery(sql);
             rs.next();
             if(rs.getRow() > 0){
+                Conexion.cerrarConexion();
                 return true;
             }else{
+                Conexion.cerrarConexion();
                 return false;
             }
 
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
         }
     }
 
