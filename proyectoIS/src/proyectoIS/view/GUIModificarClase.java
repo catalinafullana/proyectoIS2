@@ -5,7 +5,6 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
-import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
@@ -24,7 +23,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     JComboBox _profesor_clase_comboBox;
     JComboBox _vehiculo_clase_comboBox;
     JTextPane _fecha_clase_text_field;
-    JTextPane _hora_clase_text_field;
+    JComboBox _hora_clase_comboBox;
     JTextPane _id_clase_text;
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
     JButton _guardar;
@@ -80,13 +79,20 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
-
+        DefaultComboBoxModel<String> tipo_model_hora = new DefaultComboBoxModel<>();
+        for (int i = 8; i <= 22; i++) {
+            if(i < 10){
+                tipo_model_hora.addElement("0" + i + ":00");
+            }else{
+                tipo_model_hora.addElement(i + ":00");
+            }
+        }
 
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
         _fecha_clase_text_field = new JTextPane();
-        _hora_clase_text_field = new JTextPane();
+        _hora_clase_comboBox = new JComboBox<>(tipo_model_hora);
         _id_clase_text = new JTextPane();
         _id_clase_text.setEditable(false);
 
@@ -94,7 +100,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
         creaCampo(panelDatos, new JLabel("Fecha: "), _fecha_clase_text_field);
-        creaCampo(panelDatos, new JLabel("Hora: "), _hora_clase_text_field);
+        creaDesplegable(panelDatos, new JLabel("Hora: "), _hora_clase_comboBox);
         creaCampo(panelDatos, new JLabel("ID Clase: "), _id_clase_text);
 
         panelPrincipal.add(panelDatos);
@@ -112,15 +118,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
-            String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
-            Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
-
-            String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
-            Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
-
-            Clase c = controladorClase.busquedaClase(a, p, _fecha_clase_text_field.getText()).getFirst();
-
-            this.controladorClase.bajaClase(c.get_id_clase());
+            this.controladorClase.bajaClase(_id_clase_text.getText());
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_borrar);
@@ -149,7 +147,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         Clase consulta = controladorClase.consultaClase(id);
 
         _fecha_clase_text_field.setText(consulta.get_fecha());
-        _hora_clase_text_field.setText(consulta.get_hora());
+        _hora_clase_comboBox.setSelectedItem(consulta.get_hora());
         _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
         _profesor_clase_comboBox.setSelectedItem(consulta.get_profesor().get_nombre() + " " + consulta.get_profesor().get_apellido1() + " " + consulta.get_profesor().get_apellido2());
         _vehiculo_clase_comboBox.setSelectedItem((consulta.get_vehiculo().get_matricula() + " Tipo: " + consulta.get_vehiculo().get_tipo_vehiculo()));
@@ -166,7 +164,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
         Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
 
-        return new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, _hora_clase_text_field.getText(), v, _id_clase_text.getText());
+        return new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
     }
 
 

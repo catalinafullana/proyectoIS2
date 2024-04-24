@@ -12,5 +12,6 @@
     <orderEntry type="library" name="mysql.connector.j" level="project" />
     <orderEntry type="library" name="mysql.connector.j1" level="project" />
     <orderEntry type="library" name="mysql.connector.j2" level="project" />
+    <orderEntry type="library" exported="" name="luuuis.jcalendar.tz" level="project" />
   </component>
 </module>

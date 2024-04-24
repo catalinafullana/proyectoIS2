@@ -33,7 +33,7 @@ public class Service_Clase implements Interface_Service_Clase{
     public boolean modificarClase(Clase clase) {
         Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
 
-        if(faDAOClase.existeClase(clase.get_id_clase())){
+        if(faDAOClase.existeClase(clase.get_id_clase()) && comprobarDatos(clase)){
             return faDAOClase.modificarClase(clase);
         }
         return false;

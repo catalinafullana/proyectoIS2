@@ -4,13 +4,13 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
-import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
+
 
 public class GUIAltaClase extends JPanel implements ClaseObserver {
 
@@ -21,7 +21,8 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     JComboBox _profesor_clase_comboBox;
     JComboBox _vehiculo_clase_comboBox;
     JTextPane _fecha_clase_text_field;
-    JTextPane _hora_clase_text_field;
+    JComboBox _hora_clase_comboBox;
+
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
     JButton _anyadir;
 
@@ -75,19 +76,27 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
+        DefaultComboBoxModel<String> tipo_model_hora = new DefaultComboBoxModel<>();
+        for (int i = 8; i <= 22; i++) {
+            if(i < 10){
+                tipo_model_hora.addElement("0" + i + ":00");
+            }else{
+                tipo_model_hora.addElement(i + ":00");
+            }
+        }
 
 
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
         _fecha_clase_text_field = new JTextPane();
-        _hora_clase_text_field = new JTextPane();
+        _hora_clase_comboBox = new JComboBox<>(tipo_model_hora);
 
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
         creaCampo(panelDatos, new JLabel("Fecha: "), _fecha_clase_text_field);
-        creaCampo(panelDatos, new JLabel("Hora: "), _hora_clase_text_field);
+        creaDesplegable(panelDatos, new JLabel("Hora: "), _hora_clase_comboBox);
 
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
@@ -103,7 +112,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
             Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
 
-            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, _hora_clase_text_field.getText(), v, ""));
+            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""));
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_anyadir);
