@@ -13,6 +13,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GUIModificarClase extends JPanel implements ClaseObserver {
 
@@ -149,6 +150,14 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
         panel.add(label);
         panel.add(combo);
+    }
+
+    public void actualizarCampos(String id){
+        Clase consulta = controladorClase.consultaClase(id);
+
+        _fecha_clase_text_field.setText(consulta.get_fecha());
+        _hora_clase_text_field.setText(consulta.get_hora());
+        //Object[] a =  _alumno_clase_comboBox.;
     }
 
 }

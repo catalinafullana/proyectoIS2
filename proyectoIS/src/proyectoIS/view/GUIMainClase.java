@@ -10,6 +10,7 @@ import proyectoIS.modelo_de_dominio.Staff;
 import javax.swing.*;
 import javax.swing.table.DefaultTableColumnModel;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     JTable _clases;
     GUIAltaClase guiAltaClase;
     MainWindow mainWindow;
+    GUIModificarClase guiModificarClase;
 
     public GUIMainClase(ControladorClase controladorClase, MainWindow mainWindow){
         this.controladorClase = controladorClase;
         this.mainWindow = mainWindow;
         this.guiAltaClase = new GUIAltaClase(this.controladorClase, this.mainWindow, this);
+        this.guiModificarClase = new GUIModificarClase(this.controladorClase, this.mainWindow, this);
         init_GUI();
     }
 
@@ -44,6 +47,16 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         ClaseModelTable model = new ClaseModelTable(arrayClases);
         _clases = new JTable(model);
+        _clases.setRowSelectionAllowed(true);
+
+        _clases.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = _clases.rowAtPoint(evt.getPoint());
+                String id = _clases.getModel().getValueAt(row, 0).toString();
+                aModificar(id);
+            }
+        });
 
         JScrollPane scrollPane = new JScrollPane(_clases);
 
@@ -186,6 +199,9 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         p.add(s);
     }
 
-
+    private void aModificar(String id){
+        guiModificarClase.actualizarCampos(id);
+        mainWindow.changeJPanel(this, guiModificarClase);
+    }
 
 }

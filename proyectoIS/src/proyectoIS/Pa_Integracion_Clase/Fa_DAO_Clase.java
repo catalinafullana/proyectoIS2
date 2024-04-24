@@ -39,7 +39,7 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
 
     @Override
     public Clase consultaClase(String id) {
-        return consultaClase(id);
+        return interfaceDaoClaseImp.consultaClase(id);
     }
 
     @Override
