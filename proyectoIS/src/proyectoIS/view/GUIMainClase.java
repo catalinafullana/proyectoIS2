@@ -136,7 +136,12 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
-        search = new JButton(new ImageIcon("resorces/icons/search.png"));
+        ImageIcon searchIcon = new ImageIcon("resources/icons/search.png");
+        Image resize = searchIcon.getImage();
+        resize = resize.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        searchIcon = new ImageIcon(resize);
+
+        search = new JButton(searchIcon);
         search.setPreferredSize(new Dimension(40, 40));
         search.addActionListener(e->{
             ControladorAlumno controladorAlumno = new ControladorAlumno();

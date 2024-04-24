@@ -18,7 +18,7 @@ public class Service_Staff implements Interface_Service_Staff{
     public Staff consultaStaff(String dni) {
         Fa_DAO_Staff faDAOStaff = new Fa_DAO_Staff();
 
-        if(!faDAOStaff.existeStaff(dni)) {
+        if(faDAOStaff.existeStaff(dni)) {
             return faDAOStaff.consultaStaff(dni);
         }
         return null;
@@ -28,7 +28,7 @@ public class Service_Staff implements Interface_Service_Staff{
     public boolean modificarStaff(Staff staff) {
         Fa_DAO_Staff faDAOStaff = new Fa_DAO_Staff();
 
-        if(!faDAOStaff.existeStaff(staff.get_dni())){
+        if(faDAOStaff.existeStaff(staff.get_dni())){
             return faDAOStaff.modificarStaff(staff);
         }
         return false;
@@ -48,7 +48,7 @@ public class Service_Staff implements Interface_Service_Staff{
     public boolean bajaStaff(String dni) {
         Fa_DAO_Staff faDAOStaff = new Fa_DAO_Staff();
 
-        if(!faDAOStaff.existeStaff(dni)){
+        if(faDAOStaff.existeStaff(dni)){
             return faDAOStaff.bajaStaff(dni);
         }
         return false;
