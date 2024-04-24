@@ -49,7 +49,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nueva clase </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar clase </font></html>"));
 
         DefaultComboBoxModel<String> tipo_model_alumno = new DefaultComboBoxModel<String>();
         ControladorAlumno controladorAlumno = new ControladorAlumno();
