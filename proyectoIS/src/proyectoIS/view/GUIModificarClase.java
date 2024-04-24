@@ -25,6 +25,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     JComboBox _vehiculo_clase_comboBox;
     JTextPane _fecha_clase_text_field;
     JTextPane _hora_clase_text_field;
+    JTextPane _id_clase_text;
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
     JButton _guardar;
     JButton _borrar;
@@ -86,12 +87,15 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
         _fecha_clase_text_field = new JTextPane();
         _hora_clase_text_field = new JTextPane();
+        _id_clase_text = new JTextPane();
+        _id_clase_text.setEditable(false);
 
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
         creaCampo(panelDatos, new JLabel("Fecha: "), _fecha_clase_text_field);
         creaCampo(panelDatos, new JLabel("Hora: "), _hora_clase_text_field);
+        creaCampo(panelDatos, new JLabel("ID Clase: "), _id_clase_text);
 
         panelPrincipal.add(panelDatos);
         pAux.add(Box.createVerticalStrut(20));
@@ -99,26 +103,15 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e->{
 
-            String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
-            Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).getFirst();
+            Clase c = crearClase(controladorStaff, controladorAlumno, controladorVehiculo);
 
-            String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
-            Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
-
-            String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
-            Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
-
-            controladorClase.modificarClase(new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, _hora_clase_text_field.getText(), v, ""));
+            controladorClase.modificarClase(c);
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_guardar);
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
-
-            String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
-            Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).getFirst();
-
             String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
             Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
 
@@ -160,7 +153,21 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
         _profesor_clase_comboBox.setSelectedItem(consulta.get_profesor().get_nombre() + " " + consulta.get_profesor().get_apellido1() + " " + consulta.get_profesor().get_apellido2());
         _vehiculo_clase_comboBox.setSelectedItem((consulta.get_vehiculo().get_matricula() + " Tipo: " + consulta.get_vehiculo().get_tipo_vehiculo()));
-        //Object[] a =  _alumno_clase_comboBox.;
+        _id_clase_text.setText(id);
     }
+
+    private Clase crearClase (ControladorStaff controladorStaff, ControladorAlumno controladorAlumno, ControladorVehiculo controladorVehiculo){
+        String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
+        Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).getFirst();
+
+        String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
+        Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
+
+        String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
+        Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
+
+        return new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, _hora_clase_text_field.getText(), v, _id_clase_text.getText());
+    }
+
 
 }

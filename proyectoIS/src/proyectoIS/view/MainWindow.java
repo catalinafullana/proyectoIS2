@@ -57,10 +57,10 @@ public class MainWindow extends JFrame {
         add(panelPrincipal);
 
 
-        setLocationRelativeTo(null);
         setPreferredSize(new Dimension(width, height));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         panelPrincipal.setVisible(true);
     }
