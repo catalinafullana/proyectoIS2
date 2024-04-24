@@ -72,7 +72,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Vehiculo de tipo: " + vehiculo.get_tipo_vehiculo().toString());
+            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
 

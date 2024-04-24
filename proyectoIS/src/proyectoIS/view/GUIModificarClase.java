@@ -57,7 +57,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + alumno.get_apellido1() + alumno.get_apellido2());
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
         }
 
 
@@ -67,7 +67,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + staff.get_apellido1() + staff.get_apellido2());
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
         }
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
@@ -76,7 +76,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + "Vehiculo de tipo: " + vehiculo.get_tipo_vehiculo().toString());
+            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
 
@@ -157,6 +157,9 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         _fecha_clase_text_field.setText(consulta.get_fecha());
         _hora_clase_text_field.setText(consulta.get_hora());
+        _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
+        _profesor_clase_comboBox.setSelectedItem(consulta.get_profesor().get_nombre() + " " + consulta.get_profesor().get_apellido1() + " " + consulta.get_profesor().get_apellido2());
+        _vehiculo_clase_comboBox.setSelectedItem((consulta.get_vehiculo().get_matricula() + " Tipo: " + consulta.get_vehiculo().get_tipo_vehiculo()));
         //Object[] a =  _alumno_clase_comboBox.;
     }
 
