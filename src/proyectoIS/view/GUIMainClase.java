@@ -47,6 +47,8 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         ClaseModelTable model = new ClaseModelTable(arrayClases);
         _clases = new JTable(model);
+
+
         _clases.setRowSelectionAllowed(true);
 
         _clases.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,11 +59,12 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
                 aModificar(id);
             }
         });
-        _clases.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         JScrollPane scrollPane = new JScrollPane(_clases);
 
         panelPrincipal.add(scrollPane);
+
+
 
         add(panelPrincipal);
 
