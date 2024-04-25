@@ -122,6 +122,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             Clase c = crearClase(controladorStaff, controladorAlumno, controladorVehiculo);
 
             controladorClase.modificarClase(c);
+            guiMainClase.actualizarTabla();
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_guardar);
@@ -130,6 +131,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             this.controladorClase.bajaClase(_id_clase_text.getText());
+            guiMainClase.actualizarTabla();
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_borrar);

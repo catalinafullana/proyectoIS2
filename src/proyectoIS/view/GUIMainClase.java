@@ -57,12 +57,14 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
                 aModificar(id);
             }
         });
+        _clases.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         JScrollPane scrollPane = new JScrollPane(_clases);
 
         panelPrincipal.add(scrollPane);
 
         add(panelPrincipal);
+
 
         _clases.setVisible(true);
     }
@@ -159,7 +161,11 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         search.addActionListener(e->{
             ControladorAlumno controladorAlumno = new ControladorAlumno();
             String[] stringAlumno = this.search_alumno.getText().split(" ");
-            Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
+            Alumno a = null;
+            if(stringAlumno.length > 1){
+                a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
+            }
+
 
             ControladorStaff controladorStaff = new ControladorStaff();
             String[] stringStaff = this.search_profesor.getText().split(" ");
@@ -167,11 +173,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             if(stringStaff.length > 1){
                 s = controladorStaff.busquedaStaff(stringStaff[0],stringStaff[1], stringStaff[2]).getFirst();
             }
-
-
-            ArrayList<Clase> listaClases = new ArrayList<>(controladorClase.busquedaClase(a, s, search_fecha.getText()));
+            String StringFecha = "";
+            if(!search_fecha.getText().equals("Fecha") && !search_fecha.getText().isEmpty()){
+                StringFecha = search_fecha.getText();
+            }
+            ArrayList<Clase> lista = new ArrayList<>(controladorClase.busquedaClase(a, s, StringFecha));
             // TODO: PARA ACTUALIZAR LA TABLA NECESITO QUE EL PANEL PRINCIPAL SEA UN ATRIBUTO
-            _clases.setModel(new ClaseModelTable(listaClases));
+            _clases.setModel(new ClaseModelTable(lista));
 
 
         });
@@ -202,6 +210,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     private void aModificar(String id){
         guiModificarClase.actualizarCampos(id);
         mainWindow.changeJPanel(this, guiModificarClase);
+    }
+
+    public void actualizarTabla(){
+        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+        ClaseModelTable modelTable = new ClaseModelTable(arrayClases);
+
+        _clases.setModel(modelTable);
     }
 
 }

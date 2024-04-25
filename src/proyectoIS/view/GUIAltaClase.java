@@ -127,6 +127,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             String fechaFormateada = formato.format(fecha);
 
             controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""));
+            guiMainClase.actualizarTabla();
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_anyadir);
