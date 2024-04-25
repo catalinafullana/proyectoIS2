@@ -1,6 +1,11 @@
 package proyectoIS.view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import com.toedter.calendar.JCalendar;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
@@ -22,7 +27,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     JComboBox _alumno_clase_comboBox;
     JComboBox _profesor_clase_comboBox;
     JComboBox _vehiculo_clase_comboBox;
-    JTextPane _fecha_clase_text_field;
+    JCalendar _fecha_clase_calendar;
     JComboBox _hora_clase_comboBox;
     JTextPane _id_clase_text;
     // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
@@ -39,17 +44,17 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     private void initGUI(){
         guiMainClase.toolbar(this);
 
-        JPanel panelPrincipal = new JPanel();
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
 
-        panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
-        JPanel pAux = new JPanel();
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.5)));
 
-        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
+        JPanel panelDatos = new JPanel();
+        panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
+        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.7)));
 
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 1,0,0));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar clase </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Nueva clase </font></html>"), BorderLayout.PAGE_START);
 
         DefaultComboBoxModel<String> tipo_model_alumno = new DefaultComboBoxModel<String>();
         ControladorAlumno controladorAlumno = new ControladorAlumno();
@@ -64,6 +69,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         ControladorStaff controladorStaff = new ControladorStaff();
         DefaultComboBoxModel<String> tipo_model_staff = new DefaultComboBoxModel<String>();
+
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
@@ -88,23 +94,27 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             }
         }
 
+        _id_clase_text = new JTextPane();
+
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
-        _fecha_clase_text_field = new JTextPane();
+        _fecha_clase_calendar = new JCalendar();
         _hora_clase_comboBox = new JComboBox<>(tipo_model_hora);
-        _id_clase_text = new JTextPane();
         _id_clase_text.setEditable(false);
 
+        creaCampo(panelDatos, new JLabel("ID Clase: "), _id_clase_text);
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
-        creaCampo(panelDatos, new JLabel("Fecha: "), _fecha_clase_text_field);
         creaDesplegable(panelDatos, new JLabel("Hora: "), _hora_clase_comboBox);
-        creaCampo(panelDatos, new JLabel("ID Clase: "), _id_clase_text);
 
-        panelPrincipal.add(panelDatos);
-        pAux.add(Box.createVerticalStrut(20));
+        JPanel auxFecha = new JPanel(new GridLayout(1, 2, 0, 0));
+        auxFecha.add(new JLabel("Fecha: "));
+        auxFecha.add(_fecha_clase_calendar);
+        panelDatos.add(auxFecha);
+
+        panelPrincipal.add(panelDatos, BorderLayout.CENTER);
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e->{
@@ -115,6 +125,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             mainWindow.changeJPanel(this, guiMainClase);
         });
         panelOpciones.add(_guardar);
+        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
@@ -123,8 +134,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         });
         panelOpciones.add(_borrar);
 
-        pAux.add(panelOpciones);
-        panelPrincipal.add(pAux);
+        panelPrincipal.add(panelOpciones, BorderLayout.PAGE_END);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
@@ -133,20 +143,30 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
-        //area_texto.setPreferredSize(new Dimension(100, 30));
-        panel.add(label);
-        panel.add(area_texto);
+        JPanel aux = new JPanel(new GridLayout(1, 2, 0, 0));
+        aux.add(label);
+        aux.add(area_texto);
+        panel.add(aux);
+        panel.add(Box.createGlue());
     }
 
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
-        panel.add(label);
-        panel.add(combo);
+        JPanel aux = new JPanel(new GridLayout(1, 2, 0, 0));
+        aux.add(label);
+        aux.add(combo);
+        panel.add(aux);
+        panel.add(Box.createGlue());
     }
 
     public void actualizarCampos(String id){
         Clase consulta = controladorClase.consultaClase(id);
 
-        _fecha_clase_text_field.setText(consulta.get_fecha());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+            _fecha_clase_calendar.setDate(formato.parse(consulta.get_fecha()));
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
         _hora_clase_comboBox.setSelectedItem(consulta.get_hora());
         _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
         _profesor_clase_comboBox.setSelectedItem(consulta.get_profesor().get_nombre() + " " + consulta.get_profesor().get_apellido1() + " " + consulta.get_profesor().get_apellido2());
@@ -164,7 +184,12 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
         Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
 
-        return new Clase(v.get_tipo_vehiculo(), this._fecha_clase_text_field.getText(), p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = this._fecha_clase_calendar.getDate();
+        // Formateamos la fecha en una cadena de texto
+        String fechaFormateada = formato.format(fecha);
+
+        return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
     }
 
 
