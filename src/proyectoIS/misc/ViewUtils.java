@@ -40,7 +40,7 @@ public class ViewUtils {
      */
     public static void quit(Component c) {
 
-        int n = JOptionPane.showOptionDialog(getWindow(c), "Are sure you want to quit?", "Quit",
+        int n = JOptionPane.showOptionDialog(getWindow(c), "¿Esta seguro?", "Exit",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
         if (n == 0) {

@@ -5,6 +5,7 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.*;
 
 import javax.swing.*;
@@ -125,10 +126,15 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             Date fecha = this._fecha_clase_calendar.getDate();
             // Formateamos la fecha en una cadena de texto
             String fechaFormateada = formato.format(fecha);
-
-            controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""));
-            guiMainClase.actualizarTabla();
-            mainWindow.changeJPanel(this, guiMainClase);
+            // COMPROBACION DE DATOS INTRODUCIDOS
+            if(comprobarHorario(a, p)){
+                if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
+                    guiMainClase.actualizarTabla();
+                    mainWindow.changeJPanel(this, guiMainClase);
+                }
+            }else{
+                ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
+            }
         });
         panelOpciones.add(_anyadir);
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
@@ -148,5 +154,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         panel.add(Box.createGlue());
     }
 
-
+    private boolean comprobarHorario(Alumno a, Staff p){
+        return a.getPreferencia_clase().equals(p.get_preferencia_horario());
+    }
 }

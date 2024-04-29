@@ -82,7 +82,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.backToMain(this);
         });
 
@@ -120,7 +119,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         addClase = new JButton(new ImageIcon("resources/icons/add.png"));
         addClase.setPreferredSize(new Dimension(40, 40));
         addClase.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.changeJPanel(this, guiAltaClase);
         });
         buttonPanel.add(addClase);
@@ -131,25 +129,16 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         search_alumno = new JTextField("Alumno");
         search_alumno.setPreferredSize(new Dimension(100, 30));
-        search_alumno.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_alumno);
 
 
 
         search_profesor = new JTextField("Profesor");
         search_profesor.setPreferredSize(new Dimension(100, 30));
-        search_profesor.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_profesor);
 
         search_fecha = new JTextField("Fecha");
         search_fecha.setPreferredSize(new Dimension(100, 30));
-        search_fecha.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_fecha);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
@@ -168,7 +157,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             if(stringAlumno.length > 1){
                 a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").getFirst();
             }
-
 
             ControladorStaff controladorStaff = new ControladorStaff();
             String[] stringStaff = this.search_profesor.getText().split(" ");
