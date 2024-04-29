@@ -23,6 +23,8 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
     GUIModificarStaff guiModificarStaff;
     MainWindow mainWindow;
 
+    JTable staffs;
+
     public GUIMainStaff(ControladorStaff controladorStaff, MainWindow mainWindow){
         this.controladorStaff = controladorStaff;
         this.mainWindow = mainWindow;
@@ -41,7 +43,8 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
 
         StaffModelTable model = new StaffModelTable(arrayStaff);
-        JTable staffs = new JTable(model);
+        staffs = new JTable(model);
+        //NO ESTA FUNCIONANDO staffs.setPreferredSize(new Dimension((int)(MainWindow.width*0.8), (int)(MainWindow.height*0.7)));
 
         staffs.setRowSelectionAllowed(true);
 

@@ -52,7 +52,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
 
         JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo staff </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Consulta staff </font></html>"));
 
 
         _nombre_staff_text_field = new JTextPane();
@@ -129,6 +129,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         _email_staff_text_field.setText(consultado.get_email());
 
         //_nombre_staff_text_field.setText("Prueba");
+        _preferencia_horario_combo.setSelectedItem(consultado.get_preferencia_horario()); //Pone deafult a mañana
 
     }
 
