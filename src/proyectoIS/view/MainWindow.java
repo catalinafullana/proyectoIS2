@@ -4,11 +4,12 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class MainWindow extends JFrame {
     public static int width=800,height=600;
@@ -63,6 +64,45 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         panelPrincipal.setVisible(true);
+
+        // Mensaje de exit
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                ViewUtils.quit(MainWindow.this);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent windowEvent) {
+
+            }
+        });
+
     }
 
     private JButton addButton(String buttonText, Dimension d, JPanel container){
