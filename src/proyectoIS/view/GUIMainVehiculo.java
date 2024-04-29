@@ -22,7 +22,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
     GUIAltaVehiculo guiAltaVehiculo;
     MainWindow mainWindow;
-
+    JTable _vehiculos;
 
     public GUIMainVehiculo(ControladorVehiculo controladorVehiculo, MainWindow mainWindow) {
         this.controladorVehiculo = controladorVehiculo;
@@ -38,18 +38,33 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
         add(panelPrincipal);
-
-        ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
-
-        VehiculosModelTable model = new VehiculosModelTable(arrayVehiculos);
-
-        JTable vehiculos = new JTable(model);
-
-        JScrollPane scrollPane = new JScrollPane(vehiculos);
-        panelPrincipal.add(scrollPane);
+        tabla(panelPrincipal);
 
         add(panelPrincipal);
-        vehiculos.setVisible(true);
+    }
+
+    private void tabla(JPanel panelPrincipal) {
+        ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
+        VehiculosModelTable model = new VehiculosModelTable(arrayVehiculos);
+
+        _vehiculos = new JTable(model);
+        _vehiculos.setAutoResizeMode(JTable.WIDTH);
+        Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
+
+        JScrollPane scrollPane = new JScrollPane(_vehiculos);
+
+        _vehiculos.setPreferredSize(tabla);
+        scrollPane.setPreferredSize(tabla);
+
+        // Crear un panel que contendrá la tabla y centrará el contenido
+        JPanel tablePanel = new JPanel(new GridBagLayout());
+        tablePanel.setPreferredSize(tabla);
+        tablePanel.add(scrollPane, new GridBagConstraints());
+
+
+        // Agregar el panel a la ventana principal, asegurándose de que esté centrado
+        panelPrincipal.add(tablePanel);
+        _vehiculos.setVisible(true);
     }
 
     protected void toolbar(JPanel p) {

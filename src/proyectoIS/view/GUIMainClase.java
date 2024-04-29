@@ -40,14 +40,21 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         setLayout(new BorderLayout());
         // TODO: EL PANELPRINCIPAL TIENE QUE SER UN ATRIBUTO MAS PARA PODER CAMBIAR LA TABLA
         JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
+        tabla(panelPrincipal);
+        add(panelPrincipal);
 
+
+    }
+
+    private void tabla(JPanel panelPrincipal) {
         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-
         ClaseModelTable model = new ClaseModelTable(arrayClases);
-        _clases = new JTable(model);
 
+        _clases = new JTable(model);
+        _clases.setAutoResizeMode(JTable.WIDTH);
 
         _clases.setRowSelectionAllowed(true);
 
@@ -62,12 +69,18 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
         JScrollPane scrollPane = new JScrollPane(_clases);
 
-        panelPrincipal.add(scrollPane);
+        Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
+        _clases.setPreferredSize(tabla);
+        scrollPane.setPreferredSize(tabla);
+
+        // Crear un panel que contendrá la tabla y centrará el contenido
+        JPanel tablePanel = new JPanel(new GridBagLayout());
+        tablePanel.setPreferredSize(tabla);
+        tablePanel.add(scrollPane, new GridBagConstraints());
 
 
-
-        add(panelPrincipal);
-
+        // Agregar el panel a la ventana principal, asegurándose de que esté centrado
+        panelPrincipal.add(tablePanel);
 
         _clases.setVisible(true);
     }
@@ -172,13 +185,11 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             // TODO: PARA ACTUALIZAR LA TABLA NECESITO QUE EL PANEL PRINCIPAL SEA UN ATRIBUTO
             _clases.setModel(new ClaseModelTable(lista));
 
-
         });
 
         buttonPanel.add(search);
 
         headerPanel.add(buttonPanel);
-
 
 
 

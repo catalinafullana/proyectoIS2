@@ -1,8 +1,6 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
-import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
@@ -23,7 +21,7 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
     GUIModificarStaff guiModificarStaff;
     MainWindow mainWindow;
 
-    JTable staffs;
+    JTable _staffs;
 
     public GUIMainStaff(ControladorStaff controladorStaff, MainWindow mainWindow){
         this.controladorStaff = controladorStaff;
@@ -35,33 +33,48 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
 
     private void init_GUI(){
         setLayout(new BorderLayout());
-
         JPanel panelPrincipal = new JPanel();
+
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
+        tabla(panelPrincipal);
+        add(panelPrincipal);
+    }
 
+
+    private void tabla(JPanel panelPrincipal) {
         ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-
         StaffModelTable model = new StaffModelTable(arrayStaff);
-        staffs = new JTable(model);
-        //NO ESTA FUNCIONANDO staffs.setPreferredSize(new Dimension((int)(MainWindow.width*0.8), (int)(MainWindow.height*0.7)));
 
-        staffs.setRowSelectionAllowed(true);
+        _staffs = new JTable(model);
+        _staffs.setAutoResizeMode(JTable.WIDTH);
 
-        staffs.addMouseListener(new java.awt.event.MouseAdapter() {
+        _staffs.setRowSelectionAllowed(true);
+
+        _staffs.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = staffs.rowAtPoint(evt.getPoint());
-                String dni = staffs.getModel().getValueAt(row, 3).toString();
+                int row = _staffs.rowAtPoint(evt.getPoint());
+                String dni = _staffs.getModel().getValueAt(row, 3).toString();
                 aModificar(dni);
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(staffs);
+        JScrollPane scrollPane = new JScrollPane(_staffs);
+
+        Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
+        _staffs.setPreferredSize(tabla);
+        scrollPane.setPreferredSize(tabla);
+
+        // Crear un panel que contendrá la tabla y centrará el contenido
+        JPanel tablePanel = new JPanel(new GridBagLayout());
+        tablePanel.setPreferredSize(tabla);
+        tablePanel.add(scrollPane, new GridBagConstraints());
+
+
         panelPrincipal.add(scrollPane);
 
-        add(panelPrincipal);
-        staffs.setVisible(true);
+        _staffs.setVisible(true);
     }
 
     protected void toolbar(JPanel p){

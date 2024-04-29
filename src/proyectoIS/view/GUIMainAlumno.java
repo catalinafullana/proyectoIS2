@@ -21,6 +21,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     GUIAltaAlumno guiAltaAlumno;
     MainWindow mainWindow;
+    JTable _alumnos;
 
 
     public GUIMainAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow) {
@@ -38,17 +39,30 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         createHeader(panelPrincipal);
         add(panelPrincipal);
 
+        tabla(panelPrincipal);
+
+    }
+
+    private void tabla(JPanel panelPrincipal) {
         ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "",""));
-
         AlumnoModelTable model = new AlumnoModelTable(arrayAlumnos);
-        JTable alumnos = new JTable(model);
 
-        JPanel panelTabla = new JPanel(new BorderLayout());
-        panelPrincipal.add(panelTabla, BorderLayout.CENTER);
+        _alumnos = new JTable(model);
+        _alumnos.setAutoResizeMode(JTable.WIDTH);
+        JScrollPane scroll = new JScrollPane(_alumnos);
 
-        panelTabla.add(new JScrollPane(alumnos), BorderLayout.CENTER);
+        Dimension dim_tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
+        _alumnos.setPreferredSize(dim_tabla);
+        scroll.setPreferredSize(dim_tabla);
 
-        alumnos.setVisible(true);
+        JPanel panelTabla = new JPanel(new GridBagLayout());
+
+        panelTabla.setPreferredSize(dim_tabla);
+        panelTabla.add(scroll, new GridBagConstraints());
+
+        panelPrincipal.add(panelTabla);
+
+        _alumnos.setVisible(true);
     }
 
     protected void toolbar(JPanel p) {

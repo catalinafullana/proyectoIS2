@@ -3,12 +3,13 @@ package proyectoIS.view;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
+public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
     ControladorAlumno controladorAlumno;
     MainWindow mainWindow;
     GUIMainAlumno guiMainAlumno;
@@ -34,10 +35,10 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
 
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
+        panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.8)));
 
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
-        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.5)));
+        panelDatos.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.5)));
 
         JPanel pAux = new JPanel();
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
@@ -65,7 +66,7 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
 
 
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<>();
-        for(Preferencia_clase t : Preferencia_clase.values()){
+        for (Preferencia_clase t : Preferencia_clase.values()) {
             tipo_model.addElement(t.toString());
         }
         _preferencia_clase_combobox = new JComboBox(tipo_model);
@@ -77,16 +78,24 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver{
 
 
         _anyadir = new JButton("Añadir");
-        _anyadir.addActionListener(e->{
+        _anyadir.addActionListener(e -> {
             //controladorAlumno.altaAlumno(new Alumno(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
-            String nombre=_nombre_alumno_text_field.getText();
-            String apellido1= _apellido1_alumno_text_field.getText();
-            String apellido2= _apellido2_alumno_text_field.getText();
-            String dni= _dni_alumno_text_field.getText();
-            String telefono= _telefono_alumno_text_field.getText();
-            String email= _email_alumno_text_field.getText();
-            Preferencia_clase preferencia_clase = Preferencia_clase.cast(_preferencia_clase_combobox.getSelectedItem().toString());
-            controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni,telefono, email, preferencia_clase));
+            String nombre = _nombre_alumno_text_field.getText();
+            String apellido1 = _apellido1_alumno_text_field.getText();
+            String apellido2 = _apellido2_alumno_text_field.getText();
+            String dni = _dni_alumno_text_field.getText();
+            String telefono = _telefono_alumno_text_field.getText();
+            String email = _email_alumno_text_field.getText();
+            String pref_clase = _preferencia_clase_combobox.getSelectedItem().toString();
+
+            if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty()
+                    || telefono.isEmpty() || email.isEmpty() || pref_clase.isEmpty())
+                ViewUtils.showErrorMsg("Debe ingresar todos los campos");
+
+
+            Preferencia_clase preferencia_clase = Preferencia_clase.cast(pref_clase);
+
+            controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni, telefono, email, preferencia_clase));
             mainWindow.changeJPanel(this, guiMainAlumno);
         });
         panelOpciones.add(_anyadir);
