@@ -35,25 +35,18 @@ public class ClaseModelTable extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object ret = null;
         Clase clase = clases.get(rowIndex);
-        switch (columnIndex) {
-            case 0:
-                ret = clase.get_id_clase();
-                break;
-            case 1:
-                ret = clase.get_alumno().get_nombre() + " " + clase.get_alumno().get_apellido1();
-                break;
-            case 2:
-                ret = clase.get_profesor().get_nombre() + " " + clase.get_profesor().get_apellido1();
-                break;
-            case 3:
-                ret = "Matricula: " + clase.get_vehiculo().get_matricula() + " Modelo: " + clase.get_vehiculo().get_modelo();
-                break;
-            case 4:
-                ret = clase.get_fecha();
-                break;
-            case 5:
-                ret = clase.get_hora();
-                break;
+        if (columnIndex == 0) {
+            ret = clase.get_id_clase();
+        } else if (columnIndex == 1) {
+            ret = clase.get_alumno().get_nombre() + " " + clase.get_alumno().get_apellido1();
+        } else if (columnIndex == 2) {
+            ret = clase.get_profesor().get_nombre() + " " + clase.get_profesor().get_apellido1();
+        } else if (columnIndex == 3) {
+            ret = "Matricula: " + clase.get_vehiculo().get_matricula() + " Modelo: " + clase.get_vehiculo().get_modelo();
+        } else if (columnIndex == 4) {
+            ret = clase.get_fecha();
+        } else if (columnIndex == 5) {
+            ret = clase.get_hora();
         }
 
         fireTableDataChanged();

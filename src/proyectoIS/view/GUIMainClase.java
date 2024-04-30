@@ -8,7 +8,7 @@ import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -28,6 +28,9 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     MainWindow mainWindow;
     GUIModificarClase guiModificarClase;
 
+    DefaultTableModel _defaultTableModel;
+    String[] _headers = {"ID Clase", "Alumno", "Profesor", "Vehiculo", "Fecha", "Hora"};
+
     public GUIMainClase(ControladorClase controladorClase, MainWindow mainWindow){
         this.controladorClase = controladorClase;
         this.mainWindow = mainWindow;
@@ -45,16 +48,31 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         createHeader(panelPrincipal);
         tabla(panelPrincipal);
         add(panelPrincipal);
-
-
     }
 
     private void tabla(JPanel panelPrincipal) {
         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-        ClaseModelTable model = new ClaseModelTable(arrayClases);
 
-        _clases = new JTable(model);
-        _clases.setAutoResizeMode(JTable.WIDTH);
+        _defaultTableModel = new DefaultTableModel();
+
+        _defaultTableModel.setColumnIdentifiers(_headers);
+        _clases = new JTable(_defaultTableModel){
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(
+                        Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
+
+        JScrollPane scrollPane = new JScrollPane(_clases, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
+        _clases.setPreferredSize(tabla);
+        scrollPane.setPreferredSize(tabla);
 
         _clases.setRowSelectionAllowed(true);
 
@@ -67,22 +85,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(_clases);
-
-        Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        _clases.setPreferredSize(tabla);
-        scrollPane.setPreferredSize(tabla);
-
-        // Crear un panel que contendrá la tabla y centrará el contenido
         JPanel tablePanel = new JPanel(new GridBagLayout());
         tablePanel.setPreferredSize(tabla);
         tablePanel.add(scrollPane, new GridBagConstraints());
 
-
-        // Agregar el panel a la ventana principal, asegurándose de que esté centrado
         panelPrincipal.add(tablePanel);
 
-        _clases.setVisible(true);
+        actualizarTabla(arrayClases);
     }
 
     protected void toolbar(JPanel p){
@@ -183,8 +192,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             }
             ArrayList<Clase> lista = new ArrayList<>(controladorClase.busquedaClase(a, s, StringFecha));
             // TODO: PARA ACTUALIZAR LA TABLA NECESITO QUE EL PANEL PRINCIPAL SEA UN ATRIBUTO
-            _clases.setModel(new ClaseModelTable(lista));
-
+            actualizarTabla(lista);
         });
 
         buttonPanel.add(search);
@@ -214,11 +222,35 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         mainWindow.changeJPanel(this, guiModificarClase);
     }
 
-    public void actualizarTabla(){
-        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-        ClaseModelTable modelTable = new ClaseModelTable(arrayClases);
+    public void actualizarTablaExterno(ArrayList<Clase> arrayClases){
+        for (int i = 0; i < arrayClases.size(); i++) {
+            Clase c = arrayClases.get(i);
+            _defaultTableModel.setValueAt(c.get_id_clase(), i, 0);
+            _defaultTableModel.setValueAt(c.get_alumno().get_nombre()+ " " + c.get_alumno().get_apellido1() + " " + c.get_alumno().get_apellido2(), i, 1);
+            _defaultTableModel.setValueAt(c.get_profesor().get_nombre() + " " + c.get_profesor().get_apellido1() + " " + c.get_profesor().get_apellido2(), i, 2);
+            _defaultTableModel.setValueAt("Matricula: " + c.get_vehiculo().get_matricula() + " Modelo: " + c.get_vehiculo().get_modelo(), i, 3);
+            _defaultTableModel.setValueAt(c.get_fecha(), i, 4);
+            _defaultTableModel.setValueAt(c.get_hora(), i, 5);
+        }
+        _defaultTableModel.fireTableStructureChanged();
+        _defaultTableModel.fireTableDataChanged();
+    }
 
-        _clases.setModel(modelTable);
+    public void actualizarTabla(ArrayList<Clase> arrayClases){
+        _defaultTableModel.setNumRows(arrayClases.size());
+        for (int i = 0; i < arrayClases.size(); i++) {
+            Clase c = arrayClases.get(i);
+            _defaultTableModel.setValueAt(c.get_id_clase(), i, 0);
+            _defaultTableModel.setValueAt(c.get_alumno().get_nombre()+ " " + c.get_alumno().get_apellido1() + " " + c.get_alumno().get_apellido2(), i, 1);
+            _defaultTableModel.setValueAt(c.get_profesor().get_nombre() + " " + c.get_profesor().get_apellido1() + " " + c.get_profesor().get_apellido2(), i, 2);
+            _defaultTableModel.setValueAt("Matricula: " + c.get_vehiculo().get_matricula() + " Modelo: " + c.get_vehiculo().get_modelo(), i, 3);
+            _defaultTableModel.setValueAt(c.get_fecha(), i, 4);
+            _defaultTableModel.setValueAt(c.get_hora(), i, 5);
+        }
+
+        _defaultTableModel.fireTableDataChanged();
+        _defaultTableModel.fireTableStructureChanged();
+
     }
 
 }

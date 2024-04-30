@@ -11,6 +11,7 @@ import proyectoIS.modelo_de_dominio.*;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -129,7 +130,8 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             // COMPROBACION DE DATOS INTRODUCIDOS
             if(comprobarHorario(a, p)){
                 if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
-                    guiMainClase.actualizarTabla();
+                    ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                    guiMainClase.actualizarTablaExterno(arrayClases);
                     mainWindow.changeJPanel(this, guiMainClase);
                 }
             }else{
