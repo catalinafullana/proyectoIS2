@@ -34,4 +34,11 @@ public class ControladorStaff {
         return this.faServiceStaff.modificarStaff(staff);
     }
 
+    public boolean iniciarSesion(String usuario, String contrasena){
+        return this.faServiceStaff.iniciarSesion(usuario, contrasena);
+    }
+
+    public boolean registrar(String usuario, String contrasena) {
+        return this.faServiceStaff.registrar(usuario, contrasena);
+    }
 }

@@ -2,8 +2,10 @@ package proyectoIS.Pa_Logica_Staff;
 
 import proyectoIS.Pa_Integracion_Staff.Fa_DAO_Staff;
 import proyectoIS.Pa_Integracion_Vehiculo.Fa_DAO_Vehiculo;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Staff;
 
+import javax.swing.text.View;
 import java.util.List;
 
 public class Service_Staff implements Interface_Service_Staff{
@@ -52,5 +54,27 @@ public class Service_Staff implements Interface_Service_Staff{
             return faDAOStaff.bajaStaff(dni);
         }
         return false;
+    }
+
+    @Override
+    public boolean inicioSesion(String usuario, String contrasena) {
+        Fa_DAO_Staff faDAOStaff = new Fa_DAO_Staff();
+        if(faDAOStaff.existeUsuario(usuario)){
+            return faDAOStaff.inicioSesion(usuario, contrasena);
+        }else{
+            ViewUtils.showErrorMsg("Usuario no existente");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean registrar(String usuario, String contrasena) {
+        Fa_DAO_Staff faDAOStaff = new Fa_DAO_Staff();
+        if(!faDAOStaff.existeUsuario(usuario)){
+            return faDAOStaff.registrar(usuario, contrasena);
+        }else{
+            ViewUtils.showErrorMsg("Usuario existente");
+            return false;
+        }
     }
 }

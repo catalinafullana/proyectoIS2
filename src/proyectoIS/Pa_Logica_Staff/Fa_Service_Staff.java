@@ -38,4 +38,14 @@ public class Fa_Service_Staff implements Interface_Fa_Service_Staff{
     @Override
     public boolean bajaStaff(String dni) {
         return interface_service_staff.bajaStaff(dni);}
+
+    @Override
+    public boolean iniciarSesion(String usuario, String contrasena) {
+        return interface_service_staff.inicioSesion(usuario, contrasena);
+    }
+
+    @Override
+    public boolean registrar(String usuario, String contrasena) {
+        return interface_service_staff.registrar(usuario, contrasena);
+    }
 }

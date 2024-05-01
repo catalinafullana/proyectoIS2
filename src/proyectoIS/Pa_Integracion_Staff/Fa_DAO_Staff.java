@@ -41,4 +41,19 @@ public class Fa_DAO_Staff implements Interface_Fa_DAO_Staff_Imp {
     public boolean existeStaff(String dni) {
         return iDAOStaffImp.existeStaff(dni);
     }
+
+    @Override
+    public boolean existeUsuario(String usuario) {
+        return iDAOStaffImp.existeUsuario(usuario);
+    }
+
+    @Override
+    public boolean inicioSesion(String usuario, String contrasena) {
+        return iDAOStaffImp.inicioSesion(usuario, contrasena);
+    }
+
+    @Override
+    public boolean registrar(String usuario, String contrasena) {
+        return iDAOStaffImp.registrar(usuario, contrasena);
+    }
 }

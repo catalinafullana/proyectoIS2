@@ -26,12 +26,20 @@ public class ViewUtils {
         showErrorMsg(null, msg);
     }
 
+    public static void showSuccessMsg(String msg){
+        showSuccessMsg(null, msg);
+    }
+
     /*
      * opens a dialog box to show an error, it will be places relative to the window
      * to which 'c' belongs
      */
     static void showErrorMsg(Component c, String msg) {
         JOptionPane.showMessageDialog(getWindow(c), msg, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    static void showSuccessMsg(Component c, String msg){
+        JOptionPane.showMessageDialog(getWindow(c), msg, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /*

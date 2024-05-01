@@ -11,4 +11,10 @@ public interface Interface_DAO_Staff_Imp {
     public List<Staff> busquedaStaff(String nombre, String apellido1, String Apellido2);
     public Staff consultaStaff(String dni);
     public boolean existeStaff(String dni);
+
+    boolean existeUsuario(String usuario);
+
+    boolean inicioSesion(String usuario, String contrasena);
+
+    boolean registrar(String usuario, String contrasena);
 }

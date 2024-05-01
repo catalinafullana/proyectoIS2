@@ -147,4 +147,66 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
             Conexion.cerrarConexion();
         }
     }
+
+    @Override
+    public boolean existeUsuario(String usuario) {
+        String sql = "select * from Tabla_usuarios where usuario ='" + usuario + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            if(rs.getRow() > 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
+        }
+    }
+
+    @Override
+    public boolean inicioSesion(String usuario, String contrasena) {
+
+        String sql = "select * from Tabla_usuarios where usuario ='" + usuario + "' and contraseña='" + contrasena + "'";
+        try{
+            Connection con = Conexion.obtenerConexion();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            rs.next();
+            if(rs.getRow() > 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
+        }
+    }
+
+    @Override
+    public boolean registrar(String usuario, String contrasena) {
+        String sql = "insert into Tabla_usuarios (usuario, contraseña)" +  "values ('" + usuario + "','" + contrasena + "')";
+        try {
+            Connection con = Conexion.obtenerConexion();
+            PreparedStatement st = con.prepareStatement(sql);
+            int i = st.executeUpdate(sql);
+            if(i > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            Conexion.cerrarConexion();
+        }
+    }
 }

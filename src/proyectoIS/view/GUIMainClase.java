@@ -222,20 +222,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         mainWindow.changeJPanel(this, guiModificarClase);
     }
 
-    public void actualizarTablaExterno(ArrayList<Clase> arrayClases){
-        for (int i = 0; i < arrayClases.size(); i++) {
-            Clase c = arrayClases.get(i);
-            _defaultTableModel.setValueAt(c.get_id_clase(), i, 0);
-            _defaultTableModel.setValueAt(c.get_alumno().get_nombre()+ " " + c.get_alumno().get_apellido1() + " " + c.get_alumno().get_apellido2(), i, 1);
-            _defaultTableModel.setValueAt(c.get_profesor().get_nombre() + " " + c.get_profesor().get_apellido1() + " " + c.get_profesor().get_apellido2(), i, 2);
-            _defaultTableModel.setValueAt("Matricula: " + c.get_vehiculo().get_matricula() + " Modelo: " + c.get_vehiculo().get_modelo(), i, 3);
-            _defaultTableModel.setValueAt(c.get_fecha(), i, 4);
-            _defaultTableModel.setValueAt(c.get_hora(), i, 5);
-        }
-        _defaultTableModel.fireTableStructureChanged();
-        _defaultTableModel.fireTableDataChanged();
-    }
-
     public void actualizarTabla(ArrayList<Clase> arrayClases){
         _defaultTableModel.setNumRows(arrayClases.size());
         for (int i = 0; i < arrayClases.size(); i++) {

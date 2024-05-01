@@ -12,4 +12,10 @@ public interface Interface_Fa_DAO_Staff_Imp {
     public boolean altaStaff(Staff staff);
     public boolean bajaStaff(String dni);
     public boolean existeStaff(String dni);
+
+    boolean existeUsuario(String usuario);
+
+    boolean inicioSesion(String usuario, String contrasena);
+
+    boolean registrar(String usuario, String contrasena);
 }

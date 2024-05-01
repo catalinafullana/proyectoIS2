@@ -13,4 +13,7 @@ public interface Interface_Service_Staff {
     public boolean altaStaff(Staff staff);
     public boolean bajaStaff(String dni);
 
+    boolean inicioSesion(String usuario, String contrasena);
+
+    boolean registrar(String usuario, String contrasena);
 }

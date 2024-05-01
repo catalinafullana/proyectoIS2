@@ -131,7 +131,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             if(comprobarHorario(a, p)){
                 if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
                     ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-                    guiMainClase.actualizarTablaExterno(arrayClases);
+                    guiMainClase.actualizarTabla(arrayClases);
                     mainWindow.changeJPanel(this, guiMainClase);
                 }
             }else{
@@ -159,4 +159,5 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     private boolean comprobarHorario(Alumno a, Staff p){
         return a.getPreferencia_clase().equals(p.get_preferencia_horario());
     }
+
 }
