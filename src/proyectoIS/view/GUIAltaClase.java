@@ -131,6 +131,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             if(comprobarHorario(a, p)){
                 if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
                     ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                    ViewUtils.showSuccessMsg("Clase creada con exito");
                     guiMainClase.actualizarTabla(arrayClases);
                     mainWindow.changeJPanel(this, guiMainClase);
                 }

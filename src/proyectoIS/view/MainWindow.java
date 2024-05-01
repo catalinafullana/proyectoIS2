@@ -23,19 +23,22 @@ public class MainWindow extends JFrame {
     private JPanel panelPrincipal;
 
     private GUIMainVehiculo guiMainVehiculo;
-
     private GUIMainAlumno guiMainAlumno;
     private GUIMainStaff guiMainStaff;
     private GUIMainClase guiMainClase;
 
+    private GUIInicioSesion guiInicioSesion;
 
-    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff) {
+
+
+    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff, GUIInicioSesion guiInicioSesion) {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
-
+        this.guiInicioSesion = guiInicioSesion;
+        // TODO: INTENTAR ARREGLAR EL DELAY
         initGUI();
     }
 
@@ -125,6 +128,9 @@ public class MainWindow extends JFrame {
         Dimension buttonSize = new Dimension(500, 50);
         _boton_clases= addButton("Clases",buttonSize, panelPrincipal );
         _boton_clases.addActionListener(e-> {
+            // TODO: AL AÑADIR UN VEHICULO/ALUMNO/PROFESOR NO SE ACTUALIZAN LOS CAMPOS, POR ESO CREO UNA NUEVA INSTANCIA CON UN NUEVO CONTROLLER
+            // PERO AÑADE MAS DELAY A LA EJECUCION ENTONCES NO SE QUE HACER PARA ARREGLARLO
+            guiMainClase = new GUIMainClase(new ControladorClase(), this);
             changeJPanel(this.panelPrincipal, guiMainClase);
         });
 
@@ -156,7 +162,11 @@ public class MainWindow extends JFrame {
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            backToMain(this.panelPrincipal);
+            //backToMain(this.panelPrincipal);
+            this.setVisible(false);
+            guiInicioSesion.limpiarCampos();
+            guiInicioSesion.setVisible(true);
+
         });
         //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));

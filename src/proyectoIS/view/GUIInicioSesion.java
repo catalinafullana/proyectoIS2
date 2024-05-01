@@ -8,6 +8,8 @@ import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class GUIInicioSesion extends JFrame {
 
@@ -19,6 +21,8 @@ public class GUIInicioSesion extends JFrame {
     private ControladorVehiculo controladorVehiculo;
 
     private JButton home;
+    private JTextField usuario;
+    private JPasswordField contrasena;
 
     private JPanel panelPrincipal;
 
@@ -70,7 +74,42 @@ public class GUIInicioSesion extends JFrame {
         toolbar.add(home);
         //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent windowEvent) {
 
+            }
+
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                ViewUtils.quit(GUIInicioSesion.this);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent windowEvent) {
+
+            }
+        });
         p.add(toolbar, BorderLayout.PAGE_START);
     }
 
@@ -88,11 +127,11 @@ public class GUIInicioSesion extends JFrame {
 
 
         aux.add(new JLabel("Usuario: "));
-        JTextField usuario = new JTextField();
+        usuario = new JTextField();
         usuario.setPreferredSize(new Dimension(40, 20));
         aux.add(usuario);
         aux.add(new JLabel("Contaseña: "));
-        JPasswordField contrasena = new JPasswordField();
+        contrasena = new JPasswordField();
         contrasena.setPreferredSize(new Dimension(40, 20));
         aux.add(contrasena);
 
@@ -102,11 +141,10 @@ public class GUIInicioSesion extends JFrame {
         inicioSesion.addActionListener(e->{
             if(!controladorStaff.iniciarSesion(usuario.getText(), toString(contrasena.getPassword()))){
                 ViewUtils.showErrorMsg("Contraseña incorrecta");
-                usuario.setText("");
-                contrasena.setText("");
+                limpiarCampos();
             }else{
                 this.setVisible(false);
-                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff));
+                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this));
             }
 
         });
@@ -115,8 +153,7 @@ public class GUIInicioSesion extends JFrame {
             if(controladorStaff.registrar(usuario.getText(), toString(contrasena.getPassword()))){
                 ViewUtils.showSuccessMsg("Usuario registrado");
             }
-            usuario.setText("");
-            contrasena.setText("");
+            limpiarCampos();
         });
 
         aux.add(inicioSesion);
@@ -132,6 +169,11 @@ public class GUIInicioSesion extends JFrame {
             s.append(c[i]);
         }
         return s.toString();
+    }
+
+    public void limpiarCampos(){
+        this.usuario.setText("");
+        this.contrasena.setText("");
     }
 
 }

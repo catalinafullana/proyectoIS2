@@ -11,6 +11,7 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
@@ -55,7 +56,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1,0,0));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nueva clase </font></html>"), BorderLayout.PAGE_START);
+        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar clase </font></html>"), BorderLayout.PAGE_START);
 
         DefaultComboBoxModel<String> tipo_model_alumno = new DefaultComboBoxModel<String>();
         ControladorAlumno controladorAlumno = new ControladorAlumno();
@@ -124,6 +125,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
             controladorClase.modificarClase(c);
             ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+            ViewUtils.showSuccessMsg("Clase modificada con exito");
             guiMainClase.actualizarTabla(arrayClases);
             mainWindow.changeJPanel(this, guiMainClase);
         });
@@ -134,6 +136,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _borrar.addActionListener(e->{
             this.controladorClase.bajaClase(_id_clase_text.getText());
             ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+            ViewUtils.showSuccessMsg("Clase borrada con exito");
             guiMainClase.actualizarTabla(arrayClases);
             mainWindow.changeJPanel(this, guiMainClase);
         });
