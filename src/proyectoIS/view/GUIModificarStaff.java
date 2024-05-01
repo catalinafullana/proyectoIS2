@@ -11,6 +11,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUIModificarStaff extends JPanel implements StaffObserver {
 
@@ -89,12 +90,16 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
                     _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
                     _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
                     Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString())));
+            ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+            guiMainStaff.actualizarTabla(listaActualizada);
             mainWindow.changeJPanel(this, guiMainStaff);
         });
         panelOpciones.add(_anyadir);
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             controladorStaff.bajaStaff(_dni_staff_text_field.getText());
+            ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+            guiMainStaff.actualizarTabla(listaActualizada);
             mainWindow.changeJPanel(this, guiMainStaff);
         });
         panelOpciones.add(_borrar);
