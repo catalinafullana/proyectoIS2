@@ -93,6 +93,10 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         });
         panelOpciones.add(_anyadir);
         _borrar = new JButton("Borrar");
+        _borrar.addActionListener(e->{
+            controladorStaff.bajaStaff(_dni_staff_text_field.getText());
+            mainWindow.changeJPanel(this, guiMainStaff);
+        });
         panelOpciones.add(_borrar);
 
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
