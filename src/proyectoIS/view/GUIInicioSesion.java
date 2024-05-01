@@ -8,7 +8,6 @@ import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class GUIInicioSesion extends JFrame {
 
@@ -38,7 +37,6 @@ public class GUIInicioSesion extends JFrame {
         this.panelPrincipal = new JPanel();
         this.panelPrincipal.setPreferredSize(new Dimension(width, height));
 
-
         JPanel contenido = new JPanel(new GridLayout(2, 1, 0, 0));
         contenido.add((new JLabel("<html><font size='20'> Inicio de sesion </font></html>")), BorderLayout.PAGE_START);
 
@@ -48,16 +46,9 @@ public class GUIInicioSesion extends JFrame {
         panelPrincipal.add(Box.createHorizontalGlue());
         toolbar(panelPrincipal);
 
-        //meter la caja con el inicio de sesion
         addLogIn(panelInicio);
         contenido.add(panelInicio, BorderLayout.CENTER);
         panelPrincipal.add(contenido);
-
-
-
-
-
-
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(width, height));
