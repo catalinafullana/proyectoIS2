@@ -51,7 +51,7 @@ public class ViewUtils {
         int n = JOptionPane.showOptionDialog(getWindow(c), "¿Esta seguro?", "Exit",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-        if (n == 0) {
+        if (n == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
