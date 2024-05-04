@@ -2,10 +2,14 @@ package proyectoIS.view;
 
 import proyectoIS.Main;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,22 +22,27 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     JButton addVehicle;
     JTextField search_matricula;
     JTextField search_modelo;
-    JTextField search_tipo;
+    JTextField search_tipo; // TODO: PONER CON UN COMBOBOX
+    JButton search;
 
     GUIAltaVehiculo guiAltaVehiculo;
+    GUIModificarVehiculo guiModificarVehiculo;
     MainWindow mainWindow;
     JTable _vehiculos;
+
+    DefaultTableModel _defaultTableModel;
+    String[] _headers = {"Matricula", "Modelo", "Tipo de vehiculo"};
 
     public GUIMainVehiculo(ControladorVehiculo controladorVehiculo, MainWindow mainWindow) {
         this.controladorVehiculo = controladorVehiculo;
         this.mainWindow = mainWindow;
         this.guiAltaVehiculo = new GUIAltaVehiculo(this.controladorVehiculo, this.mainWindow, this);
+        this.guiModificarVehiculo = new GUIModificarVehiculo(controladorVehiculo, mainWindow, this);
         init_GUI();
     }
 
     private void init_GUI() {
         setLayout(new BorderLayout());
-        //setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         JPanel panelPrincipal = new JPanel();
         toolbar(panelPrincipal);
         createHeader(panelPrincipal);
@@ -45,26 +54,45 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
     private void tabla(JPanel panelPrincipal) {
         ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
-        VehiculosModelTable model = new VehiculosModelTable(arrayVehiculos);
 
-        _vehiculos = new JTable(model);
-        _vehiculos.setAutoResizeMode(JTable.WIDTH);
+        _defaultTableModel = new DefaultTableModel();
+        _defaultTableModel.setColumnIdentifiers(_headers);
+        _vehiculos = new JTable(_defaultTableModel){
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(
+                        Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
+
+        JScrollPane scrollPane = new JScrollPane(_vehiculos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-
-        JScrollPane scrollPane = new JScrollPane(_vehiculos);
-
         _vehiculos.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
-        // Crear un panel que contendrá la tabla y centrará el contenido
+        _vehiculos.setRowSelectionAllowed(true);
+
+        _vehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = _vehiculos.rowAtPoint(evt.getPoint());
+                String id = _vehiculos.getModel().getValueAt(row, 0).toString();
+                aModificar(id);
+            }
+        });
+
         JPanel tablePanel = new JPanel(new GridBagLayout());
         tablePanel.setPreferredSize(tabla);
         tablePanel.add(scrollPane, new GridBagConstraints());
 
-
-        // Agregar el panel a la ventana principal, asegurándose de que esté centrado
         panelPrincipal.add(tablePanel);
-        _vehiculos.setVisible(true);
+
+        actualizarTabla(arrayVehiculos);
     }
 
     protected void toolbar(JPanel p) {
@@ -80,11 +108,9 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
             //abrir formulario crear
             mainWindow.backToMain(this);
         });
-        //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));
 
 
-        //JLabel header = new JLabel("Vehículos");
         JLabel header = new JLabel("<html><font size='25' color=white> Vehículos </font></html>");
         header.setFont(new Font("Arial", Font.BOLD, 25));
         header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
@@ -101,15 +127,6 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         //headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), 40));
         headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), (int)(MainWindow.height*0.1)));
 
-
-        /*
-        JLabel header = new JLabel("Vehículos");
-        header.setFont(new Font("Arial", Font.BOLD, 25));
-        header.setPreferredSize(new Dimension((int) (MainWindow.width*0.4), 50));
-
-        headerPanel.add(header);
-
-         */
         createButtonsInHeader(headerPanel);
         headerPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#274060")));
 
@@ -122,53 +139,51 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
         addVehicle = new JButton(new ImageIcon("resources/icons/add.png"));
         addVehicle.setPreferredSize(new Dimension(40, 40));
-        addVehicle.addActionListener(e-> {
-            //abrir formulario crear
-            mainWindow.changeJPanel(this, guiAltaVehiculo);
-        });
+
         buttonPanel.add(addVehicle);
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
 
-        search_matricula = new JTextField("Matrícula");
+        search_matricula = new JTextField("Matricula");
         search_matricula.setPreferredSize(new Dimension(100, 30));
-        search_matricula.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
+
         buttonPanel.add(search_matricula);
 
         search_modelo = new JTextField("Modelo");
         search_modelo.setPreferredSize(new Dimension(100, 30));
-        search_modelo.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
+
         buttonPanel.add(search_modelo);
 
         search_tipo = new JTextField("Tipo");
         search_tipo.setPreferredSize(new Dimension(100, 30));
-        search_tipo.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
+
         buttonPanel.add(search_tipo);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
-        /*
-        eraseVehicle = new JButton(new ImageIcon("resources/icons/erase.png"));
-        eraseVehicle.setPreferredSize(new Dimension(40, 40));
-        eraseVehicle.addActionListener(e-> {
-            //abrir formulario borrar
+        ImageIcon searchIcon = new ImageIcon("resources/icons/search.png");
+        Image resize = searchIcon.getImage();
+        resize = resize.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        searchIcon = new ImageIcon(resize);
+        search = new JButton(searchIcon);
+        search.setPreferredSize(new Dimension(40, 40));
+        search.addActionListener(e->{
+            String matricula = "";
+            if(!search_matricula.getText().equals("Matricula")){
+                matricula = search_matricula.getText();
+            }
+            String modelo = "";
+            if(!search_modelo.getText().equals("Modelo")){
+                modelo = search_modelo.getText();
+            }
+            TipoCarnet tipo = null;
+            if(!search_tipo.getText().equals("Tipo")){
+                tipo = TipoCarnet.cast(search_tipo.getText());
+            }
+
+            ArrayList<Vehiculo> lista = new ArrayList<>(controladorVehiculo.busqueda(matricula, modelo, tipo));
+            actualizarTabla(lista);
         });
-        buttonPanel.add(eraseVehicle);
-
-        addVehicle = new JButton(new ImageIcon("resources/icons/add.png"));
-        addVehicle.setPreferredSize(new Dimension(40, 40));
-        addVehicle.addActionListener(e-> {
-            //abrir formulario crear
-        });
-        buttonPanel.add(addVehicle);
-
-         */
-
+        buttonPanel.add(search);
         headerPanel.add(buttonPanel);
 
     }
@@ -186,5 +201,22 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         p.add(s);
     }
 
+    private void aModificar(String matricula){
+        guiModificarVehiculo.actualizarCampos(matricula);
+        mainWindow.changeJPanel(this, guiModificarVehiculo);
+    }
+
+    public void actualizarTabla(ArrayList<Vehiculo> arrayVehiculos){
+        _defaultTableModel.setNumRows(arrayVehiculos.size());
+        for (int i = 0; i < arrayVehiculos.size(); i++) {
+           Vehiculo v = arrayVehiculos.get(i);
+            _defaultTableModel.setValueAt(v.get_matricula(), i, 0);
+            _defaultTableModel.setValueAt(v.get_modelo(), i, 1);
+            _defaultTableModel.setValueAt(v.get_tipo_vehiculo(), i, 2);
+        }
+        _defaultTableModel.fireTableDataChanged();
+        _defaultTableModel.fireTableStructureChanged();
+
+    }
 
 }

@@ -8,7 +8,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO: ELIMINAR CLASE
 public class StaffModelTable extends AbstractTableModel {
 
     String[] _headers = {"Nombre", "Apellido 1", "Apellido 2", "DNI", "Teléfono", "Email", "Horario"};

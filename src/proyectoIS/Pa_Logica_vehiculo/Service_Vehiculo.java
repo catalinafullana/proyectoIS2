@@ -2,6 +2,7 @@ package proyectoIS.Pa_Logica_vehiculo;
 
 import proyectoIS.Pa_Integracion_Vehiculo.Fa_DAO_Vehiculo;
 import proyectoIS.misc.TipoCarnet;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.util.List;
@@ -21,8 +22,10 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
 
         if(faDAOVehiculo.existeVehiculo(matricula)) {
             return faDAOVehiculo.consultaVehiculo(matricula);
+        }else{
+            ViewUtils.showErrorMsg("Vehiculo no existente");
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -31,8 +34,10 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
 
         if(faDAOVehiculo.existeVehiculo(vehiculo.get_matricula())){
             return faDAOVehiculo.modificarVehiculo(vehiculo);
+        }else{
+            ViewUtils.showErrorMsg("Vehiculo no existente");
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -41,8 +46,10 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
 
         if(!faDAOVehiculo.existeVehiculo(vehiculo.get_matricula())){
             return faDAOVehiculo.altaVehiculo(vehiculo);
+        }else{
+            ViewUtils.showErrorMsg("Vehiculo ya existente");
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -51,7 +58,9 @@ public class Service_Vehiculo implements Interface_Service_Vehiculo {
 
         if(faDAOVehiculo.existeVehiculo(matricula)){
             return faDAOVehiculo.bajaVehiculo(matricula);
+        }else{
+            ViewUtils.showErrorMsg("Vehiculo no existente");
+            return false;
         }
-        return false;
     }
 }

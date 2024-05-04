@@ -191,7 +191,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
                 StringFecha = search_fecha.getText();
             }
             ArrayList<Clase> lista = new ArrayList<>(controladorClase.busquedaClase(a, s, StringFecha));
-            // TODO: PARA ACTUALIZAR LA TABLA NECESITO QUE EL PANEL PRINCIPAL SEA UN ATRIBUTO
             actualizarTabla(lista);
         });
 

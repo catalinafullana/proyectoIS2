@@ -98,7 +98,7 @@ public class Service_Clase implements Interface_Service_Clase{
                 }
             }
         }else{
-            ViewUtils.showErrorMsg("Datos introducidos");
+            ViewUtils.showErrorMsg("Datos introducidos erroneos");
             return false;
         }
     }

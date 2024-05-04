@@ -18,6 +18,7 @@ import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.util.Objects;
 
@@ -32,7 +33,6 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     JCalendar _fecha_clase_calendar;
     JComboBox _hora_clase_comboBox;
     JTextPane _id_clase_text;
-    // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
     JButton _guardar;
     JButton _borrar;
 
@@ -123,22 +123,30 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
             Clase c = crearClase(controladorStaff, controladorAlumno, controladorVehiculo);
 
-            controladorClase.modificarClase(c);
-            ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-            ViewUtils.showSuccessMsg("Clase modificada con exito");
-            guiMainClase.actualizarTabla(arrayClases);
-            mainWindow.changeJPanel(this, guiMainClase);
+            if(controladorClase.modificarClase(c)){
+                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                ViewUtils.showSuccessMsg("Clase modificada con exito");
+                guiMainClase.actualizarTabla(arrayClases);
+                mainWindow.changeJPanel(this, guiMainClase);
+            }else{
+                ViewUtils.showErrorMsg("Error al modifcar la clase");
+            }
+
+
         });
         panelOpciones.add(_guardar);
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
-            this.controladorClase.bajaClase(_id_clase_text.getText());
-            ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
-            ViewUtils.showSuccessMsg("Clase borrada con exito");
-            guiMainClase.actualizarTabla(arrayClases);
-            mainWindow.changeJPanel(this, guiMainClase);
+            if(this.controladorClase.bajaClase(_id_clase_text.getText())){
+                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                ViewUtils.showSuccessMsg("Clase borrada con exito");
+                guiMainClase.actualizarTabla(arrayClases);
+                mainWindow.changeJPanel(this, guiMainClase);
+            }else{
+                ViewUtils.showErrorMsg("Error al eliminar la clase");
+            }
         });
         panelOpciones.add(_borrar);
 

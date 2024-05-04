@@ -27,9 +27,6 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     JComboBox _vehiculo_clase_comboBox;
     JCalendar _fecha_clase_calendar;
     JComboBox _hora_clase_comboBox;
-
-
-    // TODO: FALTA EL TIPO DE VEHICULO QUE YO HARIA QUE NO SE PUDIERA CAMBIAR Y QUE AL SELECCIONAR EL VEHICULO SE AUTOCOMPLETASE
     JButton _anyadir;
 
     public GUIAltaClase(ControladorClase c, MainWindow mainWindow, GUIMainClase guiMainClase) {
@@ -49,7 +46,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         JPanel panelDatos = new JPanel();
         panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
         panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.7)));
-
+        JPanel pAux = new JPanel(new GridLayout(1 ,1 , 0 , 0));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1,0,0));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nueva clase </font></html>"), BorderLayout.PAGE_START);
@@ -134,6 +131,8 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
                     ViewUtils.showSuccessMsg("Clase creada con exito");
                     guiMainClase.actualizarTabla(arrayClases);
                     mainWindow.changeJPanel(this, guiMainClase);
+                }else{
+                    ViewUtils.showErrorMsg("Error al crear clase");
                 }
             }else{
                 ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
@@ -141,8 +140,9 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         });
         panelOpciones.add(_anyadir);
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
-        panelPrincipal.add(panelOpciones, BorderLayout.PAGE_END);
-
+        pAux.add(panelOpciones);
+        //panelPrincipal.add(panelOpciones, BorderLayout.PAGE_END);
+        panelPrincipal.add(pAux, BorderLayout.PAGE_END);
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);

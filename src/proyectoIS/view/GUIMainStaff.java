@@ -50,8 +50,6 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
 
     private void tabla(JPanel panelPrincipal) {
         ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-        StaffModelTable model = new StaffModelTable(arrayStaff);
-
         _defaultTableModel = new DefaultTableModel();
         _defaultTableModel.setColumnIdentifiers(_headers);
         _staffs = new JTable(_defaultTableModel){

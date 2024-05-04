@@ -90,6 +90,13 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         panel.add(area_texto);
     }
 
+    public void actualizarCampos(String matricula){
+        Vehiculo consulta = controladorVehiculo.consulta(matricula);
+        _matricula_vehiculo_text_field.setText(consulta.get_matricula());
+        _modelo_vehiculo_text_field.setText(consulta.get_modelo());
+        _tipo_vehiculo.setSelectedItem(consulta.get_tipo_vehiculo());
+    }
+
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
         panel.add(label);
         panel.add(combo);
