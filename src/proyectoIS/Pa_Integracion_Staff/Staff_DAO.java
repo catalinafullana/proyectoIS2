@@ -52,7 +52,7 @@ public class Staff_DAO implements Interface_DAO_Staff_Imp{
 
     @Override
     public boolean modificarStaff(Staff staff) {
-        String sql = "update Tabla_staff set nombre ='" + staff.get_nombre() + "', apellido1 ='" + staff.get_apellido1() + "' where apellido2='" + staff.get_apellido2() + "' where dni='" + staff.get_dni() + "' where tlf='" + staff.get_tlf() + "' where email='" + staff.get_email() + "' where id_trabajador='" + "'";
+        String sql = "update Tabla_staff set  nombre ='" + staff.get_nombre() + "', apellido1 ='" + staff.get_apellido1() + "', apellido2='" + staff.get_apellido2() + "', tlf='" + staff.get_tlf() + "', email='" + staff.get_email() + "', horario='" + staff.get_preferencia_horario() + "'where dni='" + staff.get_dni() + "'";
         try {
             Connection con = Conexion.obtenerConexion();
             PreparedStatement st = con.prepareStatement(sql);

@@ -25,9 +25,7 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
     JTextPane _tlf_staff_text_field;
     JTextPane _email_staff_text_field;
     JComboBox _preferencia_horario_combo;
-    JButton _guardar;
     JButton _anyadir;
-    JButton _borrar;
 
     public GUIAltaStaff(ControladorStaff c, MainWindow mainWindow, GUIMainStaff guiMainStaff) {
         this.controladorStaff = c;
@@ -81,9 +79,6 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
 
         panelPrincipal.add(panelDatos);
 
-
-        _guardar = new JButton("Guardar");
-        panelOpciones.add(_guardar);
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
             controladorStaff.altaStaff(new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
@@ -95,8 +90,6 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
             mainWindow.changeJPanel(this, guiMainStaff);
         });
         panelOpciones.add(_anyadir);
-        _borrar = new JButton("Borrar");
-        panelOpciones.add(_borrar);
 
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
 

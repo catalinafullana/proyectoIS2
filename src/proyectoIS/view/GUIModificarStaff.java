@@ -5,6 +5,7 @@ import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
@@ -26,7 +27,6 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
     JTextPane _email_staff_text_field;
     JComboBox _preferencia_horario_combo;
     JButton _guardar;
-    JButton _anyadir;
     JButton _borrar;
 
     public GUIModificarStaff(ControladorStaff c, MainWindow mainWindow, GUIMainStaff guiMainStaff) {
@@ -84,21 +84,25 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
 
         _guardar = new JButton("Guardar");
         panelOpciones.add(_guardar);
-        _anyadir = new JButton("Añadir");
-        _anyadir.addActionListener(e->{
-            controladorStaff.altaStaff(new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
+        _guardar.addActionListener(e->{
+            Staff s = new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
                     _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
                     _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
-                    Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString())));
-            ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-            guiMainStaff.actualizarTabla(listaActualizada);
-            mainWindow.changeJPanel(this, guiMainStaff);
+                    Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString()));
+            if(controladorStaff.modificarStaff(s)){
+                ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+                ViewUtils.showSuccessMsg("Staff modificado con éxito");
+                guiMainStaff.actualizarTabla(listaActualizada);
+                mainWindow.changeJPanel(this, guiMainStaff);
+            }else{
+                ViewUtils.showErrorMsg("Error al modificar staff");
+            }
         });
-        panelOpciones.add(_anyadir);
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             controladorStaff.bajaStaff(_dni_staff_text_field.getText());
             ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+            ViewUtils.showSuccessMsg("Staff borrado con éxito");
             guiMainStaff.actualizarTabla(listaActualizada);
             mainWindow.changeJPanel(this, guiMainStaff);
         });
@@ -138,7 +142,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         _email_staff_text_field.setText(consultado.get_email());
 
         //_nombre_staff_text_field.setText("Prueba");
-        _preferencia_horario_combo.setSelectedItem(consultado.get_preferencia_horario()); //Pone deafult a mañana
+        _preferencia_horario_combo.setSelectedItem(consultado.get_preferencia_horario().toString()); //Pone default a mañana
 
     }
 
