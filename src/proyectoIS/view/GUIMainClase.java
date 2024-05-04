@@ -41,7 +41,6 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
 
     private void init_GUI(){
         setLayout(new BorderLayout());
-        // TODO: EL PANELPRINCIPAL TIENE QUE SER UN ATRIBUTO MAS PARA PODER CAMBIAR LA TABLA
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         toolbar(panelPrincipal);

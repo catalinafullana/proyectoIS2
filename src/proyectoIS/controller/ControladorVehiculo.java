@@ -20,15 +20,15 @@ public class ControladorVehiculo {
         return faServiceVehiculo.bajaVehiculo(matricula);
     }
 
-    public List<Vehiculo> busqueda(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
+    public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
         return faServiceVehiculo.busquedaVehiculo(matricula, modelo, tipo_vehiculo);
     }
 
-    public Vehiculo consulta(String matricula) {
+    public Vehiculo consultaVehiculo(String matricula) {
         return faServiceVehiculo.consultaVehiculo(matricula);
     }
 
-    public boolean modificar(Vehiculo vehiculo) {
+    public boolean modificarVehiculo(Vehiculo vehiculo) {
         return faServiceVehiculo.modificarVehiculo(vehiculo);
     }
 

@@ -3,7 +3,6 @@ package proyectoIS.view;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.misc.ViewUtils;
-import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
@@ -17,9 +16,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     JTextPane _matricula_vehiculo_text_field;
     JComboBox _tipo_vehiculo;
     JTextPane _modelo_vehiculo_text_field;
-    JButton _guardar;
     JButton _anyadir;
-    JButton _borrar;
 
     public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
         this.controladorVehiculo = c;
@@ -64,7 +61,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
             if(comprobarIntroducidos()){
                 if(controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString())))){
                     ViewUtils.showSuccessMsg("Vehiculo creado con exito");
-                    ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
+                    ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
                     guiMainVehiculo.actualizarTabla(arrayVehiculos);
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 }else{
@@ -84,8 +81,6 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
-        //area_texto = new JTextPane();
-        //area_texto.setPreferredSize(new Dimension(100, 50));
         panel.add(label);
         panel.add(area_texto);
     }

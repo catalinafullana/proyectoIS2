@@ -1,9 +1,7 @@
 package proyectoIS.view;
 
-import proyectoIS.Main;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
@@ -18,11 +16,10 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     ControladorVehiculo controladorVehiculo;
     private JButton home;
 
-    //JButton eraseVehicle;
     JButton addVehicle;
     JTextField search_matricula;
     JTextField search_modelo;
-    JTextField search_tipo; // TODO: PONER CON UN COMBOBOX
+    JComboBox search_tipo;
     JButton search;
 
     GUIAltaVehiculo guiAltaVehiculo;
@@ -53,7 +50,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     }
 
     private void tabla(JPanel panelPrincipal) {
-        ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busqueda("", "", null));
+        ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
 
         _defaultTableModel = new DefaultTableModel();
         _defaultTableModel.setColumnIdentifiers(_headers);
@@ -105,7 +102,6 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.backToMain(this);
         });
         toolbar.add(Box.createHorizontalStrut(10));
@@ -120,11 +116,8 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     }
 
     private void createHeader(JPanel p) {
-        //addSeparator(p, new Dimension(MainWindow.width, 10), JToolBar.Separator.HORIZONTAL);
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
-        //headerPanel.setMinimumSize(new Dimension(MainWindow.width, 200000));
-        //headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), 40));
         headerPanel.setPreferredSize(new Dimension((int)(MainWindow.width*0.9), (int)(MainWindow.height*0.1)));
 
         createButtonsInHeader(headerPanel);
@@ -139,7 +132,9 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
 
         addVehicle = new JButton(new ImageIcon("resources/icons/add.png"));
         addVehicle.setPreferredSize(new Dimension(40, 40));
-
+        addVehicle.addActionListener(e->{
+            mainWindow.changeJPanel(this, guiAltaVehiculo);
+        });
         buttonPanel.add(addVehicle);
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
@@ -153,8 +148,12 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         search_modelo.setPreferredSize(new Dimension(100, 30));
 
         buttonPanel.add(search_modelo);
-
-        search_tipo = new JTextField("Tipo");
+        DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<>();
+        tipo_model.addElement("Tipo");
+        for (TipoCarnet value : TipoCarnet.values()) {
+            tipo_model.addElement(value.toString());
+        }
+        search_tipo = new JComboBox<>(tipo_model);
         search_tipo.setPreferredSize(new Dimension(100, 30));
 
         buttonPanel.add(search_tipo);
@@ -176,11 +175,11 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
                 modelo = search_modelo.getText();
             }
             TipoCarnet tipo = null;
-            if(!search_tipo.getText().equals("Tipo")){
-                tipo = TipoCarnet.cast(search_tipo.getText());
+            if(!search_tipo.getSelectedItem().toString().equals("Tipo")){
+                tipo = TipoCarnet.cast(search_tipo.getSelectedItem().toString());
             }
 
-            ArrayList<Vehiculo> lista = new ArrayList<>(controladorVehiculo.busqueda(matricula, modelo, tipo));
+            ArrayList<Vehiculo> lista = new ArrayList<>(controladorVehiculo.busquedaVehiculo(matricula, modelo, tipo));
             actualizarTabla(lista);
         });
         buttonPanel.add(search);

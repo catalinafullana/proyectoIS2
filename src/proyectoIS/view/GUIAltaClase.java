@@ -74,7 +74,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
         DefaultComboBoxModel<String> tipo_model_vehiculo = new DefaultComboBoxModel<String>();
 
-        List<Vehiculo> lista_vehiculo = controladorVehiculo.busqueda("","",null);
+        List<Vehiculo> lista_vehiculo = controladorVehiculo.busquedaVehiculo("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
             tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
@@ -112,7 +112,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
             String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
-            Vehiculo v = controladorVehiculo.busqueda(stringVehiculo[0], "", null).get(0);
+            Vehiculo v = controladorVehiculo.busquedaVehiculo(stringVehiculo[0], "", null).get(0);
 
             String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
             Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
