@@ -2,8 +2,12 @@ package proyectoIS.view;
 
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.modelo_de_dominio.Alumno;
+import proyectoIS.modelo_de_dominio.Clase;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -22,6 +26,8 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
     GUIAltaAlumno guiAltaAlumno;
     MainWindow mainWindow;
     JTable _alumnos;
+    DefaultTableModel _defaultTableModel;
+    String[] _headers = {"Nombre", "Apellido 1", "Apellido 2", "DNI", "Telefono","E-mail", "Preferencia Clase"};
 
 
     public GUIMainAlumno(ControladorAlumno controladorAlumno, MainWindow mainWindow) {
@@ -45,11 +51,23 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     private void tabla(JPanel panelPrincipal) {
         ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "",""));
-        AlumnoModelTable model = new AlumnoModelTable(arrayAlumnos);
+        //AlumnoModelTable model = new AlumnoModelTable(arrayAlumnos);
+         _defaultTableModel = new DefaultTableModel();
 
-        _alumnos = new JTable(model);
-        _alumnos.setAutoResizeMode(JTable.WIDTH);
-        JScrollPane scroll = new JScrollPane(_alumnos);
+        _defaultTableModel.setColumnIdentifiers(_headers);
+        _alumnos = new JTable(_defaultTableModel) {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(
+                        Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
+        //_alumnos.setAutoResizeMode(JTable.WIDTH);
+        JScrollPane scroll = new JScrollPane(_alumnos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension dim_tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
         _alumnos.setPreferredSize(dim_tabla);
@@ -61,7 +79,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         panelTabla.add(scroll, new GridBagConstraints());
 
         panelPrincipal.add(panelTabla);
-
+        actualizarTabla(arrayAlumnos);
         _alumnos.setVisible(true);
     }
 
@@ -169,6 +187,24 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         JSeparator s = new JSeparator(orientation);
         s.setPreferredSize(dim);
         p.add(s);
+    }
+
+    public void actualizarTabla(ArrayList<Alumno> alumnos){
+        _defaultTableModel.setNumRows(alumnos.size());
+        for (int i = 0; i < alumnos.size(); i++) {
+            Alumno c = alumnos.get(i);
+            _defaultTableModel.setValueAt(c.get_nombre(), i, 0);
+            _defaultTableModel.setValueAt(c.get_apellido1(), i, 1);
+            _defaultTableModel.setValueAt(c.get_apellido2(), i, 2);
+            _defaultTableModel.setValueAt(c.get_dni(), i, 3);
+            _defaultTableModel.setValueAt(c.get_tlf(), i, 4);
+            _defaultTableModel.setValueAt(c.get_email(), i, 5);
+            _defaultTableModel.setValueAt(c.getPreferencia_clase().toString(), i, 6);
+        }
+
+        _defaultTableModel.fireTableDataChanged();
+        _defaultTableModel.fireTableStructureChanged();
+
     }
 
 }
