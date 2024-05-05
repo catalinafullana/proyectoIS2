@@ -6,7 +6,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO: ELIMINAR CLASE
 public class VehiculosModelTable extends AbstractTableModel {
     String[] _headers = {"Matricula", "Tipo", "Modelo"};
     List<Vehiculo> vehiculos;

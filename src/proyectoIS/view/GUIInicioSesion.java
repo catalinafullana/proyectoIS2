@@ -28,7 +28,6 @@ public class GUIInicioSesion extends JFrame {
 
 
     public GUIInicioSesion(){
-        //mainWindow = new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff);
         controladorAlumno = new ControladorAlumno();
         controladorClase = new ControladorClase();
         controladorStaff = new ControladorStaff();
@@ -72,7 +71,6 @@ public class GUIInicioSesion extends JFrame {
 
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
-        //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));
         addWindowListener(new WindowListener() {
             @Override
@@ -144,7 +142,7 @@ public class GUIInicioSesion extends JFrame {
                 limpiarCampos();
             }else{
                 this.setVisible(false);
-                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this));
+                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this, usuario.getText()));
             }
 
         });

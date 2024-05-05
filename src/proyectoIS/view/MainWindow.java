@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class MainWindow extends JFrame {
     public static int width=800,height=600;
     private JButton home;
+    private String _usuario;
 
     private JButton _boton_clases;
     private JButton _boton_alumnos;
@@ -35,7 +36,7 @@ public class MainWindow extends JFrame {
 
 
 
-    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff, GUIInicioSesion guiInicioSesion) {
+    public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff, GUIInicioSesion guiInicioSesion, String usuario) {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
@@ -43,6 +44,7 @@ public class MainWindow extends JFrame {
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
         this.guiInicioSesion = guiInicioSesion;
+        this._usuario = usuario;
         // TODO: INTENTAR ARREGLAR EL DELAY
         initGUI();
     }
@@ -52,16 +54,22 @@ public class MainWindow extends JFrame {
         //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         //panelPrincipal.add(Box.createVerticalGlue());
         panelPrincipal.setPreferredSize(new Dimension(width, height));
+        JPanel panelTexto = new JPanel(new BorderLayout());
+        JPanel aux = new JPanel(new GridLayout(2, 1 , 10, 20));
         JPanel panelB = new JPanel();
         panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
 
         panelPrincipal.add(Box.createHorizontalGlue());
         toolbar(panelPrincipal);
+
+
+
         addButtons(panelB);
-        //panelB.add(Box.createVerticalGlue());
 
-
-        panelPrincipal.add(panelB);
+        panelTexto.add(new JLabel("<html><font size='20'> Bienvenido/a a Gestiones Magno " + _usuario + " </font></html>"), BorderLayout.PAGE_START);
+        aux.add(panelTexto);
+        aux.add(panelB);
+        panelPrincipal.add(aux);
         panelPrincipal.add(Box.createHorizontalGlue());
         add(panelPrincipal);
 
@@ -162,7 +170,7 @@ public class MainWindow extends JFrame {
         toolbar.setRollover(true);
         toolbar.setPreferredSize(new Dimension(width, 50));
 
-        home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
+        home = createButton("Cerrar sesion", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
             //backToMain(this.panelPrincipal);
