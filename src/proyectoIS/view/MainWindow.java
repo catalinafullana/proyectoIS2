@@ -5,11 +5,13 @@ import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.ViewUtils;
+import proyectoIS.modelo_de_dominio.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
     public static int width=800,height=600;
@@ -27,6 +29,8 @@ public class MainWindow extends JFrame {
     private GUIMainStaff guiMainStaff;
     private GUIMainClase guiMainClase;
 
+    private ControladorStaff controladorStaff;
+
     private GUIInicioSesion guiInicioSesion;
 
 
@@ -35,6 +39,7 @@ public class MainWindow extends JFrame {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
+        this.controladorStaff = controladorStaff;
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
         this.guiInicioSesion = guiInicioSesion;
@@ -145,9 +150,7 @@ public class MainWindow extends JFrame {
         });
 
         _boton_vehiculos= addButton("Vehiculos",buttonSize, panelPrincipal );
-
         _boton_vehiculos.addActionListener(e-> {
-            //invocar panel vehiculos
             changeJPanel(this.panelPrincipal, guiMainVehiculo);
         });
     }

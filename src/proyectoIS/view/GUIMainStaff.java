@@ -85,11 +85,8 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         tablePanel.setPreferredSize(tabla);
         tablePanel.add(scrollPane, new GridBagConstraints());
 
-        //panelPrincipal.add(scrollPane);
         panelPrincipal.add(tablePanel);
         actualizarTabla(arrayStaff);
-
-        //_staffs.setVisible(true);
     }
 
     protected void toolbar(JPanel p){
@@ -104,6 +101,7 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         home.addActionListener(e-> {
             //abrir formulario crear
             mainWindow.backToMain(this);
+            resetTabla();
         });
 
         toolbar.add(Box.createHorizontalStrut(10));
@@ -147,24 +145,15 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
 
         search_nombre = new JTextField("Nombre");
         search_nombre.setPreferredSize(new Dimension(100, 30));
-        search_nombre.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_nombre);
 
 
         search_apellido1 = new JTextField("Primer Apellido");
         search_apellido1.setPreferredSize(new Dimension(100, 30));
-        search_apellido1.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_apellido1);
 
         search_apellido2 = new JTextField("Segundo Apellido");
         search_apellido2.setPreferredSize(new Dimension(100, 30));
-        search_apellido1.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_apellido2);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
@@ -177,7 +166,6 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         searchStaff = new JButton(searchIcon);
         searchStaff.setPreferredSize(new Dimension(40, 40));
         searchStaff.addActionListener(e-> {
-            //TODO Busqueda
             String nombre = search_nombre.getText();
             if (Objects.equals(nombre, "Nombre")){
                 nombre = "";
@@ -231,6 +219,18 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         }
         _defaultTableModel.fireTableDataChanged();
         _defaultTableModel.fireTableStructureChanged();
+    }
+
+    public void resetTextFields(){
+        search_nombre.setText("Nombre");
+        search_apellido1.setText("Primer Apellido");
+        search_apellido2.setText("Segundo Apellido");
+    }
+
+    public void resetTabla(){
+        resetTextFields();
+        ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+        actualizarTabla(arrayStaff);
     }
 
 
