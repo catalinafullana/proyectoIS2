@@ -10,6 +10,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GUIMainStaff extends JPanel implements StaffObserver{
 
@@ -177,7 +178,19 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         searchStaff.setPreferredSize(new Dimension(40, 40));
         searchStaff.addActionListener(e-> {
             //TODO Busqueda
-            ArrayList<Staff> lista = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+            String nombre = search_nombre.getText();
+            if (Objects.equals(nombre, "Nombre")){
+                nombre = "";
+            }
+            String apellido1 = search_apellido1.getText();
+            if (Objects.equals(apellido1, "Primer Apellido")){
+                apellido1 = "";
+            }
+            String apellido2 = search_apellido2.getText();
+            if (apellido2 == "Segundo Apellido"){
+                apellido2 = "";
+            }
+            ArrayList<Staff> lista = new ArrayList<>(controladorStaff.busquedaStaff(nombre, apellido1, apellido2));
             actualizarTabla(lista);
         });
         buttonPanel.add(searchStaff);
