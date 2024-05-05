@@ -2,12 +2,14 @@ package proyectoIS.view;
 
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.misc.Preferencia_clase;
-import proyectoIS.misc.TipoCarnet;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static proyectoIS.misc.Utils.comprueba_formato_dni;
+import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
 public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
     ControladorAlumno controladorAlumno;
@@ -88,15 +90,12 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
             String email = _email_alumno_text_field.getText();
             String pref_clase = _preferencia_clase_combobox.getSelectedItem().toString();
 
-            if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty()
-                    || telefono.isEmpty() || email.isEmpty() || pref_clase.isEmpty())
-                ViewUtils.showErrorMsg("Debe ingresar todos los campos");
+            if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_clase)) {
+                Preferencia_clase preferencia_clase = Preferencia_clase.cast(pref_clase);
 
-
-            Preferencia_clase preferencia_clase = Preferencia_clase.cast(pref_clase);
-
-            controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni, telefono, email, preferencia_clase));
-            mainWindow.changeJPanel(this, guiMainAlumno);
+                controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni, telefono, email, preferencia_clase));
+                mainWindow.changeJPanel(this, guiMainAlumno);
+            }
         });
         panelOpciones.add(_anyadir);
 
@@ -107,6 +106,19 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);
+    }
+
+    private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefClase) {
+        if(nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefClase.isEmpty()){
+            ViewUtils.showErrorMsg("Debe ingresar todos los campos");
+        }else{
+            if(comprueba_formato_dni(dni)){
+                if(comprueba_formato_telefono(telefono)){
+                    return true;
+                }else  ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+            else{  ViewUtils.showErrorMsg("Formato DNI incorrecto");  }
+        }
+        return false;
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {

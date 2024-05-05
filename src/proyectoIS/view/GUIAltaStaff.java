@@ -1,17 +1,16 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.Preferencia_clase;
-import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Staff;
-import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
+import static proyectoIS.misc.Utils.comprueba_formato_dni;
+import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
 public class GUIAltaStaff extends JPanel implements StaffObserver {
 
@@ -81,13 +80,20 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
 
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e->{
-            controladorStaff.altaStaff(new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
-                    _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
-                    _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
-                    Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString())));
-            ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-            guiMainStaff.actualizarTabla(listaActualizada);
-            mainWindow.changeJPanel(this, guiMainStaff);
+            String nombre = _nombre_staff_text_field.getText();
+            String apellido1 = _apellido1_staff_text_field.getText();
+            String apellido2 = _apellido2_staff_text_field.getText();
+            String dni = _dni_staff_text_field.getText();
+            String telefono = _tlf_staff_text_field.getText();
+            String email = _email_staff_text_field.getText();
+            String pref_horario = _preferencia_horario_combo.getSelectedItem().toString();
+
+            if(comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)) {
+                controladorStaff.altaStaff(new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario)));
+                ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+                guiMainStaff.actualizarTabla(listaActualizada);
+                mainWindow.changeJPanel(this, guiMainStaff);
+            }
         });
         panelOpciones.add(_anyadir);
 
@@ -100,6 +106,20 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);
 
+    }
+
+    private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefHorario) {
+        if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefHorario.isEmpty()) {
+            ViewUtils.showErrorMsg("Debe ingresar los campos");
+        } else {
+            if (comprueba_formato_telefono(telefono)) {
+                if (comprueba_formato_dni(dni)) {
+                    return true;
+                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
+            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+        }
+
+        return false;
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {

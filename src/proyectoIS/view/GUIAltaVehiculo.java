@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
+import static proyectoIS.misc.Utils.comprueba_formato_matricula;
+
+public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
     GUIMainVehiculo guiMainVehiculo;
@@ -30,11 +32,11 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
 
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayout(3, 1, 10, 20));
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.65)));
+        panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.65)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
         JPanel pAux = new JPanel();
-        pAux.setPreferredSize(new Dimension((int)(MainWindow.width * 0.2), (int)(MainWindow.height * 0.4)));
+        pAux.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.4)));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 10, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
@@ -44,7 +46,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         creaCampo(panelDatos, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
 
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();
-        for(TipoCarnet t : TipoCarnet.values()){
+        for (TipoCarnet t : TipoCarnet.values()) {
             tipo_model.addElement(t.toString());
         }
         _tipo_vehiculo = new JComboBox(tipo_model);
@@ -57,17 +59,19 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         pAux.add(Box.createVerticalStrut(10));
 
         _anyadir = new JButton("Añadir");
-        _anyadir.addActionListener(e->{
-            if(comprobarIntroducidos()){
-                if(controladorVehiculo.altaVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString())))){
+        _anyadir.addActionListener(e -> {
+            String matricula = _matricula_vehiculo_text_field.getText();
+            String tipo = _tipo_vehiculo.getSelectedItem().toString();
+            String modelo = _modelo_vehiculo_text_field.getText();
+            if (comprobarIntroducidos(matricula, tipo, modelo)) {
+                if (controladorVehiculo.altaVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))) {
                     ViewUtils.showSuccessMsg("Vehiculo creado con exito");
                     ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
                     guiMainVehiculo.actualizarTabla(arrayVehiculos);
                     mainWindow.changeJPanel(this, guiMainVehiculo);
-                }else{
+                } else {
                     ViewUtils.showErrorMsg("Error al crear vehiculo");
                 }
-
             }
         });
         panelOpciones.add(_anyadir);
@@ -80,6 +84,17 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
         setVisible(true);
     }
 
+    private boolean comprobarIntroducidos(String matricula, String tipo, String modelo) {
+
+        if(! (matricula.isEmpty()||tipo.isEmpty()||modelo.isEmpty())){
+            if (comprueba_formato_matricula(matricula)) {
+                return true;
+            } else { ViewUtils.showErrorMsg("Campo 'matricula' erroneo"); }
+        }else { ViewUtils.showErrorMsg("Debe rellenar todos los campos"); }
+
+        return false;
+    }
+
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
         panel.add(label);
         panel.add(area_texto);
@@ -88,20 +103,6 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver{
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
         panel.add(label);
         panel.add(combo);
-    }
-
-    private boolean comprobarIntroducidos(){
-        if(!_matricula_vehiculo_text_field.getText().isEmpty()){
-            if(!_modelo_vehiculo_text_field.getText().isEmpty()){
-                return true;
-            }else{
-                ViewUtils.showErrorMsg("Campo 'modelo' obligatorio");
-                return false;
-            }
-        }else{
-            ViewUtils.showErrorMsg("Campo 'matricula' obligatorio");
-            return false;
-        }
     }
 
 

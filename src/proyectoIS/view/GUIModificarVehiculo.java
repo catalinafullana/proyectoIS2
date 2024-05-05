@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static proyectoIS.misc.Utils.comprueba_formato_matricula;
+
 public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
@@ -59,8 +61,12 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
-            if(comprobarIntroducidos()){
-                if(controladorVehiculo.modificarVehiculo(new Vehiculo(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), TipoCarnet.cast(_tipo_vehiculo.getSelectedItem().toString())))){
+            String matricula = _matricula_vehiculo_text_field.getText();
+            String tipo = _tipo_vehiculo.getSelectedItem().toString();
+            String modelo = _modelo_vehiculo_text_field.getText();
+
+            if (comprobarIntroducidos(matricula, tipo, modelo)) {
+                if(controladorVehiculo.modificarVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))){
                     ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
                     guiMainVehiculo.actualizarTabla(arrayVehiculos);
                     ViewUtils.showSuccessMsg("Vehiculo modificado con exito");
@@ -116,18 +122,15 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         panel.add(combo);
     }
 
-    private boolean comprobarIntroducidos(){
-        if(!_matricula_vehiculo_text_field.getText().isEmpty()){
-            if(!_modelo_vehiculo_text_field.getText().isEmpty()){
+    private boolean comprobarIntroducidos(String matricula, String tipo, String modelo) {
+
+        if(! (matricula.isEmpty()||tipo.isEmpty()||modelo.isEmpty())){
+            if (comprueba_formato_matricula(matricula)) {
                 return true;
-            }else{
-                ViewUtils.showErrorMsg("Campo 'modelo' obligatorio");
-                return false;
-            }
-        }else{
-            ViewUtils.showErrorMsg("Campo 'matricula' obligatorio");
-            return false;
-        }
+            } else { ViewUtils.showErrorMsg("Campo 'matricula' erroneo"); }
+        }else { ViewUtils.showErrorMsg("Debe rellenar todos los campos"); }
+
+        return false;
     }
 
 

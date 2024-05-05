@@ -26,17 +26,14 @@ public class ControladorAlumno {
 
     public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni){
         return this.faServiceAlumno.busquedaAlumno(nombre, apellido1, dni);
-        //return null;
     }
 
     public Alumno consultaAlumno(String dni){
         return this.faServiceAlumno.consultaAlumno(dni);
-        //return null;
     }
 
     public boolean modificarAlumno(Alumno alumno){
         return this.faServiceAlumno.modificarAlumno(alumno);
-        //return false;
     }
 
 }

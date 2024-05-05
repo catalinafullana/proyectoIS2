@@ -23,6 +23,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     JTextField search_apellido2;
 
+    GUIModificarAlumno guiModificarAlumno;
     GUIAltaAlumno guiAltaAlumno;
     MainWindow mainWindow;
     JTable _alumnos;
@@ -34,6 +35,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         this.controladorAlumno = controladorAlumno;
         this.mainWindow = mainWindow;
         this.guiAltaAlumno = new GUIAltaAlumno(this.controladorAlumno, this.mainWindow, this);
+        this.guiModificarAlumno = new GUIModificarAlumno(controladorAlumno, this.mainWindow, this);
         init_GUI();
     }
 
@@ -72,6 +74,15 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         Dimension dim_tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
         _alumnos.setPreferredSize(dim_tabla);
         scroll.setPreferredSize(dim_tabla);
+
+        _alumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = _alumnos.rowAtPoint(evt.getPoint());
+                String id = _alumnos.getModel().getValueAt(row, 3).toString();
+                aModificar(id);
+            }
+        });
 
         JPanel panelTabla = new JPanel(new GridBagLayout());
 
@@ -207,4 +218,9 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     }
 
+
+    private void aModificar(String id){
+        guiModificarAlumno.actualizarCampos(id);
+        mainWindow.changeJPanel(this, guiModificarAlumno);
+    }
 }

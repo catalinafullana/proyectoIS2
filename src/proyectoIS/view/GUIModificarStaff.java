@@ -1,18 +1,16 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.Preferencia_clase;
-import proyectoIS.misc.TipoCarnet;
 import proyectoIS.misc.ViewUtils;
-import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
-import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
+import static proyectoIS.misc.Utils.comprueba_formato_dni;
+import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
 public class GUIModificarStaff extends JPanel implements StaffObserver {
 
@@ -36,19 +34,19 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         initGUI();
     }
 
-    private void initGUI(){
+    private void initGUI() {
         guiMainStaff.toolbar(this);
 
         //JPanel panelPrincipal = new JPanel();
         //panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
         //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 0));
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
+        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.8)));
         //panelPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
 
 
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
-        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.5)));
+        panelDatos.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.5)));
 
 
         JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
@@ -71,7 +69,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         creaCampo(panelDatos, new JLabel("Email: "), _email_staff_text_field);
 
         DefaultComboBoxModel<String> preferencia_model = new DefaultComboBoxModel<String>();
-        for(Preferencia_clase t : Preferencia_clase.values()){
+        for (Preferencia_clase t : Preferencia_clase.values()) {
             preferencia_model.addElement(t.toString());
         }
         _preferencia_horario_combo = new JComboBox(preferencia_model);
@@ -84,22 +82,29 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
 
         _guardar = new JButton("Guardar");
         panelOpciones.add(_guardar);
-        _guardar.addActionListener(e->{
-            Staff s = new Staff(_nombre_staff_text_field.getText(), _apellido1_staff_text_field.getText(),
-                    _apellido2_staff_text_field.getText(), _dni_staff_text_field.getText(),
-                    _tlf_staff_text_field.getText(),  _email_staff_text_field.getText(),
-                    Preferencia_clase.cast(_preferencia_horario_combo.getSelectedItem().toString()));
-            if(controladorStaff.modificarStaff(s)){
-                ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-                ViewUtils.showSuccessMsg("Staff modificado con éxito");
-                guiMainStaff.actualizarTabla(listaActualizada);
-                mainWindow.changeJPanel(this, guiMainStaff);
-            }else{
-                ViewUtils.showErrorMsg("Error al modificar staff");
+        _guardar.addActionListener(e -> {
+            String nombre = _nombre_staff_text_field.getText();
+            String apellido1 = _apellido1_staff_text_field.getText();
+            String apellido2 = _apellido2_staff_text_field.getText();
+            String dni = _dni_staff_text_field.getText();
+            String telefono = _tlf_staff_text_field.getText();
+            String email = _email_staff_text_field.getText();
+            String pref_horario = _preferencia_horario_combo.getSelectedItem().toString();
+
+            if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)) {
+                Staff s = new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
+                if (controladorStaff.modificarStaff(s)) {
+                    ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+                    ViewUtils.showSuccessMsg("Staff modificado con éxito");
+                    guiMainStaff.actualizarTabla(listaActualizada);
+                    mainWindow.changeJPanel(this, guiMainStaff);
+                } else {
+                    ViewUtils.showErrorMsg("Error al modificar staff");
+                }
             }
         });
         _borrar = new JButton("Borrar");
-        _borrar.addActionListener(e->{
+        _borrar.addActionListener(e -> {
             controladorStaff.bajaStaff(_dni_staff_text_field.getText());
             ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
             ViewUtils.showSuccessMsg("Staff borrado con éxito");
@@ -108,7 +113,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         });
         panelOpciones.add(_borrar);
 
-        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
+        panelOpciones.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.1)));
 
         panelPrincipal.add(panelOpciones);
 
@@ -117,6 +122,20 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);
 
+    }
+
+    private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefHorario) {
+        if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefHorario.isEmpty()) {
+            ViewUtils.showErrorMsg("Debe ingresar los campos");
+        } else {
+            if (comprueba_formato_telefono(telefono)) {
+                if (comprueba_formato_dni(dni)) {
+                    return true;
+                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
+            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+        }
+
+        return false;
     }
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
@@ -131,7 +150,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         panel.add(combo);
     }
 
-    public void actualizarCampos(String dni){
+    public void actualizarCampos(String dni) {
         Staff consultado = controladorStaff.consultaStaff(dni);
 
         _nombre_staff_text_field.setText(consultado.get_nombre());
