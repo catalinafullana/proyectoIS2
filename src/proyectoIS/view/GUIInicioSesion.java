@@ -122,8 +122,6 @@ public class GUIInicioSesion extends JFrame {
     private void addLogIn(JPanel p){
         JPanel aux = new JPanel(new GridLayout(3, 2, 10, 10));
 
-
-
         aux.add(new JLabel("Usuario: "));
         usuario = new JTextField();
         usuario.setPreferredSize(new Dimension(40, 20));
@@ -146,7 +144,7 @@ public class GUIInicioSesion extends JFrame {
             }
 
         });
-
+        // TODO: HACER CON NUEVA VENTANA
         registrar.addActionListener(e->{
             if(controladorStaff.registrar(usuario.getText(), toString(contrasena.getPassword()))){
                 ViewUtils.showSuccessMsg("Usuario registrado");

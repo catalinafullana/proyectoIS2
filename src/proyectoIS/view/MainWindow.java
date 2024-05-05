@@ -55,9 +55,12 @@ public class MainWindow extends JFrame {
         //panelPrincipal.add(Box.createVerticalGlue());
         panelPrincipal.setPreferredSize(new Dimension(width, height));
         JPanel panelTexto = new JPanel(new BorderLayout());
-        JPanel aux = new JPanel(new GridLayout(2, 1 , 10, 20));
-        JPanel panelB = new JPanel();
-        panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
+        JPanel aux = new JPanel(new GridLayout(2,1, 15, 10));
+        JPanel panelB = new JPanel(new GridLayout(2 ,2, 10, 10));
+        panelB.setPreferredSize(new Dimension((int) (MainWindow.width * 0.1), (int) (MainWindow.height * 0.2)));
+
+        //panelB.setPreferredSize(new Dimension((int) (MainWindow.width * 0.3), (int) (MainWindow.height * 0.35)));
+        //panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
 
         panelPrincipal.add(Box.createHorizontalGlue());
         toolbar(panelPrincipal);
@@ -130,15 +133,17 @@ public class MainWindow extends JFrame {
 
         //container.add(Box.createVerticalStrut(30));
 
-
+        /*
         JSeparator separator = new JSeparator(1);
         container.add(separator);
+
+         */
 
         return b;
     }
 
     private void addButtons(JPanel panelPrincipal) {
-        Dimension buttonSize = new Dimension(500, 50);
+        Dimension buttonSize = new Dimension(15, 15);
         _boton_clases= addButton("Clases",buttonSize, panelPrincipal );
         _boton_clases.addActionListener(e-> {
             // TODO: AL AÑADIR UN VEHICULO/ALUMNO/PROFESOR NO SE ACTUALIZAN LOS CAMPOS, POR ESO CREO UNA NUEVA INSTANCIA CON UN NUEVO CONTROLLER
