@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GUIMainStaff extends JPanel implements StaffObserver{
+public class GUIMainStaff extends JPanel {
 
     ControladorStaff controladorStaff;
     private JButton home;
@@ -20,7 +20,7 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
     JButton searchStaff;
     JTextField search_nombre;
     JTextField search_apellido1;
-    JTextField search_apellido2;    //TODO revisar si hacemos asi la busqueda
+    JTextField search_apellido2;
 
     GUIAltaStaff guiAltaStaff;
     GUIModificarStaff guiModificarStaff;

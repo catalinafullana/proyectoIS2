@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import static proyectoIS.misc.Utils.comprueba_formato_dni;
 import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
-public class GUIAltaStaff extends JPanel implements StaffObserver {
+public class GUIAltaStaff extends JPanel {
 
     ControladorStaff controladorStaff;
     MainWindow mainWindow;
     GUIMainStaff guiMainStaff;
     JTextPane _nombre_staff_text_field;
     JTextPane _apellido1_staff_text_field;
-    JTextPane _apellido2_staff_text_field;//TODO revisar si lo dejamos asi
+    JTextPane _apellido2_staff_text_field;
     JTextPane _dni_staff_text_field;
     JTextPane _tlf_staff_text_field;
     JTextPane _email_staff_text_field;

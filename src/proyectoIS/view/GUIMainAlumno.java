@@ -12,7 +12,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GUIMainAlumno extends JPanel implements AlumnoObserver{
+public class GUIMainAlumno extends JPanel {
 
     ControladorAlumno controladorAlumno;
     private JButton home;

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
-public class GUIMainClase extends JPanel implements ClaseObserver{
+public class GUIMainClase extends JPanel{
 
     ControladorClase controladorClase;
     private JButton home;

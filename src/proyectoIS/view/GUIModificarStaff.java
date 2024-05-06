@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static proyectoIS.misc.Utils.comprueba_formato_dni;
 import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
-public class GUIModificarStaff extends JPanel implements StaffObserver {
+public class GUIModificarStaff extends JPanel {
 
     ControladorStaff controladorStaff;
     MainWindow mainWindow;

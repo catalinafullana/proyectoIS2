@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static proyectoIS.misc.Utils.comprueba_formato_dni;
 import static proyectoIS.misc.Utils.comprueba_formato_telefono;
 
-public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
+public class GUIModificarAlumno extends JPanel{
     ControladorAlumno controladorAlumno;
     MainWindow mainWindow;
     GUIMainAlumno guiMainAlumno;

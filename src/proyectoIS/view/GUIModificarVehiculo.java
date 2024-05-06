@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import static proyectoIS.misc.Utils.comprueba_formato_matricula;
 
-public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
+public class GUIModificarVehiculo extends JPanel {
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
     GUIMainVehiculo guiMainVehiculo;

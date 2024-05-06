@@ -7,17 +7,16 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static proyectoIS.misc.Utils.comprueba_formato_matricula;
 
-public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
+public class GUIAltaVehiculo extends JPanel{
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
     GUIMainVehiculo guiMainVehiculo;
-    JTextPane _matricula_vehiculo_text_field;
+    JTextField _matricula_vehiculo_text_field;
     JComboBox _tipo_vehiculo;
-    JTextPane _modelo_vehiculo_text_field;
+    JTextField _modelo_vehiculo_text_field;
     JButton _anyadir;
 
     public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
@@ -38,10 +37,12 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 10, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
-        _matricula_vehiculo_text_field = new JTextPane();
+        _matricula_vehiculo_text_field = new JTextField();
         creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
-        _modelo_vehiculo_text_field = new JTextPane();
+        _modelo_vehiculo_text_field = new JTextField();
         creaCampo(panelDatos, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
+
+
 
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();
         for (TipoCarnet t : TipoCarnet.values()) {
@@ -90,7 +91,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
         return false;
     }
 
-    private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
+    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto) {
         panel.add(label);
         panel.add(area_texto);
     }

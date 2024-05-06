@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.List;
 
 
-public class GUIAltaClase extends JPanel implements ClaseObserver {
+public class GUIAltaClase extends JPanel {
 
     ControladorClase controladorClase;
     MainWindow mainWindow;

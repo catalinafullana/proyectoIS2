@@ -23,7 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GUIModificarClase extends JPanel implements ClaseObserver {
+public class GUIModificarClase extends JPanel {
 
     ControladorClase controladorClase;
     MainWindow mainWindow;

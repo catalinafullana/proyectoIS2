@@ -12,7 +12,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
+public class GUIMainVehiculo extends JPanel {
 
     ControladorVehiculo controladorVehiculo;
     private JButton home;

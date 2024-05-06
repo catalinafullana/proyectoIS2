@@ -10,9 +10,12 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import java.util.List;
 
 public class Service_Clase implements Interface_Service_Clase{
+
+    private Fa_DAO_Clase faDAOClase;
+
     @Override
     public boolean altaClase(Clase clase) {
-        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
 
         if(comprobarDatos(clase)){
             return faDAOClase.altaClase(clase);
@@ -22,7 +25,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public boolean bajaClase(String id) {
-        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
 
         if(faDAOClase.existeClase(id)){
             return faDAOClase.bajaClase(id);
@@ -34,7 +37,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public boolean modificarClase(Clase clase) {
-        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
         if(faDAOClase.existeClase(clase.get_id_clase())){
             if(comprobarDatos(clase)){
                 return faDAOClase.modificarClase(clase);
@@ -49,15 +52,15 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public List<Clase> busquedaClase(Alumno a, Staff p, String fecha, Vehiculo v) {
-        Fa_DAO_Clase faDaoClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
 
-        return faDaoClase.busquedaClase(a, p, fecha, v);
+        return faDAOClase.busquedaClase(a, p, fecha, v);
 
     }
 
     @Override
     public Clase consultaClase(String id) {
-        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
 
         if(faDAOClase.existeClase(id)){
             return faDAOClase.consultaClase(id);
@@ -70,7 +73,7 @@ public class Service_Clase implements Interface_Service_Clase{
 
     // FUNCION PARA COMPROBAR EXISTENCIA Y DISPONIBILIDAD DEL ALUMNO, PROFESOR Y COCHE
     private boolean comprobarDatos(Clase clase){
-        Fa_DAO_Clase faDAOClase = new Fa_DAO_Clase();
+        faDAOClase = new Fa_DAO_Clase();
 
         String dni_alumno = clase.get_alumno().get_dni();
         String dni_profesor = clase.get_profesor().get_dni();
