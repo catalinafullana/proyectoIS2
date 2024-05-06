@@ -47,25 +47,25 @@ public class MainWindow extends JFrame {
     }
 
     private void initGUI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.panelPrincipal = new JPanel();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image icon = toolkit.getImage("resources/icons/logo_azul.png");
         this.setIconImage(icon);
-        //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-        //panelPrincipal.add(Box.createVerticalGlue());
+
         panelPrincipal.setPreferredSize(new Dimension(width, height));
         JPanel panelTexto = new JPanel(new BorderLayout());
+
         JPanel aux = new JPanel(new GridLayout(2,1, 15, 10));
         JPanel panelB = new JPanel(new GridLayout(2 ,2, 10, 10));
         panelB.setPreferredSize(new Dimension((int) (MainWindow.width * 0.1), (int) (MainWindow.height * 0.2)));
 
-        //panelB.setPreferredSize(new Dimension((int) (MainWindow.width * 0.3), (int) (MainWindow.height * 0.35)));
-        //panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
-
         panelPrincipal.add(Box.createHorizontalGlue());
         toolbar(panelPrincipal);
-
-
 
         addButtons(panelB);
 
@@ -128,6 +128,9 @@ public class MainWindow extends JFrame {
 
         JButton b = new JButton(buttonText);
         b.setPreferredSize(d);
+        b.setMinimumSize(d);
+        b.setMaximumSize(d);
+        b.setSize(d);
         b.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(b);
 
@@ -135,7 +138,8 @@ public class MainWindow extends JFrame {
     }
 
     private void addButtons(JPanel panelPrincipal) {
-        Dimension buttonSize = new Dimension(15, 15);
+
+        Dimension buttonSize = new Dimension(100, 100);
         _boton_clases= addButton("Clases",buttonSize, panelPrincipal );
         _boton_clases.addActionListener(e-> {
             guiMainClase = new GUIMainClase(new ControladorClase(), this);
@@ -150,12 +154,17 @@ public class MainWindow extends JFrame {
         _boton_staff= addButton("Staff",buttonSize, panelPrincipal );
         _boton_staff.addActionListener(e-> {
             changeJPanel(this.panelPrincipal, guiMainStaff);
+            ControladorVehiculo v;
+
         });
 
         _boton_vehiculos= addButton("Vehiculos",buttonSize, panelPrincipal );
         _boton_vehiculos.addActionListener(e-> {
             changeJPanel(this.panelPrincipal, guiMainVehiculo);
         });
+
+
+
     }
 
     public void toolbar(JPanel p) {

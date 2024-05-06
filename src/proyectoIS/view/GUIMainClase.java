@@ -1,5 +1,11 @@
 package proyectoIS.view;
 
+import com.toedter.calendar.JDateChooser;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
@@ -12,7 +18,10 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
 
 public class GUIMainClase extends JPanel implements ClaseObserver{
 
@@ -22,7 +31,8 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     JButton search;
     JTextField search_alumno;
     JTextField search_profesor;
-    JTextField search_fecha;
+    //JTextField search_fecha;
+    JDatePickerImpl search_fecha;
     JTextField search_vehiculo;
     JTable _clases;
     GUIAltaClase guiAltaClase;
@@ -152,7 +162,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         search_alumno = new JTextField("Alumno");
         search_alumno.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_alumno);
-        
+
         search_profesor = new JTextField("Profesor");
         search_profesor.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_profesor);
@@ -161,8 +171,14 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         search_vehiculo.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_vehiculo);
 
-        search_fecha = new JTextField("Fecha");
-        search_fecha.setPreferredSize(new Dimension(100, 30));
+        JLabel fecha = new JLabel("Fecha:");
+        buttonPanel.add(fecha);
+
+        Properties p = new Properties();
+        p.put("text.today", "Hoy");
+
+        search_fecha = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateComponentFormatter());
+        search_fecha.setPreferredSize(new Dimension(150, 30));
         buttonPanel.add(search_fecha);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
@@ -189,9 +205,13 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
                 s = controladorStaff.busquedaStaff(stringStaff[0],stringStaff[1], stringStaff[2]).getFirst();
             }
             String StringFecha = "";
-            if(!search_fecha.getText().equals("Fecha") && !search_fecha.getText().isEmpty()){
-                StringFecha = search_fecha.getText();
+
+            if(search_fecha.getModel().getValue() != null){
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date selectedDate = (Date) search_fecha.getModel().getValue();
+                StringFecha = formatter.format(selectedDate);
             }
+
             Vehiculo v = null;
             if(!search_vehiculo.getText().equals("Matricula vehiculo") && !search_vehiculo.getText().isEmpty()){
                 ControladorVehiculo controladorVehiculo = new ControladorVehiculo();

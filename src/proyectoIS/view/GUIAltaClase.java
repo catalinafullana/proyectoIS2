@@ -1,6 +1,10 @@
 package proyectoIS.view;
 
 import com.toedter.calendar.JCalendar;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
@@ -11,10 +15,8 @@ import proyectoIS.modelo_de_dominio.*;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 
 public class GUIAltaClase extends JPanel implements ClaseObserver {
@@ -25,7 +27,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
     JComboBox _alumno_clase_comboBox;
     JComboBox _profesor_clase_comboBox;
     JComboBox _vehiculo_clase_comboBox;
-    JCalendar _fecha_clase_calendar;
+    JDatePickerImpl _fecha_clase_datePicker;
     JComboBox _hora_clase_comboBox;
     JButton _anyadir;
 
@@ -40,8 +42,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         guiMainClase.toolbar(this);
 
         JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
-
+        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.5), (int)(MainWindow.height * 0.7)));
 
         JPanel panelDatos = new JPanel();
         panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
@@ -89,11 +90,17 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             }
         }
 
+        UtilDateModel model = new UtilDateModel();
+        Properties prop = new Properties();
+        prop.put("text.today", "Hoy");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, prop);
+        _fecha_clase_datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+
+
 
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
-        _fecha_clase_calendar = new JCalendar();
         _hora_clase_comboBox = new JComboBox<>(tipo_model_hora);
 
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
@@ -103,7 +110,7 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
 
         JPanel auxFecha = new JPanel(new GridLayout(1, 2, 0, 0));
         auxFecha.add(new JLabel("Fecha: "));
-        auxFecha.add(_fecha_clase_calendar);
+        auxFecha.add(_fecha_clase_datePicker);
         panelDatos.add(auxFecha);
 
         panelPrincipal.add(panelDatos, BorderLayout.CENTER);
@@ -120,23 +127,29 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
             String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
             Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
 
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            Date fecha = this._fecha_clase_calendar.getDate();
-            // Formateamos la fecha en una cadena de texto
-            String fechaFormateada = formato.format(fecha);
-            // COMPROBACION DE DATOS INTRODUCIDOS
-            if(comprobarHorario(a, p)){
-                if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
-                    ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
-                    ViewUtils.showSuccessMsg("Clase creada con exito");
-                    guiMainClase.actualizarTabla(arrayClases);
-                    mainWindow.changeJPanel(this, guiMainClase);
+            String fechaFormateada = "";
+
+            if(_fecha_clase_datePicker.getModel().getValue() != null){
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
+                fechaFormateada = formatter.format(selectedDate);
+                // COMPROBACION DE DATOS INTRODUCIDOS
+                if(comprobarHorario(a, p)){
+                    if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
+                        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
+                        ViewUtils.showSuccessMsg("Clase creada con exito");
+                        guiMainClase.actualizarTabla(arrayClases);
+                        mainWindow.changeJPanel(this, guiMainClase);
+                    }else{
+                        ViewUtils.showErrorMsg("Error al crear clase");
+                    }
                 }else{
-                    ViewUtils.showErrorMsg("Error al crear clase");
+                    ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
                 }
             }else{
-                ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
+                ViewUtils.showErrorMsg("Debe seleccionar una fecha");
             }
+
         });
         panelOpciones.add(_anyadir);
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));

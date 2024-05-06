@@ -131,6 +131,11 @@ public class GUIInicioSesion extends JFrame {
     }
 
     private void addLogIn(JPanel p){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JPanel aux = new JPanel(new GridLayout(3, 2, 10, 10));
         aux.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.25)));
 

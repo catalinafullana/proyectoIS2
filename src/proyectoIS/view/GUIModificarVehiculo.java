@@ -42,7 +42,7 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 10, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar vehículo </font></html>"));
         _matricula_vehiculo_text_field = new JTextPane();
         _matricula_vehiculo_text_field.setEditable(false);
         creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);

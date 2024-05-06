@@ -29,6 +29,11 @@ public class GUIRegistrar extends JFrame {
     }
 
     private void initGUI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image icon = toolkit.getImage("resources/icons/logo_azul.png");

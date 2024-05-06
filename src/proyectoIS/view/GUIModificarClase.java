@@ -2,11 +2,13 @@ package proyectoIS.view;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.toedter.calendar.JCalendar;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
@@ -19,7 +21,7 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
+import java.util.List;
 
 public class GUIModificarClase extends JPanel implements ClaseObserver {
 
@@ -29,7 +31,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
     JComboBox _alumno_clase_comboBox;
     JComboBox _profesor_clase_comboBox;
     JComboBox _vehiculo_clase_comboBox;
-    JCalendar _fecha_clase_calendar;
+    JDatePickerImpl _fecha_clase_datePicker;
     JComboBox _hora_clase_comboBox;
     JTextPane _id_clase_text;
     JButton _guardar;
@@ -46,13 +48,12 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         guiMainClase.toolbar(this);
 
         JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
-
+        panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.5), (int)(MainWindow.height * 0.7)));
 
         JPanel panelDatos = new JPanel();
         panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
         panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.7)));
-
+        JPanel pAux = new JPanel(new GridLayout(1 ,1 , 0 , 0));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1,0,0));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Modificar clase </font></html>"), BorderLayout.PAGE_START);
@@ -65,8 +66,6 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         for (Alumno alumno : lista_alumnos) {
             tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
         }
-
-
 
         ControladorStaff controladorStaff = new ControladorStaff();
         DefaultComboBoxModel<String> tipo_model_staff = new DefaultComboBoxModel<String>();
@@ -95,12 +94,17 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             }
         }
 
+        UtilDateModel model = new UtilDateModel();
+        Properties prop = new Properties();
+        prop.put("text.today", "Hoy");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, prop);
+        _fecha_clase_datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+
         _id_clase_text = new JTextPane();
 
         _alumno_clase_comboBox = new JComboBox<>(tipo_model_alumno);
         _profesor_clase_comboBox = new JComboBox<>(tipo_model_staff);
         _vehiculo_clase_comboBox = new JComboBox<>(tipo_model_vehiculo);
-        _fecha_clase_calendar = new JCalendar();
         _hora_clase_comboBox = new JComboBox<>(tipo_model_hora);
         _id_clase_text.setEditable(false);
 
@@ -112,7 +116,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         JPanel auxFecha = new JPanel(new GridLayout(1, 2, 0, 0));
         auxFecha.add(new JLabel("Fecha: "));
-        auxFecha.add(_fecha_clase_calendar);
+        auxFecha.add(_fecha_clase_datePicker);
         panelDatos.add(auxFecha);
 
         panelPrincipal.add(panelDatos, BorderLayout.CENTER);
@@ -134,8 +138,6 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         });
         panelOpciones.add(_guardar);
-        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
-
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             if(this.controladorClase.bajaClase(_id_clase_text.getText())){
@@ -148,9 +150,9 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             }
         });
         panelOpciones.add(_borrar);
-
-        panelPrincipal.add(panelOpciones, BorderLayout.PAGE_END);
-
+        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
+        pAux.add(panelOpciones);
+        panelPrincipal.add(pAux, BorderLayout.PAGE_END);
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
         setVisible(true);
@@ -178,9 +180,9 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
 
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try{
-            _fecha_clase_calendar.setDate(formato.parse(consulta.get_fecha()));
+            _fecha_clase_datePicker.getModel().setDate(formato.parse(consulta.get_fecha()).getYear() + 1900, formato.parse(consulta.get_fecha()).getMonth(), formato.parse(consulta.get_fecha()).getDate());
         }catch (ParseException e) {
-            e.printStackTrace();
+            ViewUtils.showErrorMsg(e.toString());
         }
         _hora_clase_comboBox.setSelectedItem(consulta.get_hora());
         _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
@@ -199,11 +201,15 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
         Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).getFirst();
 
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date fecha = this._fecha_clase_calendar.getDate();
-        // Formateamos la fecha en una cadena de texto
-        String fechaFormateada = formato.format(fecha);
+        String fechaFormateada = "";
+        if(_fecha_clase_datePicker.getModel().getValue() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
+            fechaFormateada = formatter.format(selectedDate);
+        }else{
+            ViewUtils.showErrorMsg("Debe seleccionar una fecha");
 
+        }
         return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
     }
 
