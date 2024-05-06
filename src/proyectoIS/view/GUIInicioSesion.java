@@ -132,7 +132,7 @@ public class GUIInicioSesion extends JFrame {
         aux.add(contrasena);
 
         JButton inicioSesion = new JButton("Iniciar sesion");
-        JButton registrar = new JButton("Regsitrar");
+        JButton registrar = new JButton("Registrar");
 
         inicioSesion.addActionListener(e->{
             if(!controladorStaff.iniciarSesion(usuario.getText(), toString(contrasena.getPassword()))){
