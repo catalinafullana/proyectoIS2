@@ -1,6 +1,3 @@
-
-// TODO: SEGURAMENTE SE PUEDA QUITAR
-
 package proyectoIS;
 
 import java.sql.Connection;

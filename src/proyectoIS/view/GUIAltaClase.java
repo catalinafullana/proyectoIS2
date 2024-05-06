@@ -58,7 +58,7 @@ public class GUIAltaClase extends JPanel {
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2() + " (" + alumno.getPreferencia_clase() + ")");
         }
 
 
@@ -69,7 +69,7 @@ public class GUIAltaClase extends JPanel {
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2() + " (" + staff.get_preferencia_horario() + ")");
         }
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
@@ -78,7 +78,7 @@ public class GUIAltaClase extends JPanel {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busquedaVehiculo("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
+            tipo_model_vehiculo.addElement("Matrícula: " + vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
         DefaultComboBoxModel<String> tipo_model_hora = new DefaultComboBoxModel<>();
@@ -105,7 +105,7 @@ public class GUIAltaClase extends JPanel {
 
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
-        creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
+        creaDesplegable(panelDatos, new JLabel("Vehículo: "), _vehiculo_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Hora: "), _hora_clase_comboBox);
 
         JPanel auxFecha = new JPanel(new GridLayout(1, 2, 0, 0));
@@ -137,7 +137,7 @@ public class GUIAltaClase extends JPanel {
                 if(comprobarHorario(a, p)){
                     if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
                         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
-                        ViewUtils.showSuccessMsg("Clase creada con exito");
+                        ViewUtils.showSuccessMsg("Clase creada con éxito");
                         guiMainClase.actualizarTabla(arrayClases);
                         mainWindow.changeJPanel(this, guiMainClase);
                     }

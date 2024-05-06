@@ -50,7 +50,7 @@ public class GUIInicioSesion extends JFrame {
 
         JPanel contenido = new JPanel(new GridLayout(2, 1, 0, 0));
         contenido.setPreferredSize(new Dimension((int) (MainWindow.width * 0.4), (int) (MainWindow.height * 0.45)));
-        contenido.add((new JLabel("<html><font size='20'> Inicio de sesion </font></html>")));
+        contenido.add((new JLabel("<html><font size='20'> Inicio de sesión </font></html>")));
 
         JPanel panelInicio = new JPanel();
         panelInicio.setLayout(new BoxLayout(panelInicio, BoxLayout.Y_AXIS));
@@ -148,7 +148,7 @@ public class GUIInicioSesion extends JFrame {
         contrasena.setPreferredSize(new Dimension(40, 20));
         aux.add(contrasena);
 
-        JButton inicioSesion = new JButton("Iniciar sesion");
+        JButton inicioSesion = new JButton("Iniciar sesión");
         JButton registrar = new JButton("Registrar");
 
         inicioSesion.addActionListener(e->{

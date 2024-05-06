@@ -31,7 +31,6 @@ public class GUIMainClase extends JPanel{
     JButton search;
     JTextField search_alumno;
     JTextField search_profesor;
-    //JTextField search_fecha;
     JDatePickerImpl search_fecha;
     JTextField search_vehiculo;
     JTable _clases;
@@ -40,7 +39,7 @@ public class GUIMainClase extends JPanel{
     GUIModificarClase guiModificarClase;
 
     DefaultTableModel _defaultTableModel;
-    String[] _headers = {"ID Clase", "Alumno", "Profesor", "Vehiculo", "Fecha", "Hora"};
+    String[] _headers = {"ID Clase", "Alumno", "Profesor", "Vehículo", "Fecha", "Hora"};
 
     public GUIMainClase(ControladorClase controladorClase, MainWindow mainWindow){
         this.controladorClase = controladorClase;
@@ -167,7 +166,7 @@ public class GUIMainClase extends JPanel{
         search_profesor.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_profesor);
 
-        search_vehiculo = new JTextField("Matricula vehiculo");
+        search_vehiculo = new JTextField("Matrícula vehículo");
         search_vehiculo.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_vehiculo);
 
@@ -213,7 +212,7 @@ public class GUIMainClase extends JPanel{
             }
 
             Vehiculo v = null;
-            if(!search_vehiculo.getText().equals("Matricula vehiculo") && !search_vehiculo.getText().isEmpty()){
+            if(!search_vehiculo.getText().equals("Matrícula vehículo") && !search_vehiculo.getText().isEmpty()){
                 ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
                 v = controladorVehiculo.consultaVehiculo(search_vehiculo.getText());
             }
@@ -257,7 +256,7 @@ public class GUIMainClase extends JPanel{
             _defaultTableModel.setValueAt(c.get_id_clase(), i, 0);
             _defaultTableModel.setValueAt(c.get_alumno().get_nombre()+ " " + c.get_alumno().get_apellido1() + " " + c.get_alumno().get_apellido2(), i, 1);
             _defaultTableModel.setValueAt(c.get_profesor().get_nombre() + " " + c.get_profesor().get_apellido1() + " " + c.get_profesor().get_apellido2(), i, 2);
-            _defaultTableModel.setValueAt("Matricula: " + c.get_vehiculo().get_matricula() + " Modelo: " + c.get_vehiculo().get_modelo(), i, 3);
+            _defaultTableModel.setValueAt("Matrícula: " + c.get_vehiculo().get_matricula() + " Modelo: " + c.get_vehiculo().get_modelo(), i, 3);
             _defaultTableModel.setValueAt(c.get_fecha(), i, 4);
             _defaultTableModel.setValueAt(c.get_hora(), i, 5);
         }

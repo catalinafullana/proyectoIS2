@@ -158,7 +158,7 @@ public class MainWindow extends JFrame {
 
         });
 
-        _boton_vehiculos= addButton("Vehiculos",buttonSize, panelPrincipal );
+        _boton_vehiculos= addButton("Vehículos",buttonSize, panelPrincipal );
         _boton_vehiculos.addActionListener(e-> {
             changeJPanel(this.panelPrincipal, guiMainVehiculo);
         });
@@ -174,7 +174,7 @@ public class MainWindow extends JFrame {
         toolbar.setRollover(true);
         toolbar.setPreferredSize(new Dimension(width, 50));
 
-        home = createButton("Cerrar sesion", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
+        home = createButton("Cerrar sesión", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
             //backToMain(this.panelPrincipal);

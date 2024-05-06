@@ -64,7 +64,7 @@ public class GUIModificarClase extends JPanel {
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2() + " (" + alumno.getPreferencia_clase() + ")");
         }
 
         ControladorStaff controladorStaff = new ControladorStaff();
@@ -73,7 +73,7 @@ public class GUIModificarClase extends JPanel {
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2() + " (" + staff.get_preferencia_horario() + ")");
         }
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
@@ -82,7 +82,7 @@ public class GUIModificarClase extends JPanel {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busquedaVehiculo("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
+            tipo_model_vehiculo.addElement("Matrícula: " + vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
         DefaultComboBoxModel<String> tipo_model_hora = new DefaultComboBoxModel<>();
@@ -111,7 +111,7 @@ public class GUIModificarClase extends JPanel {
         creaCampo(panelDatos, new JLabel("ID Clase: "), _id_clase_text);
         creaDesplegable(panelDatos, new JLabel("Alumno: "), _alumno_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Profesor: "), _profesor_clase_comboBox);
-        creaDesplegable(panelDatos, new JLabel("Vehiculo: "), _vehiculo_clase_comboBox);
+        creaDesplegable(panelDatos, new JLabel("Vehículo: "), _vehiculo_clase_comboBox);
         creaDesplegable(panelDatos, new JLabel("Hora: "), _hora_clase_comboBox);
 
         JPanel auxFecha = new JPanel(new GridLayout(1, 2, 0, 0));
@@ -125,10 +125,12 @@ public class GUIModificarClase extends JPanel {
         _guardar.addActionListener(e->{
 
             Clase c = crearClase(controladorStaff, controladorAlumno, controladorVehiculo);
-
+            if(c == null){
+                return;
+            }
             if(controladorClase.modificarClase(c)){
                 ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
-                ViewUtils.showSuccessMsg("Clase modificada con exito");
+                ViewUtils.showSuccessMsg("Clase modificada con éxito");
                 guiMainClase.actualizarTabla(arrayClases);
                 mainWindow.changeJPanel(this, guiMainClase);
             }
@@ -140,7 +142,7 @@ public class GUIModificarClase extends JPanel {
         _borrar.addActionListener(e->{
             if(this.controladorClase.bajaClase(_id_clase_text.getText())){
                 ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
-                ViewUtils.showSuccessMsg("Clase borrada con exito");
+                ViewUtils.showSuccessMsg("Clase borrada con éxito");
                 guiMainClase.actualizarTabla(arrayClases);
                 mainWindow.changeJPanel(this, guiMainClase);
             }else{
@@ -185,12 +187,12 @@ public class GUIModificarClase extends JPanel {
         _hora_clase_comboBox.setSelectedItem(consulta.get_hora());
         _alumno_clase_comboBox.setSelectedItem(consulta.get_alumno().get_nombre() + " " + consulta.get_alumno().get_apellido1() + " " + consulta.get_alumno().get_apellido2());
         _profesor_clase_comboBox.setSelectedItem(consulta.get_profesor().get_nombre() + " " + consulta.get_profesor().get_apellido1() + " " + consulta.get_profesor().get_apellido2());
-        _vehiculo_clase_comboBox.setSelectedItem((consulta.get_vehiculo().get_matricula() + " Tipo: " + consulta.get_vehiculo().get_tipo_vehiculo()));
+        _vehiculo_clase_comboBox.setSelectedItem(("Matrícula " + consulta.get_vehiculo().get_matricula() + " Tipo: " + consulta.get_vehiculo().get_tipo_vehiculo()));
         _id_clase_text.setText(id);
     }
 
     private Clase crearClase (ControladorStaff controladorStaff, ControladorAlumno controladorAlumno, ControladorVehiculo controladorVehiculo){
-        /*
+
         String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
         Vehiculo v = controladorVehiculo.busquedaVehiculo(stringVehiculo[0], "", null).getFirst();
 
@@ -205,43 +207,20 @@ public class GUIModificarClase extends JPanel {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
             fechaFormateada = formatter.format(selectedDate);
-            return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
+
+            if(comprobarHorario(a, p)){
+                return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
+            }else {
+                ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
+            }
         }else{
             ViewUtils.showErrorMsg("Debe seleccionar una fecha");
             return null;
         }
 
-        String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
-        Vehiculo v = controladorVehiculo.busquedaVehiculo(stringVehiculo[0], "", null).get(0);
 
-        String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
-        Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
 
-        String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
-        Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
 
-        String fechaFormateada = "";
-
-        if(_fecha_clase_datePicker.getModel().getValue() != null){
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
-            fechaFormateada = formatter.format(selectedDate);
-            // COMPROBACION DE DATOS INTRODUCIDOS
-            if(comprobarHorario(a, p)){
-                if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
-                    ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
-                    ViewUtils.showSuccessMsg("Clase creada con exito");
-                    guiMainClase.actualizarTabla(arrayClases);
-                    mainWindow.changeJPanel(this, guiMainClase);
-                }
-            }else{
-                ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
-            }
-        }else{
-            ViewUtils.showErrorMsg("Debe seleccionar una fecha");
-        }
-
-         */
         return null;
     }
     private boolean comprobarHorario(Alumno a, Staff p){
