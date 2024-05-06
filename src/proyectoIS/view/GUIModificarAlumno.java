@@ -12,8 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static proyectoIS.misc.Utils.comprueba_formato_dni;
-import static proyectoIS.misc.Utils.comprueba_formato_telefono;
+import static proyectoIS.misc.Utils.*;
 
 public class GUIModificarAlumno extends JPanel{
     ControladorAlumno controladorAlumno;
@@ -132,15 +131,23 @@ public class GUIModificarAlumno extends JPanel{
         setVisible(true);
     }
 
-    private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefClaseAlumno) {
-        if(nombre.isEmpty()||apellido1.isEmpty()||apellido2.isEmpty()||dni.isEmpty()||telefono.isEmpty()||email.isEmpty()|| prefClaseAlumno.isEmpty()) {
-            ViewUtils.showErrorMsg("Debe ingresar los campos");
-        }else {
-            if (comprueba_formato_dni(dni)) {
-                if (comprueba_formato_telefono(telefono)) {
-                    return true;
-                } else { ViewUtils.showErrorMsg("Telefono erróneo");  }
-            } else {     ViewUtils.showErrorMsg("DNI erroneo"); }
+    private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefClase) {
+        if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefClase.isEmpty()) {
+            ViewUtils.showErrorMsg("Debe rellenar todos los campos");
+        } else {
+            if(comprueba_tamano_nombre(nombre)){
+                if(comprueba_tamano_apellido(apellido1)){
+                    if(comprueba_tamano_apellido(apellido2)){
+                        if (comprueba_tamano_email(email)){
+                            if (comprueba_formato_telefono(telefono)) {
+                                if (comprueba_formato_dni(dni)) {
+                                    return true;
+                                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
+                            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+                        } else { ViewUtils.showErrorMsg("Email excede el tamaño permitido (30)"); }
+                    } else { ViewUtils.showErrorMsg("Segundo apellido excede el tamaño permitido (20)"); }
+                } else { ViewUtils.showErrorMsg("Primer apellido excede el tamaño permitido (20)"); }
+            } else { ViewUtils.showErrorMsg("Nombre excede el tamaño permitido (10)"); }
         }
         return false;
     }

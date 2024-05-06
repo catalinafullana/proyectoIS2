@@ -11,8 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static proyectoIS.misc.Utils.comprueba_formato_dni;
-import static proyectoIS.misc.Utils.comprueba_formato_telefono;
+import static proyectoIS.misc.Utils.*;
 
 public class GUIModificarStaff extends JPanel {
 
@@ -63,12 +62,12 @@ public class GUIModificarStaff extends JPanel {
         _tlf_staff_text_field = new JTextField(9);
         _email_staff_text_field = new JTextField(30);
 
-        creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_staff_text_field);
-        creaCampo(panelDatos, new JLabel("Primer Apellido: "), _apellido1_staff_text_field);
-        creaCampo(panelDatos, new JLabel("Segundo Apellido: "), _apellido2_staff_text_field);
-        creaCampo(panelDatos, new JLabel("DNI: "), _dni_staff_text_field);
-        creaCampo(panelDatos, new JLabel("Teléfono: "), _tlf_staff_text_field);
-        creaCampo(panelDatos, new JLabel("Email: "), _email_staff_text_field);
+        creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_staff_text_field, true);
+        creaCampo(panelDatos, new JLabel("Primer Apellido: "), _apellido1_staff_text_field, true);
+        creaCampo(panelDatos, new JLabel("Segundo Apellido: "), _apellido2_staff_text_field, true);
+        creaCampo(panelDatos, new JLabel("DNI: "), _dni_staff_text_field, false);
+        creaCampo(panelDatos, new JLabel("Teléfono: "), _tlf_staff_text_field, true);
+        creaCampo(panelDatos, new JLabel("Email: "), _email_staff_text_field, true);
 
         DefaultComboBoxModel<String> preferencia_model = new DefaultComboBoxModel<String>();
         for (Preferencia_clase t : Preferencia_clase.values()) {
@@ -133,19 +132,25 @@ public class GUIModificarStaff extends JPanel {
         if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefHorario.isEmpty()) {
             ViewUtils.showErrorMsg("Debe rellenar todos los campos");
         } else {
-            if (comprueba_formato_telefono(telefono)) {
-                if (comprueba_formato_dni(dni)) {
-                    return true;
-                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
-            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+            if(comprueba_tamano_nombre(nombre)){
+                if(comprueba_tamano_apellido(apellido1)){
+                    if(comprueba_tamano_apellido(apellido2)){
+                        if (comprueba_tamano_email(email)){
+                            if (comprueba_formato_telefono(telefono)) {
+                                if (comprueba_formato_dni(dni)) {
+                                    return true;
+                                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
+                            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+                        } else { ViewUtils.showErrorMsg("Email excede el tamaño permitido (30)"); }
+                    } else { ViewUtils.showErrorMsg("Segundo apellido excede el tamaño permitido (20)"); }
+                } else { ViewUtils.showErrorMsg("Primer apellido excede el tamaño permitido (20)"); }
+            } else { ViewUtils.showErrorMsg("Nombre excede el tamaño permitido (10)"); }
         }
-
         return false;
     }
 
-    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto) {
-        //area_texto = new JTextPane();
-        //area_texto.setPreferredSize(new Dimension(100, 30));
+    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto, boolean editable) {
+        area_texto.setEditable(editable);
         panel.add(label);
         panel.add(area_texto);
     }
@@ -180,7 +185,6 @@ public class GUIModificarStaff extends JPanel {
         _tlf_staff_text_field.setText(consultado.get_tlf());
         _email_staff_text_field.setText(consultado.get_email());
 
-        //_nombre_staff_text_field.setText("Prueba");
         _preferencia_horario_combo.setSelectedItem(consultado.get_preferencia_horario().toString()); //Pone default a mañana
 
     }
