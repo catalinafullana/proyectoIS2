@@ -82,11 +82,9 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         panelPrincipal.add(panelDatos);
 
         _guardar = new JButton("Guardar");
-        panelOpciones.add(_guardar);
         _guardar.addActionListener(e -> {
             Staff s = leerCampos(); //Si campos correctos devuelve staff, sino null
             if (s != null) {
-                //Staff s = new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
                 if (controladorStaff.modificarStaff(s)) {
                     ViewUtils.showSuccessMsg("Staff modificado con éxito");
                     guiMainStaff.resetTabla();
@@ -94,8 +92,11 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
                 } else {
                     ViewUtils.showErrorMsg("Error al modificar staff");
                 }
-            }
+            } else
+                ViewUtils.showErrorMsg("Nuevos datos del staff no válidos");
         });
+        panelOpciones.add(_guardar);
+
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
             if (!_dni_staff_text_field.getText().isEmpty()) {
@@ -107,15 +108,12 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
                         ViewUtils.showSuccessMsg("Staff borrado con éxito");
                         guiMainStaff.resetTabla();
                         mainWindow.changeJPanel(this, guiMainStaff);
-                    } else {
+                    } else
                         ViewUtils.showErrorMsg("Error al eliminar Staff");
-                    }
-                } else {
+                } else
                     ViewUtils.showErrorMsg("Error al eliminar Staff: Staff tiene clases");
-                }
-            } else {
+            } else
                 ViewUtils.showErrorMsg("DNI erroneo");
-            }
 
         });
         panelOpciones.add(_borrar);

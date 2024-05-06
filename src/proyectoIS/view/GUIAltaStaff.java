@@ -98,7 +98,6 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
         panelOpciones.add(_anyadir);
 
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
-
         panelPrincipal.add(panelOpciones);
 
 

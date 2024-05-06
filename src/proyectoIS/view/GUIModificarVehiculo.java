@@ -1,8 +1,12 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorVehiculo;
+import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.misc.ViewUtils;
+import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
@@ -36,8 +40,6 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.65)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel pAux = new JPanel();
-        pAux.setPreferredSize(new Dimension((int)(MainWindow.width * 0.2), (int)(MainWindow.height * 0.4)));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 10, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
@@ -57,46 +59,45 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
 
 
         panelPrincipal.add(panelDatos);
-        pAux.add(Box.createVerticalStrut(10));
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
-            String matricula = _matricula_vehiculo_text_field.getText();
-            String tipo = _tipo_vehiculo.getSelectedItem().toString();
-            String modelo = _modelo_vehiculo_text_field.getText();
-
-            if (comprobarIntroducidos(matricula, tipo, modelo)) {
-                if(controladorVehiculo.modificarVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))){
+            Vehiculo s = leerCampos();
+            if (s != null) {
+                if(controladorVehiculo.modificarVehiculo(s)){
                     guiMainVehiculo.resetTabla();
-                    ViewUtils.showSuccessMsg("Vehiculo modificado con exito");
+                    ViewUtils.showSuccessMsg("Vehículo modificado con éxito");
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 }else{
-                    ViewUtils.showErrorMsg("Error al modificar el vehiculo");
+                    ViewUtils.showErrorMsg("Error al modificar el vehículo");
                 }
-            }
-
+            } else
+                ViewUtils.showErrorMsg("Nuevos datos del vehículo no válidos");
         });
         panelOpciones.add(_guardar);
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             if(!_matricula_vehiculo_text_field.getText().isEmpty()){
-                if(controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText())){
-                    guiMainVehiculo.resetTabla();
-                    ViewUtils.showSuccessMsg("Vehiculo eliminado con exito");
-                    mainWindow.changeJPanel(this, guiMainVehiculo);
-                }else{
-                    ViewUtils.showErrorMsg("Error al eliminar el vehiculo");
-                }
-            }else{
-                ViewUtils.showErrorMsg("Matricula erronea");
-            }
+                Vehiculo baja = leerCampos();
+                ControladorClase controladorClase = new ControladorClase();
+                ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, null, "", baja);
+                if (Clases.isEmpty()) {
+                    if (controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText())) {
+                        guiMainVehiculo.resetTabla();
+                        ViewUtils.showSuccessMsg("Vehículo eliminado con éxito");
+                        mainWindow.changeJPanel(this, guiMainVehiculo);
+                    } else
+                        ViewUtils.showErrorMsg("Error al eliminar el vehículo");
+                } else
+                    ViewUtils.showErrorMsg("Error al eliminar vehículo: Vehículo tiene clases");
+            } else
+                ViewUtils.showErrorMsg("Matrícula erronea");
 
         });
         panelOpciones.add(_borrar);
 
-        pAux.add(panelOpciones);
-        panelPrincipal.add(pAux);
+        panelPrincipal.add(panelOpciones);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
@@ -129,6 +130,17 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         }else { ViewUtils.showErrorMsg("Debe rellenar todos los campos"); }
 
         return false;
+    }
+
+    private Vehiculo leerCampos(){
+        String matricula = _matricula_vehiculo_text_field.getText();
+        String tipo = _tipo_vehiculo.getSelectedItem().toString();
+        String modelo = _modelo_vehiculo_text_field.getText();
+
+        if (comprobarIntroducidos(matricula, tipo, modelo)){
+            return new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo));
+        } else
+            return null;
     }
 
 

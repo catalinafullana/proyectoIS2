@@ -47,8 +47,6 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.65)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel pAux = new JPanel();
-        pAux.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.4)));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 10, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
@@ -82,7 +80,6 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
 
 
         panelPrincipal.add(panelDatos);
-        pAux.add(Box.createVerticalStrut(10));
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
@@ -95,7 +92,9 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
                 } else {
                     ViewUtils.showErrorMsg("Error al modificar el alumno");
                 }
-            }
+            } else
+                ViewUtils.showErrorMsg("Nuevos datos del alumno no válidos");
+
 
         });
         panelOpciones.add(_guardar);
@@ -124,8 +123,9 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         });
         panelOpciones.add(_borrar);
 
-        pAux.add(panelOpciones);
-        panelPrincipal.add(pAux);
+        panelOpciones.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.1)));
+
+        panelPrincipal.add(panelOpciones);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));

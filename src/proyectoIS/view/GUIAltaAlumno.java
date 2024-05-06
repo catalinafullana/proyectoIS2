@@ -44,7 +44,6 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
         panelDatos.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.5)));
 
-        JPanel pAux = new JPanel();
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
@@ -78,8 +77,6 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
 
 
         panelPrincipal.add(panelDatos);
-        pAux.add(Box.createVerticalStrut(20));
-
 
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e -> {
@@ -102,9 +99,8 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
         });
         panelOpciones.add(_anyadir);
 
-
-        pAux.add(panelOpciones);
-        panelPrincipal.add(pAux);
+        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
+        panelPrincipal.add(panelOpciones);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));

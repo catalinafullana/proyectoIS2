@@ -35,8 +35,6 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
         panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.65)));
 
         JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel pAux = new JPanel();
-        pAux.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.4)));
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 10, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
@@ -56,7 +54,6 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
 
 
         panelPrincipal.add(panelDatos);
-        pAux.add(Box.createVerticalStrut(10));
 
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e -> {
@@ -75,8 +72,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
         });
         panelOpciones.add(_anyadir);
 
-        pAux.add(panelOpciones);
-        panelPrincipal.add(pAux);
+        panelPrincipal.add(panelOpciones);
 
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));
