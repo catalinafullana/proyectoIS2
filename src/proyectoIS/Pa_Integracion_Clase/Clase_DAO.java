@@ -1,7 +1,6 @@
 package proyectoIS.Pa_Integracion_Clase;
 
 import proyectoIS.Conexion;
-import proyectoIS.Pa_Integracion_Vehiculo.Vehiculo_DAO;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Alumno;
@@ -11,7 +10,6 @@ import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Clase_DAO implements Interface_DAO_Clase_Imp{
@@ -77,26 +75,41 @@ public class Clase_DAO implements Interface_DAO_Clase_Imp{
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Staff p, String fecha) {
+    public List<Clase> busquedaClase(Alumno a, Staff p, String fecha, Vehiculo v) {
         List<Clase> listaClase = new ArrayList<>();
         String sql = "";
-        if(a != null && p != null && !fecha.isEmpty()){
+
+        if(a != null && p != null && v != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "' and matricula_vehiculo='" + v.get_matricula() + "' and fecha ='" + fecha + "'";
+        }else if(a != null && p != null && v != null){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "' and matricula_vehiculo ='" + v.get_matricula() + "'";
+        }else if(a != null && p != null && !fecha.isEmpty()){
             sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "' and fecha ='" + fecha + "'";
+        }else if(a != null && v != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and matricula_vehiculo ='" + v.get_matricula() + "' and fecha ='" + fecha + "'";
         }else if(a != null && p != null){
             sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and dni_profesor ='" + p.get_dni() + "'";
+        }else if(a != null && v != null){
+            sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and matricula_vehiculo ='" + v.get_matricula() + "'";
         }else if(a != null && !fecha.isEmpty()){
             sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "' and fecha ='" + fecha + "'";
         }else if(a != null){
             sql = "select * from Tabla_clases where dni_alumno ='" + a.get_dni() + "'";
+        }else if(p != null && v != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where matricula_vehiculo ='" + v.get_matricula() + "' and dni_profesor ='" + p.get_dni() + "' and fecha ='" + fecha + "'";
+        }else if(p != null && v != null){
+            sql = "select * from Tabla_clases where dni_profesor ='" + p.get_dni() + "' and matricula_vehiculo ='" + v.get_matricula() + "'";
         }else if(p != null && !fecha.isEmpty()){
             sql = "select * from Tabla_clases where dni_profesor ='" + p.get_dni() + "' and fecha ='" + fecha + "'";
-
         }else if(p != null){
             sql = "select * from Tabla_clases where dni_profesor ='" + p.get_dni() + "'";
-
+        }else if(v != null && !fecha.isEmpty()){
+            sql = "select * from Tabla_clases where matricula_vehiculo ='" + v.get_matricula() + "' and fecha ='" + fecha + "'";
+        }else if(v != null){
+            sql = "select * from Tabla_clases where matricula_vehiculo ='" + v.get_matricula() + "'";
         }else if(!fecha.isEmpty()){
             sql = "select * from Tabla_clases where fecha ='" + fecha + "'";
-        }else{
+        }else {
             sql = "select * from Tabla_clases";
         }
 

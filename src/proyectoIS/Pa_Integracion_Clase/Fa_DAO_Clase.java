@@ -1,12 +1,10 @@
 package proyectoIS.Pa_Integracion_Clase;
 
-import proyectoIS.Pa_Integracion_Vehiculo.Fa_DAO_Vehiculo;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
+import proyectoIS.modelo_de_dominio.Vehiculo;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
@@ -33,8 +31,8 @@ public class Fa_DAO_Clase implements Interface_Fa_DAO_Clase_Imp {
     }
 
     @Override
-    public List<Clase> busquedaClase(Alumno a, Staff p, String fecha) {
-        return interfaceDaoClaseImp.busquedaClase(a, p, fecha);
+    public List<Clase> busquedaClase(Alumno a, Staff p, String fecha, Vehiculo v) {
+        return interfaceDaoClaseImp.busquedaClase(a, p, fecha, v);
     }
 
     @Override
