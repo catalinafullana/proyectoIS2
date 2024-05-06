@@ -1,9 +1,12 @@
 package proyectoIS.view;
 
 import proyectoIS.controller.ControladorAlumno;
+import proyectoIS.controller.ControladorClase;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
+import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,15 +112,25 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
-            if (!_dni_alumno_text_field.getText().isEmpty()) {
-                if (controladorAlumno.bajaAlumno(_dni_alumno_text_field.getText())) {
-                    ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "", null));
-                    guiMainAlumno.actualizarTabla(arrayAlumnos);
-                    ViewUtils.showSuccessMsg("Alumno eliminado con exito");
-                    mainWindow.changeJPanel(this, guiMainAlumno);
+            if (!_dni_alumno_text_field.getText().isEmpty()) {/*
+                ControladorClase controladorClase = new ControladorClase();
+                Alumno baja = controladorAlumno.consultaAlumno(_dni_alumno_text_field.getText());
+                ArrayList<Alumno> bajaLista = (ArrayList<Alumno>) controladorAlumno.busquedaAlumno(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
+                ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(bajaLista.get(0), null,"");
+                if(Clases.isEmpty()) {
+                */
+                    if (controladorAlumno.bajaAlumno(_dni_alumno_text_field.getText())) {
+                        ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "", null));
+                        guiMainAlumno.actualizarTabla(arrayAlumnos);
+                        ViewUtils.showSuccessMsg("Alumno eliminado con exito");
+                        mainWindow.changeJPanel(this, guiMainAlumno);
+                    } else {
+                        ViewUtils.showErrorMsg("Error al eliminar el alumno");
+                    }/*
                 } else {
-                    ViewUtils.showErrorMsg("Error al eliminar el alumno");
+                    ViewUtils.showErrorMsg("Error al eliminar el alumno: Alumno tiene clases");
                 }
+                */
             } else {
                 ViewUtils.showErrorMsg("DNI erroneo");
             }
