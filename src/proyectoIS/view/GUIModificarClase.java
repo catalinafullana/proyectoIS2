@@ -123,7 +123,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
             Clase c = crearClase(controladorStaff, controladorAlumno, controladorVehiculo);
 
             if(controladorClase.modificarClase(c)){
-                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
                 ViewUtils.showSuccessMsg("Clase modificada con exito");
                 guiMainClase.actualizarTabla(arrayClases);
                 mainWindow.changeJPanel(this, guiMainClase);
@@ -139,7 +139,7 @@ public class GUIModificarClase extends JPanel implements ClaseObserver {
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e->{
             if(this.controladorClase.bajaClase(_id_clase_text.getText())){
-                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+                ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
                 ViewUtils.showSuccessMsg("Clase borrada con exito");
                 guiMainClase.actualizarTabla(arrayClases);
                 mainWindow.changeJPanel(this, guiMainClase);

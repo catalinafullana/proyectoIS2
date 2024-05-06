@@ -3,16 +3,16 @@ package proyectoIS.view;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
+import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
+import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GUIMainClase extends JPanel implements ClaseObserver{
 
@@ -23,6 +23,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     JTextField search_alumno;
     JTextField search_profesor;
     JTextField search_fecha;
+    JTextField search_vehiculo;
     JTable _clases;
     GUIAltaClase guiAltaClase;
     MainWindow mainWindow;
@@ -50,7 +51,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
     }
 
     private void tabla(JPanel panelPrincipal) {
-        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, ""));
+        ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
 
         _defaultTableModel = new DefaultTableModel();
 
@@ -158,6 +159,10 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         search_profesor.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_profesor);
 
+        search_vehiculo = new JTextField("Matricula vehiculo");
+        search_vehiculo.setPreferredSize(new Dimension(100, 30));
+        buttonPanel.add(search_vehiculo);
+
         search_fecha = new JTextField("Fecha");
         search_fecha.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_fecha);
@@ -189,7 +194,14 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
             if(!search_fecha.getText().equals("Fecha") && !search_fecha.getText().isEmpty()){
                 StringFecha = search_fecha.getText();
             }
-            ArrayList<Clase> lista = new ArrayList<>(controladorClase.busquedaClase(a, s, StringFecha));
+            Vehiculo v = null;
+            if(!search_vehiculo.getText().equals("Matricula vehiculo") && !search_vehiculo.getText().isEmpty()){
+                ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
+                v = controladorVehiculo.consultaVehiculo(search_vehiculo.getText());
+            }
+
+
+            ArrayList<Clase> lista = new ArrayList<>(controladorClase.busquedaClase(a, s, StringFecha, v));
             actualizarTabla(lista);
         });
 
