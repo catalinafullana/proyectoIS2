@@ -90,9 +90,9 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
 
             if(comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)) {
                 controladorStaff.altaStaff(new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario)));
-                ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-                guiMainStaff.actualizarTabla(listaActualizada);
+                guiMainStaff.resetTabla();
                 mainWindow.changeJPanel(this, guiMainStaff);
+                limpiarCampos();
             }
         });
         panelOpciones.add(_anyadir);
@@ -133,7 +133,7 @@ public class GUIAltaStaff extends JPanel implements StaffObserver {
         panel.add(label);
         panel.add(combo);
     }
-    public void limpiarCampos(){
+    private void limpiarCampos(){
         _nombre_staff_text_field.setText("");
         _apellido1_staff_text_field.setText("");
         _apellido2_staff_text_field.setText("");

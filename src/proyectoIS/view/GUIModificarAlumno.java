@@ -63,7 +63,7 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         creaCampo(panelDatos, new JLabel("Apellido 2: "), _apellido2_alumno_text_field, true);
 
         _dni_alumno_text_field = new JTextPane();
-        creaCampo(panelDatos, new JLabel("Dni: "), _dni_alumno_text_field, false);
+        creaCampo(panelDatos, new JLabel("Dni: "), _dni_alumno_text_field, true);
 
         _tlf_alumno_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Telefono: "), _tlf_alumno_text_field, true);
@@ -98,9 +98,8 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
             if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email,pref_clase_alumno)) {
                 if (controladorAlumno.modificarAlumno(new Alumno(nombre, apellido1, apellido2,
                         dni, telefono, email, Preferencia_clase.cast(pref_clase_alumno)))) {
-                    ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "", ""));
-                    guiMainAlumno.actualizarTabla(arrayAlumnos);
                     ViewUtils.showSuccessMsg("Alumno modificado con exito");
+                    guiMainAlumno.resetTabla();
                     mainWindow.changeJPanel(this, guiMainAlumno);
                 } else {
                     ViewUtils.showErrorMsg("Error al modificar el alumno");
@@ -112,7 +111,8 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
-            if (!_dni_alumno_text_field.getText().isEmpty()) {/*
+            if (!_dni_alumno_text_field.getText().isEmpty()) {
+            /*
                 ControladorClase controladorClase = new ControladorClase();
                 Alumno baja = controladorAlumno.consultaAlumno(_dni_alumno_text_field.getText());
                 ArrayList<Alumno> bajaLista = (ArrayList<Alumno>) controladorAlumno.busquedaAlumno(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
@@ -120,9 +120,8 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
                 if(Clases.isEmpty()) {
                 */
                     if (controladorAlumno.bajaAlumno(_dni_alumno_text_field.getText())) {
-                        ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "", null));
-                        guiMainAlumno.actualizarTabla(arrayAlumnos);
                         ViewUtils.showSuccessMsg("Alumno eliminado con exito");
+                        guiMainAlumno.resetTabla();
                         mainWindow.changeJPanel(this, guiMainAlumno);
                     } else {
                         ViewUtils.showErrorMsg("Error al eliminar el alumno");

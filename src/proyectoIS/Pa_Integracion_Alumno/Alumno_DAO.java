@@ -32,15 +32,14 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
 
     @Override
     public boolean bajaAlumno(String dni) {
-        String sql = "delete * from Tabla_alumnos where dni = '" + dni + "'";
+        String sql = "delete from Tabla_alumnos where dni = '" + dni + "'";
         try {
             Connection con = Conexion.obtenerConexion();
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            rs.next();
-            if (rs.getRow() > 0) {
+            PreparedStatement st = con.prepareStatement(sql);
+            int i = st.executeUpdate(sql);
+            if(i > 0){
                 return true;
-            } else {
+            }else{
                 return false;
             }
         } catch (SQLException e) {

@@ -135,7 +135,6 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         addStaff = new JButton(new ImageIcon("resources/icons/add.png"));
         addStaff.setPreferredSize(new Dimension(40, 40));
         addStaff.addActionListener(e-> {
-            guiAltaStaff.limpiarCampos();
             mainWindow.changeJPanel(this, guiAltaStaff);
         });
         buttonPanel.add(addStaff);
@@ -224,7 +223,7 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         search_apellido2.setText("Segundo Apellido");
     }
 
-    private void resetTabla(){
+    protected void resetTabla(){
         resetTextFields();
         ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
         actualizarTabla(arrayStaff);

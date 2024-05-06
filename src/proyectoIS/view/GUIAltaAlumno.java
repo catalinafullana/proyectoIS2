@@ -4,9 +4,11 @@ import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static proyectoIS.misc.Utils.comprueba_formato_dni;
 import static proyectoIS.misc.Utils.comprueba_formato_telefono;
@@ -92,9 +94,10 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
 
             if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_clase)) {
                 Preferencia_clase preferencia_clase = Preferencia_clase.cast(pref_clase);
-
                 controladorAlumno.altaAlumno(new Alumno(nombre, apellido1, apellido2, dni, telefono, email, preferencia_clase));
+                guiMainAlumno.resetTabla();
                 mainWindow.changeJPanel(this, guiMainAlumno);
+                limpiarCampos();
             }
         });
         panelOpciones.add(_anyadir);
@@ -129,6 +132,16 @@ public class GUIAltaAlumno extends JPanel implements AlumnoObserver {
     private void creaDesplegable(JPanel panel, JLabel label, JComboBox combo) {
         panel.add(label);
         panel.add(combo);
+    }
+
+    private void limpiarCampos(){
+        _nombre_alumno_text_field.setText("");
+        _apellido1_alumno_text_field.setText("");
+        _apellido2_alumno_text_field.setText("");
+        _dni_alumno_text_field.setText("");
+        _telefono_alumno_text_field.setText("");
+        _email_alumno_text_field.setText("");
+        _preferencia_clase_combobox.setSelectedItem(Preferencia_clase.MANYANA);
     }
 
 }

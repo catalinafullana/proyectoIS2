@@ -3,6 +3,7 @@ package proyectoIS.view;
 import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
+import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,8 +21,8 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
     JButton addVehicle;
     JTextField search_nombre;
     JTextField search_apellido1;
-
     JTextField search_apellido2;
+    JButton searchAlumno;
 
     GUIModificarAlumno guiModificarAlumno;
     GUIAltaAlumno guiAltaAlumno;
@@ -104,8 +105,8 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.backToMain(this);
+            resetTabla();
         });
 
         toolbar.add(Box.createHorizontalStrut(10));
@@ -137,51 +138,49 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         addVehicle = new JButton(new ImageIcon("resources/icons/add.png"));
         addVehicle.setPreferredSize(new Dimension(40, 40));
         addVehicle.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.changeJPanel(this, guiAltaAlumno);
         });
         buttonPanel.add(addVehicle);
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
 
-
         search_nombre = new JTextField("Nombre");
         search_nombre.setPreferredSize(new Dimension(100, 30));
-        search_nombre.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
         buttonPanel.add(search_nombre);
 
-        search_apellido1 = new JTextField("Apellido 1");
-        search_apellido1.setPreferredSize(new Dimension(100, 30));
-        search_apellido1.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
+        search_apellido1 = new JTextField("Primer Apellido");
+        search_apellido1.setPreferredSize(new Dimension(150, 30));
         buttonPanel.add(search_apellido1);
 
-        search_apellido2 = new JTextField("Apellido 2");
-        search_apellido2.setPreferredSize(new Dimension(100, 30));
-        search_apellido2.addActionListener(e-> {
-            //actualizar tabla en funcion de los contenidos del search
-        });
+        search_apellido2 = new JTextField("Segundo Apellido");
+        search_apellido2.setPreferredSize(new Dimension(150, 30));
         buttonPanel.add(search_apellido2);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
-    /*
-    eraseVehicle = new JButton(new ImageIcon("resources/icons/erase.png"));
-    eraseVehicle.setPreferredSize(new Dimension(40, 40));
-    eraseVehicle.addActionListener(e-> {
-        //abrir formulario borrar
-    });
-    buttonPanel.add(eraseVehicle);
 
-    addVehicle = new JButton(new ImageIcon("resources/icons/add.png"));
-    addVehicle.setPreferredSize(new Dimension(40, 40));
-    addVehicle.addActionListener(e-> {
-        //abrir formulario crear
-    });
-    buttonPanel.add(addVehicle);
+        ImageIcon searchIcon = new ImageIcon("resources/icons/search.png");
+        Image resize = searchIcon.getImage();
+        resize = resize.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        searchIcon = new ImageIcon(resize);
 
-     */
+        searchAlumno = new JButton(searchIcon);
+        searchAlumno.setPreferredSize(new Dimension(40, 40));
+        searchAlumno.addActionListener(e-> {
+            String nombre = "";
+            if (!search_nombre.getText().equals("Nombre")){
+                nombre = search_nombre.getText();
+            }
+            String apellido1 = "";
+            if (!search_apellido1.getText().equals("Primer Apellido")){
+                apellido1 = search_apellido1.getText();
+            }
+            String apellido2 = "";
+            if (!search_apellido2.getText().equals("Segundo Apellido")){
+                apellido2 = search_apellido2.getText();
+            }
+            ArrayList<Alumno> lista = new ArrayList<>(controladorAlumno.busquedaAlumno(nombre, apellido1, apellido2));
+            actualizarTabla(lista);
+        });
+        buttonPanel.add(searchAlumno);
 
         headerPanel.add(buttonPanel);
 
@@ -218,9 +217,20 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
 
     }
 
-
     private void aModificar(String id){
         guiModificarAlumno.actualizarCampos(id);
         mainWindow.changeJPanel(this, guiModificarAlumno);
+    }
+
+    private void resetTextFields(){
+        search_nombre.setText("Nombre");
+        search_apellido1.setText("Primer Apellido");
+        search_apellido2.setText("Segundo Apellido");
+    }
+
+    protected void resetTabla(){
+        resetTextFields();
+        ArrayList<Alumno> arrayAlumno = new ArrayList<>(controladorAlumno.busquedaAlumno("", "", ""));
+        actualizarTabla(arrayAlumno);
     }
 }

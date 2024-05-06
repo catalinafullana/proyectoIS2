@@ -96,9 +96,8 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
             if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)) {
                 Staff s = new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
                 if (controladorStaff.modificarStaff(s)) {
-                    ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
                     ViewUtils.showSuccessMsg("Staff modificado con éxito");
-                    guiMainStaff.actualizarTabla(listaActualizada);
+                    guiMainStaff.resetTabla();
                     mainWindow.changeJPanel(this, guiMainStaff);
                 } else {
                     ViewUtils.showErrorMsg("Error al modificar staff");
@@ -113,9 +112,8 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
             ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, bajaLista.get(0),"");
             if(Clases.isEmpty()){
                 if(controladorStaff.bajaStaff(_dni_staff_text_field.getText())){
-                    ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
                     ViewUtils.showSuccessMsg("Staff borrado con éxito");
-                    guiMainStaff.actualizarTabla(listaActualizada);
+                    guiMainStaff.resetTabla();
                     mainWindow.changeJPanel(this, guiMainStaff);
                 } else {
                     ViewUtils.showErrorMsg("Error al eliminar Staff");
