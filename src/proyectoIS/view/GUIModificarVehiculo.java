@@ -67,8 +67,7 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
 
             if (comprobarIntroducidos(matricula, tipo, modelo)) {
                 if(controladorVehiculo.modificarVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))){
-                    ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
-                    guiMainVehiculo.actualizarTabla(arrayVehiculos);
+                    guiMainVehiculo.resetTabla();
                     ViewUtils.showSuccessMsg("Vehiculo modificado con exito");
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 }else{
@@ -83,8 +82,7 @@ public class GUIModificarVehiculo extends JPanel implements VehiculoObserver{
         _borrar.addActionListener(e->{
             if(!_matricula_vehiculo_text_field.getText().isEmpty()){
                 if(controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText())){
-                    ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
-                    guiMainVehiculo.actualizarTabla(arrayVehiculos);
+                    guiMainVehiculo.resetTabla();
                     ViewUtils.showSuccessMsg("Vehiculo eliminado con exito");
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 }else{

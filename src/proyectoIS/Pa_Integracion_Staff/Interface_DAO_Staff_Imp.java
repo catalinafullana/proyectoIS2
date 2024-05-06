@@ -14,7 +14,7 @@ public interface Interface_DAO_Staff_Imp {
 
     boolean existeUsuario(String usuario);
 
-    boolean inicioSesion(String usuario, String contrasena);
+    public boolean inicioSesion(String usuario, String contrasena);
 
-    boolean registrar(String usuario, String contrasena);
+    public boolean registrar(String usuario, String contrasena);
 }

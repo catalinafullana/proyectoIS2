@@ -66,8 +66,7 @@ public class GUIAltaVehiculo extends JPanel implements VehiculoObserver {
             if (comprobarIntroducidos(matricula, tipo, modelo)) {
                 if (controladorVehiculo.altaVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))) {
                     ViewUtils.showSuccessMsg("Vehiculo creado con exito");
-                    ArrayList<Vehiculo> arrayVehiculos = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
-                    guiMainVehiculo.actualizarTabla(arrayVehiculos);
+                    guiMainVehiculo.resetTabla();
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 } else {
                     ViewUtils.showErrorMsg("Error al crear vehiculo");

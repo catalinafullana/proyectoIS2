@@ -141,7 +141,6 @@ public class GUIAltaClase extends JPanel implements ClaseObserver {
         panelOpciones.add(_anyadir);
         panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
         pAux.add(panelOpciones);
-        //panelPrincipal.add(panelOpciones, BorderLayout.PAGE_END);
         panelPrincipal.add(pAux, BorderLayout.PAGE_END);
         add(panelPrincipal);
         setPreferredSize(new Dimension(MainWindow.width, MainWindow.height));

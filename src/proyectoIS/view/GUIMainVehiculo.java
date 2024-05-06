@@ -70,7 +70,6 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         JScrollPane scrollPane = new JScrollPane(_vehiculos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        //_vehiculos.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
         _vehiculos.setRowSelectionAllowed(true);
@@ -226,7 +225,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         search_modelo.setText("Modelo");
         search_tipo.setSelectedIndex(0);
     }
-    private void resetTabla(){
+    protected void resetTabla(){
         resetTextFields();
         ArrayList<Vehiculo> arrayVehiculo = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
         actualizarTabla(arrayVehiculo);

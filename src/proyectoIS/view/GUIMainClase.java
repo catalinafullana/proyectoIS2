@@ -152,9 +152,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         search_alumno = new JTextField("Alumno");
         search_alumno.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_alumno);
-
-
-
+        
         search_profesor = new JTextField("Profesor");
         search_profesor.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_profesor);
