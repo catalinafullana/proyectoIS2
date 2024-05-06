@@ -67,8 +67,6 @@ public class GUIAltaVehiculo extends JPanel{
                     ViewUtils.showSuccessMsg("Vehiculo creado con exito");
                     guiMainVehiculo.resetTabla();
                     mainWindow.changeJPanel(this, guiMainVehiculo);
-                } else {
-                    ViewUtils.showErrorMsg("Error al crear vehiculo");
                 }
             }
         });

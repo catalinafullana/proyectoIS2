@@ -84,12 +84,10 @@ public class GUIModificarVehiculo extends JPanel {
                 ControladorClase controladorClase = new ControladorClase();
                 ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, null, "", baja);
                 if (Clases.isEmpty()) {
-                    if (controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText())) {
-                        guiMainVehiculo.resetTabla();
-                        ViewUtils.showSuccessMsg("Vehículo eliminado con éxito");
-                        mainWindow.changeJPanel(this, guiMainVehiculo);
-                    } else
-                        ViewUtils.showErrorMsg("Error al eliminar el vehículo");
+                    controladorVehiculo.bajaVehiculo(_matricula_vehiculo_text_field.getText());
+                    guiMainVehiculo.resetTabla();
+                    ViewUtils.showSuccessMsg("Vehículo eliminado con éxito");
+                    mainWindow.changeJPanel(this, guiMainVehiculo);
                 } else
                     ViewUtils.showErrorMsg("Error al eliminar vehículo: Vehículo tiene clases");
             } else

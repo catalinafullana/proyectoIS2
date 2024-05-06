@@ -131,8 +131,6 @@ public class GUIModificarClase extends JPanel {
                 ViewUtils.showSuccessMsg("Clase modificada con exito");
                 guiMainClase.actualizarTabla(arrayClases);
                 mainWindow.changeJPanel(this, guiMainClase);
-            }else{
-                ViewUtils.showErrorMsg("Error al modifcar la clase");
             }
 
 
@@ -192,6 +190,7 @@ public class GUIModificarClase extends JPanel {
     }
 
     private Clase crearClase (ControladorStaff controladorStaff, ControladorAlumno controladorAlumno, ControladorVehiculo controladorVehiculo){
+        /*
         String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
         Vehiculo v = controladorVehiculo.busquedaVehiculo(stringVehiculo[0], "", null).getFirst();
 
@@ -206,11 +205,47 @@ public class GUIModificarClase extends JPanel {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
             fechaFormateada = formatter.format(selectedDate);
+            return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
         }else{
             ViewUtils.showErrorMsg("Debe seleccionar una fecha");
-
+            return null;
         }
-        return new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, _id_clase_text.getText());
+
+        String[] stringVehiculo = this._vehiculo_clase_comboBox.getSelectedItem().toString().split(" ");
+        Vehiculo v = controladorVehiculo.busquedaVehiculo(stringVehiculo[0], "", null).get(0);
+
+        String[] stringAlumno = this._alumno_clase_comboBox.getSelectedItem().toString().split(" ");
+        Alumno a = controladorAlumno.busquedaAlumno(stringAlumno[0], stringAlumno[1], "").get(0);
+
+        String[] stringProfesor = this._profesor_clase_comboBox.getSelectedItem().toString().split(" ");
+        Staff p = controladorStaff.busquedaStaff(stringProfesor[0], stringProfesor[1], stringProfesor[2]).get(0);
+
+        String fechaFormateada = "";
+
+        if(_fecha_clase_datePicker.getModel().getValue() != null){
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
+            fechaFormateada = formatter.format(selectedDate);
+            // COMPROBACION DE DATOS INTRODUCIDOS
+            if(comprobarHorario(a, p)){
+                if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
+                    ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
+                    ViewUtils.showSuccessMsg("Clase creada con exito");
+                    guiMainClase.actualizarTabla(arrayClases);
+                    mainWindow.changeJPanel(this, guiMainClase);
+                }
+            }else{
+                ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
+            }
+        }else{
+            ViewUtils.showErrorMsg("Debe seleccionar una fecha");
+        }
+
+         */
+        return null;
+    }
+    private boolean comprobarHorario(Alumno a, Staff p){
+        return a.getPreferencia_clase().equals(p.get_preferencia_horario());
     }
 
 

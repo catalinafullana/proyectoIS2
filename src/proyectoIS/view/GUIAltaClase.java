@@ -140,8 +140,6 @@ public class GUIAltaClase extends JPanel {
                         ViewUtils.showSuccessMsg("Clase creada con exito");
                         guiMainClase.actualizarTabla(arrayClases);
                         mainWindow.changeJPanel(this, guiMainClase);
-                    }else{
-                        ViewUtils.showErrorMsg("Error al crear clase");
                     }
                 }else{
                     ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
