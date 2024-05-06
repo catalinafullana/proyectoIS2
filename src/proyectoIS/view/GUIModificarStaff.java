@@ -19,12 +19,12 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
     ControladorStaff controladorStaff;
     MainWindow mainWindow;
     GUIMainStaff guiMainStaff;
-    JTextPane _nombre_staff_text_field;
-    JTextPane _apellido1_staff_text_field;
-    JTextPane _apellido2_staff_text_field;//TODO revisar si lo dejamos asi
-    JTextPane _dni_staff_text_field;
-    JTextPane _tlf_staff_text_field;
-    JTextPane _email_staff_text_field;
+    JTextField _nombre_staff_text_field;
+    JTextField _apellido1_staff_text_field;
+    JTextField _apellido2_staff_text_field;//TODO revisar si lo dejamos asi
+    JTextField _dni_staff_text_field;
+    JTextField _tlf_staff_text_field;
+    JTextField _email_staff_text_field;
     JComboBox _preferencia_horario_combo;
     JButton _guardar;
     JButton _borrar;
@@ -56,12 +56,12 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         panelPrincipal.add(new JLabel("<html><font size='20'> Consulta staff </font></html>"));
 
 
-        _nombre_staff_text_field = new JTextPane();
-        _apellido1_staff_text_field = new JTextPane();
-        _apellido2_staff_text_field = new JTextPane();
-        _dni_staff_text_field = new JTextPane();
-        _tlf_staff_text_field = new JTextPane();
-        _email_staff_text_field = new JTextPane();
+        _nombre_staff_text_field = new JTextField(10);
+        _apellido1_staff_text_field = new JTextField(20);
+        _apellido2_staff_text_field = new JTextField(20);
+        _dni_staff_text_field = new JTextField(9);
+        _tlf_staff_text_field = new JTextField(9);
+        _email_staff_text_field = new JTextField(30);
 
         creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_staff_text_field);
         creaCampo(panelDatos, new JLabel("Primer Apellido: "), _apellido1_staff_text_field);
@@ -131,7 +131,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
 
     private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefHorario) {
         if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefHorario.isEmpty()) {
-            ViewUtils.showErrorMsg("Debe ingresar los campos");
+            ViewUtils.showErrorMsg("Debe rellenar todos los campos");
         } else {
             if (comprueba_formato_telefono(telefono)) {
                 if (comprueba_formato_dni(dni)) {
@@ -143,7 +143,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         return false;
     }
 
-    private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
+    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto) {
         //area_texto = new JTextPane();
         //area_texto.setPreferredSize(new Dimension(100, 30));
         panel.add(label);

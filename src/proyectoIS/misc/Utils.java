@@ -17,6 +17,18 @@ public class Utils {
         return resultado;
     }
 
+    public static boolean comprueba_tamano_nombre(String n) {
+        return n.length() <= 10;
+    }
+
+    public static boolean comprueba_tamano_apellido(String a) {
+        return a.length() <= 20;
+    }
+
+    public static boolean comprueba_tamano_email(String e) {
+        return e.length() <= 30;
+    }
+
     public static boolean comprueba_formato_telefono(String tlf) {
         return tlf.length() == 9 && isNumeric(tlf);
     }

@@ -22,7 +22,8 @@ public class Service_Staff implements Interface_Service_Staff{
 
         if(faDAOStaff.existeStaff(dni)) {
             return faDAOStaff.consultaStaff(dni);
-        }
+        } else
+            ViewUtils.showErrorMsg("Staff no existente");
         return null;
     }
 
@@ -32,7 +33,8 @@ public class Service_Staff implements Interface_Service_Staff{
 
         if(faDAOStaff.existeStaff(staff.get_dni())){
             return faDAOStaff.modificarStaff(staff);
-        }
+        } else
+            ViewUtils.showErrorMsg("Staff no existente");
         return false;
     }
 
@@ -42,7 +44,8 @@ public class Service_Staff implements Interface_Service_Staff{
 
         if(!faDAOStaff.existeStaff(staff.get_dni())){
             return faDAOStaff.altaStaff(staff);
-        }
+        } else
+            ViewUtils.showErrorMsg("Staff existente");
         return false;
     }
 
@@ -52,7 +55,8 @@ public class Service_Staff implements Interface_Service_Staff{
 
         if(faDAOStaff.existeStaff(dni)){
             return faDAOStaff.bajaStaff(dni);
-        }
+        } else
+            ViewUtils.showErrorMsg("Staff no existente");
         return false;
     }
 
