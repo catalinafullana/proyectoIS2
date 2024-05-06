@@ -18,12 +18,12 @@ public class GUIModificarStaff extends JPanel {
     ControladorStaff controladorStaff;
     MainWindow mainWindow;
     GUIMainStaff guiMainStaff;
-    JTextField _nombre_staff_text_field;
-    JTextField _apellido1_staff_text_field;
-    JTextField _apellido2_staff_text_field;//TODO revisar si lo dejamos asi
-    JTextField _dni_staff_text_field;
-    JTextField _tlf_staff_text_field;
-    JTextField _email_staff_text_field;
+    JTextPane _nombre_staff_text_field;
+    JTextPane _apellido1_staff_text_field;
+    JTextPane _apellido2_staff_text_field;//TODO revisar si lo dejamos asi
+    JTextPane _dni_staff_text_field;
+    JTextPane _tlf_staff_text_field;
+    JTextPane _email_staff_text_field;
     JComboBox _preferencia_horario_combo;
     JButton _guardar;
     JButton _borrar;
@@ -38,29 +38,26 @@ public class GUIModificarStaff extends JPanel {
     private void initGUI() {
         guiMainStaff.toolbar(this);
 
-        //JPanel panelPrincipal = new JPanel();
-        //panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
-        //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
         panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.8)));
-        //panelPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
 
 
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
         panelDatos.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.5)));
 
 
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 0, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Consulta staff </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar staff </font></html>"));
 
+        panelPrincipal.add(Box.createVerticalStrut(80));
 
-        _nombre_staff_text_field = new JTextField(10);
-        _apellido1_staff_text_field = new JTextField(20);
-        _apellido2_staff_text_field = new JTextField(20);
-        _dni_staff_text_field = new JTextField(9);
-        _tlf_staff_text_field = new JTextField(9);
-        _email_staff_text_field = new JTextField(30);
+        _nombre_staff_text_field = new JTextPane();
+        _apellido1_staff_text_field = new JTextPane();
+        _apellido2_staff_text_field = new JTextPane();
+        _dni_staff_text_field = new JTextPane();
+        _tlf_staff_text_field = new JTextPane();
+        _email_staff_text_field = new JTextPane();
 
         creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_staff_text_field, true);
         creaCampo(panelDatos, new JLabel("Primer Apellido: "), _apellido1_staff_text_field, true);
@@ -99,7 +96,7 @@ public class GUIModificarStaff extends JPanel {
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
             if (!_dni_staff_text_field.getText().isEmpty()) {
-                Staff baja = leerCampos(); //Si campos correctos devuelve staff, sino null
+                Staff baja = controladorStaff.consultaStaff(_dni_staff_text_field.getText()); //Si campos correctos devuelve staff, sino null
                 ControladorClase controladorClase = new ControladorClase();
                 ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, baja, "", null);
                 if (Clases.isEmpty()) {
@@ -149,7 +146,7 @@ public class GUIModificarStaff extends JPanel {
         return false;
     }
 
-    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto, boolean editable) {
+    private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto, boolean editable) {
         area_texto.setEditable(editable);
         panel.add(label);
         panel.add(area_texto);

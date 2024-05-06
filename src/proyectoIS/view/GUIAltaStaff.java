@@ -9,8 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static proyectoIS.misc.Utils.comprueba_formato_dni;
-import static proyectoIS.misc.Utils.comprueba_formato_telefono;
+import static proyectoIS.misc.Utils.*;
 
 public class GUIAltaStaff extends JPanel {
 
@@ -36,12 +35,8 @@ public class GUIAltaStaff extends JPanel {
     private void initGUI(){
         guiMainStaff.toolbar(this);
 
-        //JPanel panelPrincipal = new JPanel();
-        //panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
-        //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 0));
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
-        //panelPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
 
 
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
@@ -51,6 +46,8 @@ public class GUIAltaStaff extends JPanel {
         JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo staff </font></html>"));
+
+        panelPrincipal.add(Box.createVerticalStrut(80));
 
 
         _nombre_staff_text_field = new JTextPane();
@@ -109,17 +106,25 @@ public class GUIAltaStaff extends JPanel {
 
     private boolean comprobarIntroducidos(String nombre, String apellido1, String apellido2, String dni, String telefono, String email, String prefHorario) {
         if (nombre.isEmpty() || apellido1.isEmpty() || apellido2.isEmpty() || dni.isEmpty() || telefono.isEmpty() || email.isEmpty() || prefHorario.isEmpty()) {
-            ViewUtils.showErrorMsg("Debe ingresar los campos");
+            ViewUtils.showErrorMsg("Debe rellenar todos los campos");
         } else {
-            if (comprueba_formato_telefono(telefono)) {
-                if (comprueba_formato_dni(dni)) {
-                    return true;
-                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
-            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+            if(comprueba_tamano_nombre(nombre)){
+                if(comprueba_tamano_apellido(apellido1)){
+                    if(comprueba_tamano_apellido(apellido2)){
+                        if (comprueba_tamano_email(email)){
+                            if (comprueba_formato_telefono(telefono)) {
+                                if (comprueba_formato_dni(dni)) {
+                                    return true;
+                                } else { ViewUtils.showErrorMsg("Formato dni incorrecto");  }
+                            } else { ViewUtils.showErrorMsg("Formato teléfono incorrecto"); }
+                        } else { ViewUtils.showErrorMsg("Email excede el tamaño permitido (30)"); }
+                    } else { ViewUtils.showErrorMsg("Segundo apellido excede el tamaño permitido (20)"); }
+                } else { ViewUtils.showErrorMsg("Primer apellido excede el tamaño permitido (20)"); }
+            } else { ViewUtils.showErrorMsg("Nombre excede el tamaño permitido (10)"); }
         }
-
         return false;
     }
+
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
         //area_texto = new JTextPane();

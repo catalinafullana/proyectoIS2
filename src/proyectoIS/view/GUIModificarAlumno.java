@@ -42,13 +42,16 @@ public class GUIModificarAlumno extends JPanel{
         guiMainAlumno.toolbar(this);
 
         JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
-        panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.65)));
+        panelPrincipal.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.8)));
 
-        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
+        panelDatos.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.5)));
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 0, 10));
 
-        panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
+        panelPrincipal.add(new JLabel("<html><font size='20'> Modificar alumno </font></html>"));
+
+        panelPrincipal.add(Box.createVerticalStrut(80));
 
         _nombre_alumno_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Nombre: "), _nombre_alumno_text_field, true);
@@ -94,14 +97,13 @@ public class GUIModificarAlumno extends JPanel{
             } else
                 ViewUtils.showErrorMsg("Nuevos datos del alumno no válidos");
 
-
         });
         panelOpciones.add(_guardar);
 
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
             if (!_dni_alumno_text_field.getText().isEmpty()) {
-                Alumno baja = leerCampos();
+                Alumno baja = controladorAlumno.consultaAlumno(_dni_alumno_text_field.getText());
                 ControladorClase controladorClase = new ControladorClase();
                 ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(baja, null,"", null);
                 if(Clases.isEmpty()) {
