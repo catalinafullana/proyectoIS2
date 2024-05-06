@@ -28,6 +28,7 @@ public class GUIInicioSesion extends JFrame {
 
 
     public GUIInicioSesion(){
+        super("GESTIONES MAGNO");
         controladorAlumno = new ControladorAlumno();
         controladorClase = new ControladorClase();
         controladorStaff = new ControladorStaff();
@@ -37,11 +38,17 @@ public class GUIInicioSesion extends JFrame {
     }
 
     private void initGUI(){
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image icon = toolkit.getImage("resources/icons/logo_azul.png");
+        this.setIconImage(icon);
+
         this.panelPrincipal = new JPanel();
         this.panelPrincipal.setPreferredSize(new Dimension(width, height));
 
         JPanel contenido = new JPanel(new GridLayout(2, 1, 0, 0));
-        contenido.add((new JLabel("<html><font size='20'> Inicio de sesion </font></html>")), BorderLayout.PAGE_START);
+        contenido.setPreferredSize(new Dimension((int) (MainWindow.width * 0.4), (int) (MainWindow.height * 0.45)));
+        contenido.add((new JLabel("<html><font size='20'> Inicio de sesion </font></html>")));
 
         JPanel panelInicio = new JPanel();
         panelInicio.setLayout(new BoxLayout(panelInicio, BoxLayout.Y_AXIS));
@@ -121,6 +128,7 @@ public class GUIInicioSesion extends JFrame {
 
     private void addLogIn(JPanel p){
         JPanel aux = new JPanel(new GridLayout(3, 2, 10, 10));
+        aux.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.25)));
 
         aux.add(new JLabel("Usuario: "));
         usuario = new JTextField();

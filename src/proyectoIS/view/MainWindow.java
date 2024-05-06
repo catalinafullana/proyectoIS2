@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
 
 
     public MainWindow(ControladorVehiculo controladorVehiculo, ControladorAlumno controladorAlumno, ControladorClase controladorClase, ControladorStaff controladorStaff, GUIInicioSesion guiInicioSesion, String usuario) {
-        super("MAGNO");
+        super("GESTIONES MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
@@ -48,7 +48,9 @@ public class MainWindow extends JFrame {
 
     private void initGUI() {
         this.panelPrincipal = new JPanel();
-        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/logo_azul_30x30.png"))).getImage());
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image icon = toolkit.getImage("resources/icons/logo_azul.png");
+        this.setIconImage(icon);
         //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         //panelPrincipal.add(Box.createVerticalGlue());
         panelPrincipal.setPreferredSize(new Dimension(width, height));
