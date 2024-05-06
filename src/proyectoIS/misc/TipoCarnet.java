@@ -6,6 +6,7 @@ public enum TipoCarnet {
     public static TipoCarnet cast(String s) {
         TipoCarnet r = null;
         switch (s) {
+            case "A" -> r = TipoCarnet.A;
             case "A1" -> r = TipoCarnet.A1;
             case "A2" -> r = TipoCarnet.A2;
             case "AM" -> r = TipoCarnet.AM;

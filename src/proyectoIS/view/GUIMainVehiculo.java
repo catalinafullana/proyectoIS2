@@ -2,6 +2,7 @@ package proyectoIS.view;
 
 import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
+import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;
@@ -102,6 +103,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
+            resetTabla();
             mainWindow.backToMain(this);
         });
         toolbar.add(Box.createHorizontalStrut(10));
@@ -206,6 +208,7 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
     }
 
     public void actualizarTabla(ArrayList<Vehiculo> arrayVehiculos){
+
         _defaultTableModel.setNumRows(arrayVehiculos.size());
         for (int i = 0; i < arrayVehiculos.size(); i++) {
            Vehiculo v = arrayVehiculos.get(i);
@@ -216,6 +219,17 @@ public class GUIMainVehiculo extends JPanel implements VehiculoObserver{
         _defaultTableModel.fireTableDataChanged();
         _defaultTableModel.fireTableStructureChanged();
 
+    }
+
+    private void resetTextFields(){
+        search_matricula.setText("Matricula");
+        search_modelo.setText("Modelo");
+        search_tipo.setSelectedIndex(0);
+    }
+    private void resetTabla(){
+        resetTextFields();
+        ArrayList<Vehiculo> arrayVehiculo = new ArrayList<>(controladorVehiculo.busquedaVehiculo("", "", null));
+        actualizarTabla(arrayVehiculo);
     }
 
 }

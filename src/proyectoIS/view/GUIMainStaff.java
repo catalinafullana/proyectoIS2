@@ -99,7 +99,6 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
         toolbar.add(home);
         home.addActionListener(e-> {
-            //abrir formulario crear
             mainWindow.backToMain(this);
             resetTabla();
         });
@@ -219,13 +218,13 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         _defaultTableModel.fireTableStructureChanged();
     }
 
-    public void resetTextFields(){
+    private void resetTextFields(){
         search_nombre.setText("Nombre");
         search_apellido1.setText("Primer Apellido");
         search_apellido2.setText("Segundo Apellido");
     }
 
-    public void resetTabla(){
+    private void resetTabla(){
         resetTextFields();
         ArrayList<Staff> arrayStaff = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
         actualizarTabla(arrayStaff);

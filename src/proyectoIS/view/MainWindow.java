@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainWindow extends JFrame {
     public static int width=800,height=600;
@@ -47,6 +48,7 @@ public class MainWindow extends JFrame {
 
     private void initGUI() {
         this.panelPrincipal = new JPanel();
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/logo_azul_30x30.png"))).getImage());
         //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         //panelPrincipal.add(Box.createVerticalGlue());
         panelPrincipal.setPreferredSize(new Dimension(width, height));
@@ -65,7 +67,7 @@ public class MainWindow extends JFrame {
 
         addButtons(panelB);
 
-        panelTexto.add(new JLabel("<html><font size='20'> Bienvenido/a a Gestiones Magno " + _usuario + " </font></html>"), BorderLayout.PAGE_START);
+        panelTexto.add(new JLabel("<html><font size='20'> Bienvenido/a a Gestiones Magno <br>" + _usuario + " </font></html>"), BorderLayout.PAGE_START);
         aux.add(panelTexto);
         aux.add(panelB);
         panelPrincipal.add(aux);
