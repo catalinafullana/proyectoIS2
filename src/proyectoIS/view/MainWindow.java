@@ -30,8 +30,6 @@ public class MainWindow extends JFrame {
     private GUIMainStaff guiMainStaff;
     private GUIMainClase guiMainClase;
 
-    private ControladorStaff controladorStaff;
-
     private GUIInicioSesion guiInicioSesion;
 
 
@@ -40,12 +38,10 @@ public class MainWindow extends JFrame {
         super("MAGNO");
         this.guiMainVehiculo = new GUIMainVehiculo(controladorVehiculo, this);
         this.guiMainAlumno = new GUIMainAlumno(controladorAlumno, this);
-        this.controladorStaff = controladorStaff;
         this.guiMainStaff = new GUIMainStaff(controladorStaff, this);
         this.guiMainClase = new GUIMainClase(controladorClase, this);
         this.guiInicioSesion = guiInicioSesion;
         this._usuario = usuario;
-        // TODO: INTENTAR ARREGLAR EL DELAY
         initGUI();
     }
 
@@ -131,14 +127,6 @@ public class MainWindow extends JFrame {
         b.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(b);
 
-        //container.add(Box.createVerticalStrut(30));
-
-        /*
-        JSeparator separator = new JSeparator(1);
-        container.add(separator);
-
-         */
-
         return b;
     }
 
@@ -146,8 +134,6 @@ public class MainWindow extends JFrame {
         Dimension buttonSize = new Dimension(15, 15);
         _boton_clases= addButton("Clases",buttonSize, panelPrincipal );
         _boton_clases.addActionListener(e-> {
-            // TODO: AL AÑADIR UN VEHICULO/ALUMNO/PROFESOR NO SE ACTUALIZAN LOS CAMPOS, POR ESO CREO UNA NUEVA INSTANCIA CON UN NUEVO CONTROLLER
-            // PERO AÑADE MAS DELAY A LA EJECUCION ENTONCES NO SE QUE HACER PARA ARREGLARLO
             guiMainClase = new GUIMainClase(new ControladorClase(), this);
             changeJPanel(this.panelPrincipal, guiMainClase);
         });
@@ -184,7 +170,6 @@ public class MainWindow extends JFrame {
             guiInicioSesion.setVisible(true);
 
         });
-        //toolbar.addSeparator();
         toolbar.add(Box.createHorizontalStrut(10));
 
         p.add(toolbar, BorderLayout.PAGE_START);
