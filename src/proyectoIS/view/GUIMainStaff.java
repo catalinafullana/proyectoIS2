@@ -136,7 +136,6 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         addStaff = new JButton(new ImageIcon("resources/icons/add.png"));
         addStaff.setPreferredSize(new Dimension(40, 40));
         addStaff.addActionListener(e-> {
-            //abrir formulario crear
             guiAltaStaff.limpiarCampos();
             mainWindow.changeJPanel(this, guiAltaStaff);
         });
@@ -147,13 +146,12 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         search_nombre.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(search_nombre);
 
-
         search_apellido1 = new JTextField("Primer Apellido");
-        search_apellido1.setPreferredSize(new Dimension(100, 30));
+        search_apellido1.setPreferredSize(new Dimension(150, 30));
         buttonPanel.add(search_apellido1);
 
         search_apellido2 = new JTextField("Segundo Apellido");
-        search_apellido2.setPreferredSize(new Dimension(100, 30));
+        search_apellido2.setPreferredSize(new Dimension(150, 30));
         buttonPanel.add(search_apellido2);
 
         addSeparator(buttonPanel, new Dimension(10, 20), JToolBar.Separator.VERTICAL);
@@ -166,17 +164,17 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         searchStaff = new JButton(searchIcon);
         searchStaff.setPreferredSize(new Dimension(40, 40));
         searchStaff.addActionListener(e-> {
-            String nombre = search_nombre.getText();
-            if (Objects.equals(nombre, "Nombre")){
-                nombre = "";
+            String nombre = "";
+            if (!search_nombre.getText().equals("Nombre")){
+                nombre = search_nombre.getText();
             }
-            String apellido1 = search_apellido1.getText();
-            if (Objects.equals(apellido1, "Primer Apellido")){
-                apellido1 = "";
+            String apellido1 = "";
+            if (!search_apellido1.getText().equals("Primer Apellido")){
+                apellido1 = search_apellido1.getText();
             }
-            String apellido2 = search_apellido2.getText();
-            if (apellido2 == "Segundo Apellido"){
-                apellido2 = "";
+            String apellido2 = "";
+            if (!search_apellido2.getText().equals("Segundo Apellido")){
+                apellido2 = search_apellido2.getText();
             }
             ArrayList<Staff> lista = new ArrayList<>(controladorStaff.busquedaStaff(nombre, apellido1, apellido2));
             actualizarTabla(lista);
