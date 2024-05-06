@@ -1,56 +1,45 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.lang.reflect.InvocationTargetException;
 
-public class GUIInicioSesion extends JFrame {
+public class GUIRegistrar extends JFrame {
 
-    public static int width=800,height=600;
+    public static int width=500,height=400;
 
     private ControladorStaff controladorStaff;
-    private ControladorClase controladorClase;
-    private ControladorAlumno controladorAlumno;
-    private ControladorVehiculo controladorVehiculo;
 
-    private JButton home;
+
     private JTextField usuario;
     private JPasswordField contrasena;
-
     private JPanel panelPrincipal;
-    private GUIRegistrar guiRegistrar;
 
+    private JButton home;
 
-    public GUIInicioSesion(){
-        super("GESTIONES MAGNO");
-        controladorAlumno = new ControladorAlumno();
-        controladorClase = new ControladorClase();
-        controladorStaff = new ControladorStaff();
-        controladorVehiculo = new ControladorVehiculo();
-
+    public GUIRegistrar(ControladorStaff controladorStaff){
+        this.controladorStaff = controladorStaff;
         initGUI();
     }
 
-    private void initGUI(){
+    private void initGUI() {
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image icon = toolkit.getImage("resources/icons/logo_azul.png");
         this.setIconImage(icon);
 
         this.panelPrincipal = new JPanel();
-        this.panelPrincipal.setPreferredSize(new Dimension(width, height));
+        this.panelPrincipal.setPreferredSize(new Dimension((int) (width * 0.6), (int) (height * 0.6)));
 
         JPanel contenido = new JPanel(new GridLayout(2, 1, 0, 0));
-        contenido.setPreferredSize(new Dimension((int) (MainWindow.width * 0.4), (int) (MainWindow.height * 0.45)));
-        contenido.add((new JLabel("<html><font size='20'> Inicio de sesion </font></html>")));
+        contenido.setPreferredSize(new Dimension((int) (width * 0.5), (int) (height * 0.55)));
+        contenido.add((new JLabel("<html><font size='7'> Registro </font></html>")));
 
         JPanel panelInicio = new JPanel();
         panelInicio.setLayout(new BoxLayout(panelInicio, BoxLayout.Y_AXIS));
@@ -63,14 +52,13 @@ public class GUIInicioSesion extends JFrame {
         panelPrincipal.add(contenido);
 
         add(panelPrincipal);
-
-        panelPrincipal.setVisible(true);
-        guiRegistrar = new GUIRegistrar(controladorStaff);
         setPreferredSize(new Dimension(width, height));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
+
+
+
     }
 
     private void toolbar(JPanel p) {
@@ -81,6 +69,12 @@ public class GUIInicioSesion extends JFrame {
         toolbar.setPreferredSize(new Dimension(width, 50));
 
         home = createButton("Home", "resources/icons/logo_azul_30x30.png", new Dimension(30,30));
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
         toolbar.add(home);
         toolbar.add(Box.createHorizontalStrut(10));
         addWindowListener(new WindowListener() {
@@ -91,7 +85,7 @@ public class GUIInicioSesion extends JFrame {
 
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                ViewUtils.quit(GUIInicioSesion.this);
+                setVisible(false);
             }
 
             @Override
@@ -143,28 +137,31 @@ public class GUIInicioSesion extends JFrame {
         contrasena.setPreferredSize(new Dimension(40, 20));
         aux.add(contrasena);
 
-        JButton inicioSesion = new JButton("Iniciar sesion");
         JButton registrar = new JButton("Registrar");
 
-        inicioSesion.addActionListener(e->{
-            if(!controladorStaff.iniciarSesion(usuario.getText(), toString(contrasena.getPassword()))){
-                ViewUtils.showErrorMsg("Contraseña incorrecta");
+        registrar.addActionListener(e->{
+            if(!usuario.getText().isEmpty() && !toString(contrasena.getPassword()).isEmpty()){
+                if(controladorStaff.registrar(usuario.getText(), toString(contrasena.getPassword()))){
+                    ViewUtils.showSuccessMsg("Usuario registrado");
+                    setVisible(false);
+                }
                 limpiarCampos();
             }else{
-                this.setVisible(false);
-                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this, usuario.getText()));
+                ViewUtils.showErrorMsg("Debe rellenar todos los campos");
             }
-
         });
-        registrar.addActionListener(e->{
-            guiRegistrar.open(this);
-        });
-
-        aux.add(inicioSesion);
-        aux.add(registrar);
+        JPanel panel = new JPanel(new GridLayout(1,1,0,0));
+        panel.setPreferredSize(new Dimension((int) (MainWindow.width * 0.2), (int) (MainWindow.height * 0.25)));
+        panel.add(registrar);
+        aux.add(panel);
         p.add(aux);
 
 
+    }
+
+    private void limpiarCampos(){
+        this.usuario.setText("");
+        this.contrasena.setText("");
     }
 
     private String toString(char[] c){
@@ -175,9 +172,12 @@ public class GUIInicioSesion extends JFrame {
         return s.toString();
     }
 
-    public void limpiarCampos(){
-        this.usuario.setText("");
-        this.contrasena.setText("");
+    public void open(Frame parent) {
+        setLocation(//
+                parent.getLocation().x + parent.getWidth() / 2 - getWidth() / 2, //
+                parent.getLocation().y + parent.getHeight() / 2 - getHeight() / 2);
+        pack();
+        setVisible(true);
     }
 
 }
