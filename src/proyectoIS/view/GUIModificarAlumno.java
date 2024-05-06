@@ -63,7 +63,7 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         creaCampo(panelDatos, new JLabel("Apellido 2: "), _apellido2_alumno_text_field, true);
 
         _dni_alumno_text_field = new JTextPane();
-        creaCampo(panelDatos, new JLabel("Dni: "), _dni_alumno_text_field, true);
+        creaCampo(panelDatos, new JLabel("Dni: "), _dni_alumno_text_field, false);
 
         _tlf_alumno_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Telefono: "), _tlf_alumno_text_field, true);
@@ -86,19 +86,10 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
 
         _guardar = new JButton("Guardar");
         _guardar.addActionListener(e -> {
-            String nombre = _nombre_alumno_text_field.getText();
-            String apellido1 = _apellido1_alumno_text_field.getText();
-            String apellido2 = _apellido2_alumno_text_field.getText();
-            String dni = _dni_alumno_text_field.getText();
-            String telefono = _tlf_alumno_text_field.getText();
-            String email = _email_alumno_text_field.getText();
-            String pref_clase_alumno = _preferencia_clase_combobox.getSelectedItem().toString();
-
-
-            if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email,pref_clase_alumno)) {
-                if (controladorAlumno.modificarAlumno(new Alumno(nombre, apellido1, apellido2,
-                        dni, telefono, email, Preferencia_clase.cast(pref_clase_alumno)))) {
-                    ViewUtils.showSuccessMsg("Alumno modificado con exito");
+            Alumno a = leerCampos();
+            if (a != null) {
+                if (controladorAlumno.modificarAlumno(a)) {
+                    ViewUtils.showSuccessMsg("Alumno modificado con éxito");
                     guiMainAlumno.resetTabla();
                     mainWindow.changeJPanel(this, guiMainAlumno);
                 } else {
@@ -112,24 +103,20 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
             if (!_dni_alumno_text_field.getText().isEmpty()) {
-            /*
+                Alumno baja = leerCampos();
                 ControladorClase controladorClase = new ControladorClase();
-                Alumno baja = controladorAlumno.consultaAlumno(_dni_alumno_text_field.getText());
-                ArrayList<Alumno> bajaLista = (ArrayList<Alumno>) controladorAlumno.busquedaAlumno(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
-                ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(bajaLista.get(0), null,"");
+                ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(baja, null,"", null);
                 if(Clases.isEmpty()) {
-                */
                     if (controladorAlumno.bajaAlumno(_dni_alumno_text_field.getText())) {
                         ViewUtils.showSuccessMsg("Alumno eliminado con exito");
                         guiMainAlumno.resetTabla();
                         mainWindow.changeJPanel(this, guiMainAlumno);
                     } else {
                         ViewUtils.showErrorMsg("Error al eliminar el alumno");
-                    }/*
+                    }
                 } else {
                     ViewUtils.showErrorMsg("Error al eliminar el alumno: Alumno tiene clases");
                 }
-                */
             } else {
                 ViewUtils.showErrorMsg("DNI erroneo");
             }
@@ -162,6 +149,20 @@ public class GUIModificarAlumno extends JPanel implements AlumnoObserver {
         area_texto.setEditable(editable);
         panel.add(label);
         panel.add(area_texto);
+    }
+    private Alumno leerCampos(){
+        String nombre = _nombre_alumno_text_field.getText();
+        String apellido1 = _apellido1_alumno_text_field.getText();
+        String apellido2 = _apellido2_alumno_text_field.getText();
+        String dni = _dni_alumno_text_field.getText();
+        String telefono = _tlf_alumno_text_field.getText();
+        String email = _email_alumno_text_field.getText();
+        String pref_clase_alumno = _preferencia_clase_combobox.getSelectedItem().toString();
+
+        if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_clase_alumno)){
+            return new Alumno(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_clase_alumno));
+        } else
+            return null;
     }
 
     public void actualizarCampos(String dni) {

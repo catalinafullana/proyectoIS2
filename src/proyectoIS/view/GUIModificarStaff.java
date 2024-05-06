@@ -81,20 +81,12 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
 
         panelPrincipal.add(panelDatos);
 
-
         _guardar = new JButton("Guardar");
         panelOpciones.add(_guardar);
         _guardar.addActionListener(e -> {
-            String nombre = _nombre_staff_text_field.getText();
-            String apellido1 = _apellido1_staff_text_field.getText();
-            String apellido2 = _apellido2_staff_text_field.getText();
-            String dni = _dni_staff_text_field.getText();
-            String telefono = _tlf_staff_text_field.getText();
-            String email = _email_staff_text_field.getText();
-            String pref_horario = _preferencia_horario_combo.getSelectedItem().toString();
-
-            if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)) {
-                Staff s = new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
+            Staff s = leerCampos(); //Si campos correctos devuelve staff, sino null
+            if (s != null) {
+                //Staff s = new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
                 if (controladorStaff.modificarStaff(s)) {
                     ViewUtils.showSuccessMsg("Staff modificado con éxito");
                     guiMainStaff.resetTabla();
@@ -106,22 +98,24 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         });
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
-            ControladorClase controladorClase = new ControladorClase();
-            Staff baja = controladorStaff.consultaStaff(_dni_staff_text_field.getText());
-            ArrayList<Staff> bajaLista = (ArrayList<Staff>) controladorStaff.busquedaStaff(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
-            ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, bajaLista.get(0),"",null);
-            if(Clases.isEmpty()){
-                if(controladorStaff.bajaStaff(_dni_staff_text_field.getText())){
-                    ViewUtils.showSuccessMsg("Staff borrado con éxito");
-                    guiMainStaff.resetTabla();
-                    mainWindow.changeJPanel(this, guiMainStaff);
+            if (!_dni_staff_text_field.getText().isEmpty()) {
+                Staff baja = leerCampos(); //Si campos correctos devuelve staff, sino null
+                ControladorClase controladorClase = new ControladorClase();
+                ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, baja, "", null);
+                if (Clases.isEmpty()) {
+                    if (controladorStaff.bajaStaff(_dni_staff_text_field.getText())) {
+                        ViewUtils.showSuccessMsg("Staff borrado con éxito");
+                        guiMainStaff.resetTabla();
+                        mainWindow.changeJPanel(this, guiMainStaff);
+                    } else {
+                        ViewUtils.showErrorMsg("Error al eliminar Staff");
+                    }
                 } else {
-                    ViewUtils.showErrorMsg("Error al eliminar Staff");
+                    ViewUtils.showErrorMsg("Error al eliminar Staff: Staff tiene clases");
                 }
             } else {
-                ViewUtils.showErrorMsg("Error al eliminar Staff: Staff tiene clases");
+                ViewUtils.showErrorMsg("DNI erroneo");
             }
-
 
         });
         panelOpciones.add(_borrar);
@@ -163,6 +157,21 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         panel.add(combo);
     }
 
+    private Staff leerCampos(){
+        String nombre = _nombre_staff_text_field.getText();
+        String apellido1 = _apellido1_staff_text_field.getText();
+        String apellido2 = _apellido2_staff_text_field.getText();
+        String dni = _dni_staff_text_field.getText();
+        String telefono = _tlf_staff_text_field.getText();
+        String email = _email_staff_text_field.getText();
+        String pref_horario = _preferencia_horario_combo.getSelectedItem().toString();
+
+        if (comprobarIntroducidos(nombre, apellido1, apellido2, dni, telefono, email, pref_horario)){
+            return new Staff(nombre, apellido1, apellido2, dni, telefono, email, Preferencia_clase.cast(pref_horario));
+        } else
+            return null;
+    }
+
     public void actualizarCampos(String dni) {
         Staff consultado = controladorStaff.consultaStaff(dni);
 
@@ -177,5 +186,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         _preferencia_horario_combo.setSelectedItem(consultado.get_preferencia_horario().toString()); //Pone default a mañana
 
     }
+
+
 
 }
