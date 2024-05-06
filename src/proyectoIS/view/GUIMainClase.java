@@ -70,7 +70,7 @@ public class GUIMainClase extends JPanel implements ClaseObserver{
         JScrollPane scrollPane = new JScrollPane(_clases, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        _clases.setPreferredSize(tabla);
+        //_clases.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
         _clases.setRowSelectionAllowed(true);

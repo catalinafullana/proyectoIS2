@@ -72,7 +72,7 @@ public class GUIMainAlumno extends JPanel implements AlumnoObserver{
         JScrollPane scroll = new JScrollPane(_alumnos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension dim_tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        _alumnos.setPreferredSize(dim_tabla);
+        //_alumnos.setPreferredSize(dim_tabla);
         scroll.setPreferredSize(dim_tabla);
 
         _alumnos.addMouseListener(new java.awt.event.MouseAdapter() {

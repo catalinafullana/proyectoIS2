@@ -68,7 +68,7 @@ public class GUIMainStaff extends JPanel implements StaffObserver{
         JScrollPane scrollPane = new JScrollPane(_staffs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        _staffs.setPreferredSize(tabla);
+        //_staffs.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
         _staffs.setRowSelectionAllowed(true);
