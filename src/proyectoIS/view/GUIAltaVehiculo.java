@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import static proyectoIS.misc.Utils.comprueba_formato_matricula;
+import static proyectoIS.misc.Utils.comprueba_tamano_modelo;
 
 public class GUIAltaVehiculo extends JPanel{
     ControladorVehiculo controladorVehiculo;
@@ -84,8 +85,10 @@ public class GUIAltaVehiculo extends JPanel{
 
         if(! (matricula.isEmpty()||tipo.isEmpty()||modelo.isEmpty())){
             if (comprueba_formato_matricula(matricula)) {
-                return true;
-            } else { ViewUtils.showErrorMsg("Campo 'matricula' erroneo"); }
+                if(comprueba_tamano_modelo(modelo)){
+                    return true;
+                } else { ViewUtils.showErrorMsg("Campo 'modelo' erroneo, debe introducir un modelo con un tamaño máximo de 40 caracteres"); }
+            } else { ViewUtils.showErrorMsg("<html><p> Campo 'matricula' erroneo, debe introducir una matrícula con el formato 1111XXX </p></html>"); }
         }else { ViewUtils.showErrorMsg("Debe rellenar todos los campos"); }
 
         return false;

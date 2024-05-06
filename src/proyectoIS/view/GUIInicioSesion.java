@@ -152,13 +152,18 @@ public class GUIInicioSesion extends JFrame {
         JButton registrar = new JButton("Registrar");
 
         inicioSesion.addActionListener(e->{
-            if(!controladorStaff.iniciarSesion(usuario.getText(), toString(contrasena.getPassword()))){
-                ViewUtils.showErrorMsg("Contraseña incorrecta");
-                limpiarCampos();
+            if(usuario.getText().isEmpty() || contrasena.getPassword().length == 0){
+                ViewUtils.showErrorMsg("Debe rellenar todos los campos");
             }else{
-                this.setVisible(false);
-                SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this, usuario.getText()));
+                if(!controladorStaff.iniciarSesion(usuario.getText(), toString(contrasena.getPassword()))){
+                    ViewUtils.showErrorMsg("Contraseña incorrecta");
+                    limpiarCampos();
+                }else{
+                    this.setVisible(false);
+                    SwingUtilities.invokeLater(() -> new MainWindow(controladorVehiculo, controladorAlumno, controladorClase, controladorStaff, this, usuario.getText()));
+                }
             }
+
 
         });
         registrar.addActionListener(e->{

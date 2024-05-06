@@ -41,5 +41,8 @@ public class Utils {
         return matricula.length() == 7 && isNumeric(matricula.substring(0,3)) &&  !isNumeric(matricula.substring(3,7));
     }
 
+    public static boolean comprueba_tamano_modelo(String m) {
+        return m.length() <= 40;
+    }
 
 }

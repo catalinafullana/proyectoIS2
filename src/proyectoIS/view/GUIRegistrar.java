@@ -153,6 +153,7 @@ public class GUIRegistrar extends JFrame {
                 limpiarCampos();
             }else{
                 ViewUtils.showErrorMsg("Debe rellenar todos los campos");
+                limpiarCampos();
             }
         });
         JPanel panel = new JPanel(new GridLayout(1,1,0,0));
