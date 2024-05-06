@@ -109,7 +109,7 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
             ControladorClase controladorClase = new ControladorClase();
             Staff baja = controladorStaff.consultaStaff(_dni_staff_text_field.getText());
             ArrayList<Staff> bajaLista = (ArrayList<Staff>) controladorStaff.busquedaStaff(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
-            ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, bajaLista.get(0),"");
+            ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, bajaLista.get(0),"",null);
             if(Clases.isEmpty()){
                 if(controladorStaff.bajaStaff(_dni_staff_text_field.getText())){
                     ViewUtils.showSuccessMsg("Staff borrado con éxito");
