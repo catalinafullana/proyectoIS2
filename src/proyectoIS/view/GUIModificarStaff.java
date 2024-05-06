@@ -1,8 +1,10 @@
 package proyectoIS.view;
 
+import proyectoIS.controller.ControladorClase;
 import proyectoIS.controller.ControladorStaff;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
+import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
@@ -105,11 +107,24 @@ public class GUIModificarStaff extends JPanel implements StaffObserver {
         });
         _borrar = new JButton("Borrar");
         _borrar.addActionListener(e -> {
-            controladorStaff.bajaStaff(_dni_staff_text_field.getText());
-            ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
-            ViewUtils.showSuccessMsg("Staff borrado con éxito");
-            guiMainStaff.actualizarTabla(listaActualizada);
-            mainWindow.changeJPanel(this, guiMainStaff);
+            ControladorClase controladorClase = new ControladorClase();
+            Staff baja = controladorStaff.consultaStaff(_dni_staff_text_field.getText());
+            ArrayList<Staff> bajaLista = (ArrayList<Staff>) controladorStaff.busquedaStaff(baja.get_nombre(), baja.get_apellido1(), baja.get_apellido2());
+            ArrayList<Clase> Clases = (ArrayList<Clase>) controladorClase.busquedaClase(null, bajaLista.get(0),"");
+            if(Clases.isEmpty()){
+                if(controladorStaff.bajaStaff(_dni_staff_text_field.getText())){
+                    ArrayList<Staff> listaActualizada = new ArrayList<>(controladorStaff.busquedaStaff("", "", ""));
+                    ViewUtils.showSuccessMsg("Staff borrado con éxito");
+                    guiMainStaff.actualizarTabla(listaActualizada);
+                    mainWindow.changeJPanel(this, guiMainStaff);
+                } else {
+                    ViewUtils.showErrorMsg("Error al eliminar Staff");
+                }
+            } else {
+                ViewUtils.showErrorMsg("Error al eliminar Staff: Staff tiene clases");
+            }
+
+
         });
         panelOpciones.add(_borrar);
 
