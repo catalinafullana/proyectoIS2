@@ -220,15 +220,13 @@ public class GUIModificarClase extends JPanel {
         return null;
     }
     private boolean comprobarHorario(Alumno a, Staff p, String hora){
-        if(a.getPreferencia_clase().equals(p.get_preferencia_horario())){
+        if(a.getPreferencia_clase().equals(p.get_preferencia_horario()) || p.get_preferencia_horario().equals(Preferencia_clase.AMBOS) || a.getPreferencia_clase().equals(Preferencia_clase.AMBOS)){
             if(a.getPreferencia_clase().equals(Preferencia_clase.MANYANA) && (hora.equals("08:00") || hora.equals("09:00") || hora.equals("10:00") || hora.equals("11:00") || hora.equals("12:00"))){
                 return true;
-            }else if(a.getPreferencia_clase().equals(Preferencia_clase.TARDE) && (hora.equals("16:00") || hora.equals("17:00") || hora.equals("18:00") || hora.equals("19:00") || hora.equals("20:00") || hora.equals("21:00") || hora.equals("22:00"))){
+            }else if(a.getPreferencia_clase().equals(Preferencia_clase.AMBOS) && p.get_preferencia_horario().equals(Preferencia_clase.AMBOS)) {
                 return true;
-
-            }else{
-                return false;
             }
+            else return a.getPreferencia_clase().equals(Preferencia_clase.TARDE) && (hora.equals("16:00") || hora.equals("17:00") || hora.equals("18:00") || hora.equals("19:00") || hora.equals("20:00") || hora.equals("21:00") || hora.equals("22:00"));
         }else{
             return false;
         }
