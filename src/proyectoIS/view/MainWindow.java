@@ -76,7 +76,7 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         panelPrincipal.setVisible(true);
-
+        setResizable(false);
         // Mensaje de exit
         addWindowListener(new WindowListener() {
             @Override

@@ -65,6 +65,7 @@ public class GUIInicioSesion extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
     }
 

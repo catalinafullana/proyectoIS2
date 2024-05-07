@@ -4,6 +4,7 @@ import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.*;
 
@@ -53,7 +54,7 @@ public class GUIAltaClase extends JPanel {
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2() + " (" + alumno.getPreferencia_clase() + ")");
         }
 
 
@@ -64,7 +65,7 @@ public class GUIAltaClase extends JPanel {
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2() + " (" + staff.get_preferencia_horario() + ")");
         }
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
@@ -129,7 +130,7 @@ public class GUIAltaClase extends JPanel {
                 Date selectedDate = (Date) _fecha_clase_datePicker.getModel().getValue();
                 fechaFormateada = formatter.format(selectedDate);
                 // COMPROBACION DE DATOS INTRODUCIDOS
-                if(comprobarHorario(a, p)){
+                if(comprobarHorario(a, p, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString())){
                     if(controladorClase.altaClase(new Clase(v.get_tipo_vehiculo(), fechaFormateada, p, a, Objects.requireNonNull(_hora_clase_comboBox.getSelectedItem()).toString(), v, ""))){
                         ArrayList<Clase> arrayClases = new ArrayList<>(controladorClase.busquedaClase(null, null, "", null));
                         ViewUtils.showSuccessMsg("Clase creada con éxito");
@@ -137,7 +138,7 @@ public class GUIAltaClase extends JPanel {
                         mainWindow.changeJPanel(this, guiMainClase);
                     }
                 }else{
-                    ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor no coincide");
+                    ViewUtils.showErrorMsg("La preferencia de horario del alumno y el profesor o la hora seleccionada no coincide");
                 }
             }else{
                 ViewUtils.showErrorMsg("Debe seleccionar una fecha");
@@ -162,8 +163,19 @@ public class GUIAltaClase extends JPanel {
         panel.add(Box.createGlue());
     }
 
-    private boolean comprobarHorario(Alumno a, Staff p){
-        return a.getPreferencia_clase().equals(p.get_preferencia_horario());
+    private boolean comprobarHorario(Alumno a, Staff p, String hora){
+        if(a.getPreferencia_clase().equals(p.get_preferencia_horario())){
+            if(a.getPreferencia_clase().equals(Preferencia_clase.MANYANA) && (hora.equals("08:00") || hora.equals("09:00") || hora.equals("10:00") || hora.equals("11:00") || hora.equals("12:00"))){
+                return true;
+            }else if(a.getPreferencia_clase().equals(Preferencia_clase.TARDE) && (hora.equals("16:00") || hora.equals("17:00") || hora.equals("18:00") || hora.equals("19:00") || hora.equals("20:00") || hora.equals("21:00") || hora.equals("22:00"))){
+                return true;
+
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 
 }
