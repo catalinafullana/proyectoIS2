@@ -59,7 +59,7 @@ public class GUIModificarClase extends JPanel {
         List<Alumno> lista_alumnos = controladorAlumno.busquedaAlumno("", "", "");
 
         for (Alumno alumno : lista_alumnos) {
-            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2() + " (" + alumno.getPreferencia_clase() + ")");
+            tipo_model_alumno.addElement(alumno.get_nombre() + " " + alumno.get_apellido1() + " " + alumno.get_apellido2());
         }
 
         ControladorStaff controladorStaff = new ControladorStaff();
@@ -68,7 +68,7 @@ public class GUIModificarClase extends JPanel {
         List<Staff> lista_staff = controladorStaff.busquedaStaff("","","");
 
         for (Staff staff : lista_staff) {
-            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2() + " (" + staff.get_preferencia_horario() + ")");
+            tipo_model_staff.addElement(staff.get_nombre() + " " + staff.get_apellido1() + " " + staff.get_apellido2());
         }
 
         ControladorVehiculo controladorVehiculo = new ControladorVehiculo();
@@ -77,7 +77,7 @@ public class GUIModificarClase extends JPanel {
         List<Vehiculo> lista_vehiculo = controladorVehiculo.busquedaVehiculo("","",null);
 
         for (Vehiculo vehiculo : lista_vehiculo) {
-            tipo_model_vehiculo.addElement("Matrícula: " + vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
+            tipo_model_vehiculo.addElement(vehiculo.get_matricula() + " Tipo: " + vehiculo.get_tipo_vehiculo().toString());
         }
 
         DefaultComboBoxModel<String> tipo_model_hora = new DefaultComboBoxModel<>();
