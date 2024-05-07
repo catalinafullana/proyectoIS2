@@ -28,8 +28,8 @@ public class Fa_DAO_Alumno implements Interface_Fa_DAO_Alumno_Imp{
     }
 
     @Override
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni) {
-        return interface_dao_alumno_imp.busquedaAlumno(nombre, apellido1, dni);
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2) {
+        return interface_dao_alumno_imp.busquedaAlumno(nombre, apellido1, apellido2);
     }
 
     @Override

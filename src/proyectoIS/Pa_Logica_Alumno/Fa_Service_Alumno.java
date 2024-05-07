@@ -28,8 +28,8 @@ public class Fa_Service_Alumno implements Interface_Fa_Service_Alumno{
     }
 
     @Override
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni) {
-        return interfaceServiceAlumno.busquedaAlumno(nombre, apellido1, dni);
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2) {
+        return interfaceServiceAlumno.busquedaAlumno(nombre, apellido1, apellido2);
     }
 
     @Override

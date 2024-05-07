@@ -8,7 +8,7 @@ public interface Interface_Fa_DAO_Alumno_Imp {
     public boolean altaAlumno(Alumno alumno);
     public boolean bajaAlumno(String dni);
     public boolean modificarAlumno(Alumno alumno);
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni);
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2);
     public Alumno consultaAlumno(String dni);
     public boolean existeAlumno(String dni);
 }

@@ -1,4 +1,4 @@
-package proyectoIS.controller;
+package proyectoIS.view;
 
 import proyectoIS.Pa_Logica_Alumno.Fa_Service_Alumno;
 import proyectoIS.Pa_Logica_Clase.Fa_Service_Clase;

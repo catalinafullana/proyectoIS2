@@ -1,12 +1,9 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorClase;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;

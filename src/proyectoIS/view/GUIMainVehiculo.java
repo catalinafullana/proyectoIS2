@@ -1,8 +1,6 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
-import proyectoIS.modelo_de_dominio.Staff;
 import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import javax.swing.*;

@@ -1,6 +1,5 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.TipoCarnet;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Vehiculo;

@@ -36,8 +36,8 @@ public class Service_Alumno implements Interface_Service_Alumno{
     }
 
     @Override
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni) {
-        return faDaoAlumno.busquedaAlumno(nombre, apellido1, dni);
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2) {
+        return faDaoAlumno.busquedaAlumno(nombre, apellido1, apellido2);
     }
 
     @Override

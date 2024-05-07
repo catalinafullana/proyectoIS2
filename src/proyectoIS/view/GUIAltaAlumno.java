@@ -1,14 +1,11 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static proyectoIS.misc.Utils.*;
 
@@ -79,7 +76,6 @@ public class GUIAltaAlumno extends JPanel {
 
         _anyadir = new JButton("Añadir");
         _anyadir.addActionListener(e -> {
-            //controladorAlumno.altaAlumno(new Alumno(_matricula_vehiculo_text_field.getText(), _modelo_vehiculo_text_field.getText(), getCarnet(_tipo_vehiculo.getSelectedItem().toString())));
             String nombre = _nombre_alumno_text_field.getText();
             String apellido1 = _apellido1_alumno_text_field.getText();
             String apellido2 = _apellido2_alumno_text_field.getText();

@@ -1,7 +1,5 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorStaff;
-import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
@@ -10,7 +8,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GUIMainStaff extends JPanel {
 
@@ -68,7 +65,6 @@ public class GUIMainStaff extends JPanel {
         JScrollPane scrollPane = new JScrollPane(_staffs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        //_staffs.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
         _staffs.setRowSelectionAllowed(true);

@@ -1,13 +1,11 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorStaff;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static proyectoIS.misc.Utils.*;
 
@@ -125,8 +123,6 @@ public class GUIAltaStaff extends JPanel {
 
 
     private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
-        //area_texto = new JTextPane();
-        //area_texto.setPreferredSize(new Dimension(100, 30));
         panel.add(label);
         panel.add(area_texto);
     }

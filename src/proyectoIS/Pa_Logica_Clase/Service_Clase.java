@@ -12,11 +12,12 @@ import java.util.List;
 public class Service_Clase implements Interface_Service_Clase{
 
     private Fa_DAO_Clase faDAOClase;
+    public Service_Clase() {
+        faDAOClase = new Fa_DAO_Clase();
+    }
 
     @Override
     public boolean altaClase(Clase clase) {
-        faDAOClase = new Fa_DAO_Clase();
-
         if(comprobarDatos(clase)){
             return faDAOClase.altaClase(clase);
         }
@@ -25,8 +26,6 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public boolean bajaClase(String id) {
-        faDAOClase = new Fa_DAO_Clase();
-
         if(faDAOClase.existeClase(id)){
             return faDAOClase.bajaClase(id);
         }else{
@@ -37,7 +36,6 @@ public class Service_Clase implements Interface_Service_Clase{
 
     @Override
     public boolean modificarClase(Clase clase) {
-        faDAOClase = new Fa_DAO_Clase();
         if(faDAOClase.existeClase(clase.get_id_clase())){
             if(comprobarDatos(clase)){
                 return faDAOClase.modificarClase(clase);

@@ -2,9 +2,7 @@ package proyectoIS.Pa_Integracion_Alumno;
 
 import proyectoIS.Conexion;
 import proyectoIS.misc.Preferencia_clase;
-import proyectoIS.misc.TipoCarnet;
 import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Vehiculo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -71,37 +69,27 @@ public class Alumno_DAO implements Interface_DAO_Alumno_Imp {
     }
 
     @Override
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni) {
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2) {
         List<Alumno> listaAlumnos = new ArrayList<>();
         String sql = "";
 
-        //si estan todos los campos llenos
-        if (!nombre.isEmpty() && !apellido1.isEmpty() && !dni.isEmpty()) {
-            sql = "select * from Tabla_alumnos where dni = '" + dni + "'" + " and apellido1='" + apellido1 + "'" + " and dni ='" + dni + "'";
-        } //si solo estan nombre y apellido
-        else if (!nombre.isEmpty() && !apellido1.isEmpty()) {
+        if (!nombre.isEmpty() && !apellido1.isEmpty() && !apellido2.isEmpty()) {
+            sql = "select * from Tabla_alumnos where nombre = '" + nombre + "'" + " and apellido1='" + apellido1 + "'" + " and apellido2 ='" + apellido2 + "'";
+        }else if(!nombre.isEmpty() && !apellido1.isEmpty()){
             sql = "select * from Tabla_alumnos where nombre ='" + nombre + "'" + "and apellido1= '" + apellido1 + "'";
-
-        } //si solo estan dni y apellido
-        else if (!apellido1.isEmpty() && !dni.isEmpty()) {
-            sql = "select * from Tabla_alumnos where dni ='" + dni + "'" + "and apellido1= '" + apellido1 + "'";
-
-        } //si solo esta el nombre
-        else if (!nombre.isEmpty()) {
+        }else if(!nombre.isEmpty() && !apellido2.isEmpty()){
+            sql = "select * from Tabla_alumnos where apellido2 ='" + apellido2 + "'" + "and nombre= '" + nombre + "'";
+        }else if(!nombre.isEmpty()) {
             sql = "select * from Tabla_alumnos where nombre ='" + nombre + "'";
-
-        } // si solo esta el apellido
-        else if (!apellido1.isEmpty()) {
+        }else if(!apellido1.isEmpty() && !apellido2.isEmpty()) {
+            sql = "select * from Tabla_alumnos where apellido2 ='" + apellido2 + "'" + "and apellido1= '" + apellido1 + "'";
+        }else if(!apellido1.isEmpty()) {
             sql = "select * from Tabla_alumnos where apellido1 ='" + apellido1 + "'";
-
-        } // si solo esta el dni
-        else if (!dni.isEmpty()) {
-            sql = "select * from Tabla_alumnos where dni ='" + dni + "'";
-        } // si esta todo vacio
-        else{
-            sql= "select * from Tabla_alumnos";
+        }else if(!apellido2.isEmpty()){
+            sql = "select * from Tabla_alumnos where apellido2 ='" + apellido2 + "'";
+        }else {
+            sql = "select * from Tabla_alumnos";
         }
-
 
         try {
             Connection con = Conexion.obtenerConexion();

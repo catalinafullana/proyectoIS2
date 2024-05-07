@@ -1,7 +1,5 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorClase;
-import proyectoIS.controller.ControladorStaff;
 import proyectoIS.misc.Preferencia_clase;
 import proyectoIS.misc.ViewUtils;
 import proyectoIS.modelo_de_dominio.Clase;

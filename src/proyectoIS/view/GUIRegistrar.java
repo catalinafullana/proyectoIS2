@@ -1,6 +1,5 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorStaff;
 import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;

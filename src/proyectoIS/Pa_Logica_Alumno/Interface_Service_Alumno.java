@@ -9,6 +9,6 @@ public interface Interface_Service_Alumno {
     public boolean altaAlumno(Alumno alumno);
     public boolean bajaAlumno(String dni);
     public boolean modificarAlumno(Alumno alumno);
-    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni);
+    public List<Alumno> busquedaAlumno(String nombre, String apellido1, String apellido2);
     public Alumno consultaAlumno(String dni);
 }

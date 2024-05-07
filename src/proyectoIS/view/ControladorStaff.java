@@ -1,4 +1,4 @@
-package proyectoIS.controller;
+package proyectoIS.view;
 
 import proyectoIS.Pa_Logica_Staff.Fa_Service_Staff;
 import proyectoIS.modelo_de_dominio.Clase;

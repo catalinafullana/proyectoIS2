@@ -1,16 +1,11 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorClase;
-import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.lang.reflect.InvocationTargetException;
 
 public class GUIInicioSesion extends JFrame {
 

@@ -1,9 +1,6 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
 import proyectoIS.modelo_de_dominio.Alumno;
-import proyectoIS.modelo_de_dominio.Clase;
-import proyectoIS.modelo_de_dominio.Staff;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +14,6 @@ public class GUIMainAlumno extends JPanel {
     ControladorAlumno controladorAlumno;
     private JButton home;
 
-    //JButton eraseVehicle;
     JButton addVehicle;
     JTextField search_nombre;
     JTextField search_apellido1;
@@ -54,7 +50,6 @@ public class GUIMainAlumno extends JPanel {
 
     private void tabla(JPanel panelPrincipal) {
         ArrayList<Alumno> arrayAlumnos = new ArrayList<>(controladorAlumno.busquedaAlumno("", "",""));
-        //AlumnoModelTable model = new AlumnoModelTable(arrayAlumnos);
          _defaultTableModel = new DefaultTableModel();
 
         _defaultTableModel.setColumnIdentifiers(_headers);
@@ -69,11 +64,9 @@ public class GUIMainAlumno extends JPanel {
                 return component;
             }
         };
-        //_alumnos.setAutoResizeMode(JTable.WIDTH);
         JScrollPane scroll = new JScrollPane(_alumnos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension dim_tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        //_alumnos.setPreferredSize(dim_tabla);
         scroll.setPreferredSize(dim_tabla);
 
         _alumnos.addMouseListener(new java.awt.event.MouseAdapter() {

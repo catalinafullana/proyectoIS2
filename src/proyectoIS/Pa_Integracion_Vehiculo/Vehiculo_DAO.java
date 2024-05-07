@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Vehiculo_DAO implements Interface_DAO_Vehiculo_Imp {
 
     @Override
-    public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) { // TODO: CAMBIAR EL TIPO VEHICULO POR STRING QUE DEBERIA IR EN LA LOGICA
+    public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
 
         List<Vehiculo> listaVehiculos = new ArrayList<>();
         String sql = "";

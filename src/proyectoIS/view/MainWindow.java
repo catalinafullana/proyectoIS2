@@ -1,18 +1,11 @@
 package proyectoIS.view;
 
-import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorClase;
-import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.misc.ViewUtils;
-import proyectoIS.modelo_de_dominio.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainWindow extends JFrame {
     public static int width=800,height=600;

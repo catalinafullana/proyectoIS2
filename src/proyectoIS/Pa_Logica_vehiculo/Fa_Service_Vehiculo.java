@@ -13,7 +13,6 @@ public class Fa_Service_Vehiculo implements Interface_Fa_Service_Vehiculo{
         interface_service_vehiculo = new Service_Vehiculo();
     }
 
-    // TODO: COMPROBAR
     @Override
     public List<Vehiculo> busquedaVehiculo(String matricula, String modelo, TipoCarnet tipo_vehiculo) {
         return interface_service_vehiculo.busquedaVehiculo(matricula, modelo, tipo_vehiculo);

@@ -1,4 +1,4 @@
-package proyectoIS.controller;
+package proyectoIS.view;
 
 import proyectoIS.Pa_Logica_vehiculo.Fa_Service_Vehiculo;
 import proyectoIS.misc.TipoCarnet;

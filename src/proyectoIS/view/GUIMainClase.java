@@ -1,15 +1,9 @@
 package proyectoIS.view;
 
-import com.toedter.calendar.JDateChooser;
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import proyectoIS.controller.ControladorAlumno;
-import proyectoIS.controller.ControladorClase;
-import proyectoIS.controller.ControladorStaff;
-import proyectoIS.controller.ControladorVehiculo;
 import proyectoIS.modelo_de_dominio.Alumno;
 import proyectoIS.modelo_de_dominio.Clase;
 import proyectoIS.modelo_de_dominio.Staff;
@@ -80,7 +74,6 @@ public class GUIMainClase extends JPanel{
         JScrollPane scrollPane = new JScrollPane(_clases, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         Dimension tabla = new Dimension((int) (MainWindow.width * 0.9), (int) (MainWindow.height * 0.7));
-        //_clases.setPreferredSize(tabla);
         scrollPane.setPreferredSize(tabla);
 
         _clases.setRowSelectionAllowed(true);
