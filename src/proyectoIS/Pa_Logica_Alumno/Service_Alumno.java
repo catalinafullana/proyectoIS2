@@ -6,11 +6,12 @@ import proyectoIS.modelo_de_dominio.Alumno;
 import java.util.List;
 
 public class Service_Alumno implements Interface_Service_Alumno{
+    private Fa_DAO_Alumno faDaoAlumno;
+
+    public Service_Alumno(){this.faDaoAlumno = new Fa_DAO_Alumno();}
 
     @Override
     public boolean altaAlumno(Alumno alumno) {
-        Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
-
         if(!faDaoAlumno.existeAlumno(alumno.get_dni())){
             return faDaoAlumno.altaAlumno(alumno);
         }
@@ -20,8 +21,6 @@ public class Service_Alumno implements Interface_Service_Alumno{
 
     @Override
     public boolean bajaAlumno(String dni) {
-        Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
-
         if(faDaoAlumno.existeAlumno(dni)){
             return faDaoAlumno.bajaAlumno(dni);
         }
@@ -30,8 +29,6 @@ public class Service_Alumno implements Interface_Service_Alumno{
 
     @Override
     public boolean modificarAlumno(Alumno alumno) {
-        Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
-
         if(faDaoAlumno.existeAlumno(alumno.get_dni())){
             return faDaoAlumno.modificarAlumno(alumno);
         }
@@ -40,14 +37,11 @@ public class Service_Alumno implements Interface_Service_Alumno{
 
     @Override
     public List<Alumno> busquedaAlumno(String nombre, String apellido1, String dni) {
-        Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
-
         return faDaoAlumno.busquedaAlumno(nombre, apellido1, dni);
     }
 
     @Override
     public Alumno consultaAlumno(String dni) {
-        Fa_DAO_Alumno faDaoAlumno=new Fa_DAO_Alumno();
         if (faDaoAlumno.existeAlumno(dni)) {
             return faDaoAlumno.consultaAlumno(dni);
         }
