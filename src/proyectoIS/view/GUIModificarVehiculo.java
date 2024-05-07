@@ -36,17 +36,21 @@ public class GUIModificarVehiculo extends JPanel {
     private void initGUI() {
         guiMainVehiculo.toolbar(this);
 
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayout(3, 1, 0, 20));
+        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 20));
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.65)));
 
-        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
+        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.2)));
+
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 2, 0, 10));
+        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
+
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Modificar vehículo </font></html>"));
+
         _matricula_vehiculo_text_field = new JTextPane();
         _matricula_vehiculo_text_field.setEditable(false);
-        creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
+        creaCampo(panelDatos, new JLabel("Matrícula: "), _matricula_vehiculo_text_field);
         _modelo_vehiculo_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();

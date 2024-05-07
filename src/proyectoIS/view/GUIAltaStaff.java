@@ -35,7 +35,7 @@ public class GUIAltaStaff extends JPanel {
     private void initGUI(){
         guiMainStaff.toolbar(this);
 
-        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 0));
+        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 20));
         panelPrincipal.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6), (int)(MainWindow.height * 0.8)));
 
 
@@ -46,8 +46,6 @@ public class GUIAltaStaff extends JPanel {
         JPanel panelOpciones = new JPanel(new GridLayout(1, 3, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo staff </font></html>"));
-
-        panelPrincipal.add(Box.createVerticalStrut(80));
 
 
         _nombre_staff_text_field = new JTextPane();

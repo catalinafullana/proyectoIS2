@@ -15,9 +15,9 @@ public class GUIAltaVehiculo extends JPanel{
     ControladorVehiculo controladorVehiculo;
     MainWindow mainWindow;
     GUIMainVehiculo guiMainVehiculo;
-    JTextField _matricula_vehiculo_text_field;
+    JTextPane _matricula_vehiculo_text_field;
     JComboBox _tipo_vehiculo;
-    JTextField _modelo_vehiculo_text_field;
+    JTextPane _modelo_vehiculo_text_field;
     JButton _anyadir;
 
     public GUIAltaVehiculo(ControladorVehiculo c, MainWindow mainWindow, GUIMainVehiculo guiMainVehiculo) {
@@ -30,20 +30,22 @@ public class GUIAltaVehiculo extends JPanel{
     private void initGUI() {
         guiMainVehiculo.toolbar(this);
 
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayout(3, 1, 10, 20));
+        JPanel panelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEADING,0, 20));
         panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.65)));
 
-        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 10, 20));
-        JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 10, 10));
+        JPanel panelDatos = new JPanel(new GridLayout(3, 2, 0, 20));
+        panelDatos.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.2)));
+
+        JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
+        panelOpciones.setPreferredSize(new Dimension((int)(MainWindow.width * 0.6),(int)(MainWindow.height * 0.1)));
+
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo vehículo </font></html>"));
-        _matricula_vehiculo_text_field = new JTextField();
-        creaCampo(panelDatos, new JLabel("Matricula: "), _matricula_vehiculo_text_field);
-        _modelo_vehiculo_text_field = new JTextField();
+
+        _matricula_vehiculo_text_field = new JTextPane();
+        creaCampo(panelDatos, new JLabel("Matrícula: "), _matricula_vehiculo_text_field);
+        _modelo_vehiculo_text_field = new JTextPane();
         creaCampo(panelDatos, new JLabel("Modelo: "), _modelo_vehiculo_text_field);
-
-
 
         DefaultComboBoxModel<String> tipo_model = new DefaultComboBoxModel<String>();
         for (TipoCarnet t : TipoCarnet.values()) {
@@ -64,7 +66,7 @@ public class GUIAltaVehiculo extends JPanel{
             String modelo = _modelo_vehiculo_text_field.getText();
             if (comprobarIntroducidos(matricula, tipo, modelo)) {
                 if (controladorVehiculo.altaVehiculo(new Vehiculo(matricula, modelo, TipoCarnet.cast(tipo)))) {
-                    ViewUtils.showSuccessMsg("Vehiculo creado con exito");
+                    ViewUtils.showSuccessMsg("Vehiculo creado con éxito");
                     guiMainVehiculo.resetTabla();
                     mainWindow.changeJPanel(this, guiMainVehiculo);
                 }
@@ -86,13 +88,13 @@ public class GUIAltaVehiculo extends JPanel{
                 if(comprueba_tamano_modelo(modelo)){
                     return true;
                 } else { ViewUtils.showErrorMsg("Campo 'modelo' erroneo, debe introducir un modelo con un tamaño máximo de 40 caracteres"); }
-            } else { ViewUtils.showErrorMsg("<html><p> Campo 'matricula' erroneo, debe introducir una matrícula con el formato 1111XXX </p></html>"); }
+            } else { ViewUtils.showErrorMsg("<html><p> Campo 'matrícula' erroneo, debe introducir una matrícula con el formato 1111XXX </p></html>"); }
         }else { ViewUtils.showErrorMsg("Debe rellenar todos los campos"); }
 
         return false;
     }
 
-    private void creaCampo(JPanel panel, JLabel label, JTextField area_texto) {
+    private void creaCampo(JPanel panel, JLabel label, JTextPane area_texto) {
         panel.add(label);
         panel.add(area_texto);
     }

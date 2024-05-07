@@ -37,7 +37,7 @@ public class GUIAltaAlumno extends JPanel {
         guiMainAlumno.toolbar(this);
 
         JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        panelPrincipal.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 20));
         panelPrincipal.setPreferredSize(new Dimension((int) (MainWindow.width * 0.6), (int) (MainWindow.height * 0.8)));
 
         JPanel panelDatos = new JPanel(new GridLayout(7, 2, 0, 20));
@@ -46,8 +46,6 @@ public class GUIAltaAlumno extends JPanel {
         JPanel panelOpciones = new JPanel(new GridLayout(1, 1, 0, 10));
 
         panelPrincipal.add(new JLabel("<html><font size='20'> Nuevo alumno </font></html>"));
-
-        panelPrincipal.add(Box.createVerticalStrut(80));
 
 
         _nombre_alumno_text_field = new JTextPane();
